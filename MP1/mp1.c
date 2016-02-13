@@ -16,10 +16,8 @@ MODULE_DESCRIPTION("CS-423 MP1");
 #define DIRECTORY "mp1"
 
 //structs for proc filesystem
-static struct proc_dir_entry *proc_dir;
+static struct proc_dir_entry proc_dir;
 static struct proc_dir_entry proc_entry;
-
-void list_cleanup();
 
 // static ssize_t mp1_read(struct file *file, char__user *buffer, size_t count, loff_t *data){
 //    //TODO
@@ -56,6 +54,21 @@ struct process processList;
 //    .write = mp1_write,
 // };
 
+// this function safely deletes and frees the linked list
+void list_cleanup() {
+   struct process *aProcess, *tmp;
+
+   printk(KERN_INFO "Cleaning up processList\n");
+   list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+      #ifdef DEBUG
+      printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+      #endif
+
+      list_del(&aProcess->list);
+      kfree(aProcess);
+   }
+}
+
 // mp1_init - Called when module is loaded
 int __init mp1_init(void)
 {
@@ -87,21 +100,6 @@ void __exit mp1_exit(void)
    proc_remove(proc_dir);
 
    printk(KERN_ALERT "MP1 MODULE UNLOADED\n");
-}
-
-// this function safely deletes and frees the linked list
-void list_cleanup() {
-   struct process *aProcess, *tmp;
-
-   printk(KERN_INFO "Cleaning up processList\n");
-   list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
-      #ifdef DEBUG
-      printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
-      #endif
-
-      list_del(&aProcess->list);
-      kfree(aProcess);
-   }
 }
 
 // Register init and exit funtions
