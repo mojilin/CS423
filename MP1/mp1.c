@@ -82,7 +82,7 @@ int __init mp1_init(void)
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
-   INIT_LIST_HEAD(processList);
+   INIT_LIST_HEAD(&processList);
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
