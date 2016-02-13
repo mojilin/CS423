@@ -40,6 +40,8 @@ struct process {
 
 struct process processList;
 
+void list_cleanup();
+
 // static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
 //    // implementation goes here...
 // }
@@ -79,7 +81,7 @@ int __init mp1_init(void)
    printk(KERN_INFO "Hello World!\n");
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
-   proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
+   proc_entry = proc_create(FILENAME, 0666, &proc_dir, &mp1_file);  //create entry in proc system
    
    printk(KERN_ALERT "MP1 MODULE LOADED\n");
    return 0;   
@@ -96,8 +98,8 @@ void __exit mp1_exit(void)
    printk(KERN_INFO "See ya.\n");
    list_cleanup();
 
-   remove_proc_entry(FILENAME, proc_dir);
-   proc_remove(proc_dir);
+   remove_proc_entry(FILENAME, &proc_dir);
+   proc_remove(&proc_dir);
 
    printk(KERN_ALERT "MP1 MODULE UNLOADED\n");
 }
