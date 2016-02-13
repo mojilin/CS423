@@ -60,7 +60,7 @@ static const struct file_operations mp1_file = {
 void list_cleanup(void) {
    struct process *aProcess, *tmp;
 
-   if (&processList.list != 0 && !list_empty(&processList)) {
+   if (list_empty(&processList.list) == 0) {
       printk(KERN_INFO "Cleaning up processList\n");
       list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
          #ifdef DEBUG
