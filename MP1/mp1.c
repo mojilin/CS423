@@ -61,13 +61,15 @@ void list_cleanup(void) {
    struct process *aProcess, *tmp;
 
    printk(KERN_INFO "Cleaning up processList\n");
-   list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
-      #ifdef DEBUG
-      printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
-      #endif
+   if (processList) {
+      list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+         #ifdef DEBUG
+         printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+         #endif
 
-      list_del(&aProcess->list);
-      kfree(aProcess);
+         list_del(&aProcess->list);
+         kfree(aProcess);
+      }
    }
 }
 
