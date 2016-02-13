@@ -40,7 +40,7 @@ struct process {
 
 struct process processList;
 
-void list_cleanup();
+void list_cleanup(void);
 
 // static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
 //    // implementation goes here...
@@ -57,7 +57,7 @@ static const struct file_operations mp1_file = {
 };
 
 // this function safely deletes and frees the linked list
-void list_cleanup() {
+void list_cleanup(void) {
    struct process *aProcess, *tmp;
 
    printk(KERN_INFO "Cleaning up processList\n");
