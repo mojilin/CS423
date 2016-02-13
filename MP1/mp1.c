@@ -20,21 +20,6 @@ MODULE_DESCRIPTION("CS-423 MP1");
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
-static ssize_t mp1_read(struct file *file, char __user *buffer, size_t count, loff_t *data){
-   //TODO
-   return 0;
-}
-
-static ssize_t mp1_write(struct file *file, const char __user *buffer, size_t count, loff_t *data){
-   return 0;
-}
-
-static const struct file_operations mp1_file = {
-   .owner = THIS_MODULE,
-   .read = mp1_read,
-   .write = mp1_write,
-};
-
 struct process {
    int pid;
    unsigned long cpu_use;
@@ -45,18 +30,24 @@ struct list_head processList;
 
 void list_cleanup(void);
 
-// static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
-//    // implementation goes here...
-// }
+static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
+   return 0;
+}
 
-// static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
-//    // implementation goes here...
-// }
+static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
+   struct process *newProcess;
+   newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+   
+   if (list_empty(&processList) == 0){
+      
+   }
+   return 0;
+}
 
 static const struct file_operations mp1_file = {
-   .owner = THIS_MODULE
-   // .read = mp1_read,
-   // .write = mp1_write,
+   .owner = THIS_MODULE,
+   .read = mp1_read,
+   .write = mp1_write,
 };
 
 // this function safely deletes and frees the linked list
