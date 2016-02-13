@@ -4,6 +4,7 @@
 #include <linux/kernel.h>
 #include <linux/list.h>
 #include <linux/slab.h>
+#include <linux/proc_fs.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -16,7 +17,9 @@ MODULE_DESCRIPTION("CS-423 MP1");
 
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
-static struct proc_dir_entry *proc_entry;
+static struct proc_dir_entry proc_entry;
+
+void list_cleanup();
 
 // static ssize_t mp1_read(struct file *file, char__user *buffer, size_t count, loff_t *data){
 //    //TODO
@@ -47,11 +50,11 @@ struct process processList;
 //    // implementation goes here...
 // }
 
-static const struct file_operations mp1_file = {
-   .owner = THIS_MODULE,
-   .read = mp1_read,
-   .write = mp1_write,
-};
+// static const struct file_operations mp1_file = {
+//    .owner = THIS_MODULE,
+//    .read = mp1_read,
+//    .write = mp1_write,
+// };
 
 // mp1_init - Called when module is loaded
 int __init mp1_init(void)
