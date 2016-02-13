@@ -1,0 +1,8 @@
+# Object Files
+*.o
+*.cmd
+#Temp filess
+MP1/.tmp_versions
+#Makefile junk
+*.order
+*symvers
