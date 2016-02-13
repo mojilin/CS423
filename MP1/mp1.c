@@ -5,7 +5,7 @@
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
-MODULE_AUTHOR("Group_ID");
+MODULE_AUTHOR("Group_17");
 MODULE_DESCRIPTION("CS-423 MP1");
 
 #define DEBUG 1
@@ -17,6 +17,7 @@ int __init mp1_init(void)
    printk(KERN_ALERT "MP1 MODULE LOADING\n");
    #endif
    // Insert your code here ...
+   printk(KERN_INFO "Hello World!\n");
    
    
    
@@ -31,7 +32,7 @@ void __exit mp1_exit(void)
    printk(KERN_ALERT "MP1 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-   
+   printk(KERN_INFO "See ya.\n");
    
 
    printk(KERN_ALERT "MP1 MODULE UNLOADED\n");
