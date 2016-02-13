@@ -5,6 +5,7 @@
 #include <linux/list.h>
 #include <linux/slab.h>
 #include <linux/proc_fs.h>
+#include <linux/fs.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -40,6 +41,7 @@ static ssize_t mp1_write (struct file *file, const char user *buffer, size_t cou
    if (list_empty(&processList) == 0){
       
    }
+   return 0;
 }
 
 static const struct file_operations mp1_file = {
@@ -54,7 +56,7 @@ void list_cleanup(void) {
 
    if (list_empty(&processList) == 0) {
       printk(KERN_INFO "Cleaning up processList\n");
-      list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+      list_for_each_entry_safe(aProcess, tmp, &processList, list) {
          #ifdef DEBUG
          printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
          #endif
@@ -74,7 +76,7 @@ int __init mp1_init(void)
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
-   INIT_LIST_HEAD(processList);
+   INIT_LIST_HEAD(&processList);
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
