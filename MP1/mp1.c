@@ -29,11 +29,11 @@ static ssize_t mp1_write(struct file *file, const char __user *buffer, size_t co
    return 0;
 }
 
-// static const struct file_operations mp1_file = {
-//    .owner = THIS_MODULE,
-//    .read = mp1_read,
-//    .write = mp1_write,
-// };
+static const struct file_operations mp1_file = {
+   .owner = THIS_MODULE,
+   .read = mp1_read,
+   .write = mp1_write,
+};
 
 struct process {
    int pid;
