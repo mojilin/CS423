@@ -33,14 +33,19 @@ void list_cleanup(void);
 //    // implementation goes here...
 // }
 
-// static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
-//    // implementation goes here...
-// }
+static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
+   struct process *newProcess;
+   newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+   
+   if (list_empty(&processList) == 0){
+      
+   }
+}
 
 static const struct file_operations mp1_file = {
    .owner = THIS_MODULE
    // .read = mp1_read,
-   // .write = mp1_write,
+   .write = mp1_write,
 };
 
 // this function safely deletes and frees the linked list
