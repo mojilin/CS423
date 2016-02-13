@@ -30,17 +30,17 @@ struct list_head processList;
 
 void list_cleanup(void);
 
-static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
+static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data) {
    return 0;
 }
 
-static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
-   struct process *newProcess;
-   newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data) {
+   // struct process *newProcess;
+   // newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
    
-   if (list_empty(&processList) == 0){
+   // if (list_empty(&processList) == 0){
       
-   }
+   // }
    return 0;
 }
 
