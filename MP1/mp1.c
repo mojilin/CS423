@@ -5,6 +5,7 @@
 #include <linux/list.h>
 #include <linux/slab.h>
 #include <linux/proc_fs.h>
+#include <linux/fs.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -19,12 +20,14 @@ MODULE_DESCRIPTION("CS-423 MP1");
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
-// static ssize_t mp1_read(struct file *file, char__user *buffer, size_t count, loff_t *data){
-//    //TODO
-// }
-// static ssize_t mp1_write(struct file *file, const char__user *buffer, size_t count, loff_t *data){
+static ssize_t mp1_read(struct file *file, char__user *buffer, size_t count, loff_t *data){
+   //TODO
+   return 0;
+}
 
-// }
+static ssize_t mp1_write(struct file *file, const char__user *buffer, size_t count, loff_t *data){
+   return 0;
+}
 
 // static const struct file_operations mp1_file = {
 //    .owner = THIS_MODULE,
