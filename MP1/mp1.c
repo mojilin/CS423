@@ -62,7 +62,7 @@ void list_cleanup(void) {
 
    if (list_empty(&processList) == 0) {
       printk(KERN_INFO "Cleaning up processList\n");
-      list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+      list_for_each_entry_safe(aProcess, tmp, &processList, list) {
          #ifdef DEBUG
          printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
          #endif
