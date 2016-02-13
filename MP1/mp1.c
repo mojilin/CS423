@@ -2,7 +2,8 @@
 
 #include <linux/module.h>
 #include <linux/kernel.h>
-#include <linux/list.h>
+// #include <linux/list.h>
+#include <linux/linux.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -19,13 +20,13 @@ struct process {
 
 struct process processList;
 
-static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
-   // implementation goes here...
-}
+// static ssize_t mp1_read (struct file *file, char user *buffer, size_t count, loff_t*data){
+//    // implementation goes here...
+// }
 
-static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
-   // implementation goes here...
-}
+// static ssize_t mp1_write (struct file *file, const char user *buffer, size_t count, loff_t*data){
+//    // implementation goes here...
+// }
 
 static const struct file_operations mp1_file = {
    .owner = THIS_MODULE,
@@ -68,7 +69,10 @@ void list_cleanup() {
 
    printk(KERN_INFO "Cleaning up processList\n");
    list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+      #ifdef DEBUG
       printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+      #endif
+
       list_del(&aProcess->list);
       kfree(aProcess);
    }
