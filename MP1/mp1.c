@@ -60,8 +60,8 @@ static const struct file_operations mp1_file = {
 void list_cleanup(void) {
    struct process *aProcess, *tmp;
 
-   printk(KERN_INFO "Cleaning up processList\n");
-   if (!list_empty(&processList)) {
+   if (&processList.list != 0 && !list_empty(&processList)) {
+      printk(KERN_INFO "Cleaning up processList\n");
       list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
          #ifdef DEBUG
          printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
