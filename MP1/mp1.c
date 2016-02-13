@@ -25,7 +25,7 @@ struct process {
    struct list_head list;
 };
 
-struct process processList;
+struct list_head processList;
 
 void list_cleanup(void);
 
@@ -47,14 +47,16 @@ static const struct file_operations mp1_file = {
 void list_cleanup(void) {
    struct process *aProcess, *tmp;
 
-   printk(KERN_INFO "Cleaning up processList\n");
-   list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
-      #ifdef DEBUG
-      printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
-      #endif
+   if (list_empty(&processList) == 0) {
+      printk(KERN_INFO "Cleaning up processList\n");
+      list_for_each_entry_safe(aProcess, tmp, &processList.list, list) {
+         #ifdef DEBUG
+         printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+         #endif
 
-      list_del(&aProcess->list);
-      kfree(aProcess);
+         list_del(&aProcess->list);
+         kfree(aProcess);
+      }
    }
 }
 
@@ -66,6 +68,8 @@ int __init mp1_init(void)
    #endif
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
+
+   INIT_LIST_HEAD(processList);
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
