@@ -48,11 +48,11 @@ struct process processList;
 //    // implementation goes here...
 // }
 
-// static const struct file_operations mp1_file = {
-//    .owner = THIS_MODULE,
-//    .read = mp1_read,
-//    .write = mp1_write,
-// };
+static const struct file_operations mp1_file = {
+   .owner = THIS_MODULE
+   // .read = mp1_read,
+   // .write = mp1_write,
+};
 
 // this function safely deletes and frees the linked list
 void list_cleanup() {
