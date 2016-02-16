@@ -6,3 +6,9 @@ MP1/.tmp_versions
 #Makefile junk
 *.order
 *symvers
+*.ko
+*~
+
+#Executables
+userapp
+*.mod.c
