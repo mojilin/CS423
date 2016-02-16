@@ -35,18 +35,36 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 }
 
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) {
-   // struct process *newProcess;
-   // newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+   struct process *newProcess, *tmp, *thisProcess;
+   newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+
+   newProcess->pid = newPID;     //register new PID
+
    
-   // if (list_empty(&processList) == 0){
-      
-   // }
+   if (list_empty(&processList) == 0){
+      INIT_LIST_HEAD(newProcess->list);
+      list_add(newProcess, processList);     //add to new to head
+
+      //TODO   add reading PID from user
+      //TODO   add locking
+   }
+   else {
+      list_for_each_entry_safe(thisProcess, tmp, &processList, list){
+         //TODO   add locking
+         if(thisProcess->pid == newPID){
+            // Error PID has already been inserted
+         }
+         else if(tmp == &processList){
+            list_add(newProcess, thisProcess);     //needs Locks
+         }
+      }
+   }
    return 0;
 }
 
 static const struct file_operations mp1_file = {
    .owner = THIS_MODULE,
-   .read = mp1_read,
+   // .read = mp1_read,
    .write = mp1_write,
 };
 
