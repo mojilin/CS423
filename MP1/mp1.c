@@ -6,6 +6,7 @@
 #include <linux/slab.h>
 #include <linux/proc_fs.h>
 #include <linux/fs.h>
+#include <linux/spinlock.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -22,6 +23,8 @@ MODULE_DESCRIPTION("CS-423 MP1");
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
+
+spinlock_t list_lock = SPIN_LOCK_UNLOCKED;
 
 struct process {
    int pid;
@@ -65,7 +68,7 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 
    /* Copy the string to user and return the right value */
    
-   temp = copy_to_user(tempBuffer, buffer, min(count, writeCount));
+   temp = copy_to_user(buffer, tempBuffer, min(count, writeCount));
 
    kfree(tempBuffer);
    return temp;
@@ -74,33 +77,45 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
    struct process *newProcess, *tmp, *thisProcess;
+   char tempBuffer[count];
    newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
 
-   // VIB: CHECK IF MALLOC FAILED
-  
-   newProcess->pid = newPID;     //register new PID
+   if (newProcess == NULL){
+      printk(KERN_WARN "malloc failed")
+      return -1;
+   }
 
+   copy_from_user(tempBuffer,buffer,count);
+   newProcess->pid = atoi(tempBuffer);     //register new PID
+   newProcess->cpu_use = 0;
    
-   if (list_empty(&processList) == 1){ // VIB: Changed from 0 to 1
+   /* check if the list is empty and just append the new process if it is*/
+   if (list_empty(&processList) != 0){
       INIT_LIST_HEAD(newProcess->list);
+
+      spin_lock(&list_lock);
       list_add(newProcess, processList);     //add to new to head
+      spin_unlock(&list_lock);
 
       //TODO   add reading PID from user
-      //TODO   add locking
    }
+   /* If the list has something in it...*/
    else {
       list_for_each_entry_safe(thisProcess, tmp, &processList, list){
-         //TODO   add locking
+         //Check if this process has already been inserted
          if(thisProcess->pid == newPID){
-            // Error PID has already been inserted
+            kfree(newProcess);
+            return -1; 
          }
+         //if not, add it in
          else if(tmp == &processList){
-            list_add(newProcess, thisProcess);     //needs Locks
+            spin_lock(&list_lock);
+            list_add(newProcess, thisProcess);
+            spin_unlock(&list_lock);
          }
       }
    }
-   // FREEEEEEE MEMORY
-   return 0;
+   return count;
 }
 
 static const struct file_operations mp1_file = {
