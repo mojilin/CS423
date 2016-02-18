@@ -7,6 +7,8 @@
 #include <linux/proc_fs.h>
 #include <linux/fs.h>
 #include <linux/spinlock.h>
+#include <linux/timer.h>
+#include <linux/jiffies.h>
 #include "mp1_given.h"
 
 MODULE_LICENSE("GPL");
@@ -23,6 +25,7 @@ MODULE_DESCRIPTION("CS-423 MP1");
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
+static struct time_list work_timer;
 
 spinlock_t list_lock = SPIN_LOCK_UNLOCKED;
 
@@ -35,6 +38,8 @@ struct process {
 struct list_head processList;
 
 void list_cleanup(void);
+
+void 
 
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
@@ -109,6 +114,8 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
          }
          //if not, add it in
          else if(tmp == &processList){
+            INIT_LIST_HEAD(newProcess->list);
+            
             spin_lock(&list_lock);
             list_add(newProcess, thisProcess);
             spin_unlock(&list_lock);
@@ -120,7 +127,7 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 
 static const struct file_operations mp1_file = {
    .owner = THIS_MODULE,
-   // .read = mp1_read,
+   .read = mp1_read,
    .write = mp1_write,
 };
 
@@ -151,12 +158,18 @@ int __init mp1_init(void)
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
+   // init_timer(&work_timer);   //Initialize timer to wake up work queue
+   // work_timer.function = work_time_handler;
+   // work_timer.expires = jiffies + 5*HZ;
+   // work_timer.data = 0;
+
    INIT_LIST_HEAD(&processList);
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
    
    printk(KERN_ALERT "MP1 MODULE LOADED\n");
+   // add_timer(&work_timer);
    return 0;   
 }
 
