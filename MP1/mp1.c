@@ -9,7 +9,9 @@
 #include <linux/spinlock.h>
 #include <linux/timer.h>
 #include <linux/jiffies.h>
+#include <linux/uaccess.h>
 #include "mp1_given.h"
+
 
 MODULE_LICENSE("GPL");
 MODULE_AUTHOR("Group_17");
@@ -19,37 +21,34 @@ MODULE_DESCRIPTION("CS-423 MP1");
 #define FILENAME "status"
 #define DIRECTORY "mp1"
 
-#define min(a,b) (((a) < (b)) ? (a) : (b))
-#define max(a,b) (((a) > (b)) ? (a) : (b))
 
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 static struct time_list work_timer;
 
-spinlock_t list_lock = SPIN_LOCK_UNLOCKED;
+spinlock_t list_lock ;//= SPIN_LOCK_UNLOCKED;
 
-struct process {
-   int pid;
+typedef struct process {
+   unsigned int pid;
    unsigned long cpu_use;
    struct list_head list;
-};
+}process;
 
 struct list_head processList;
 
 void list_cleanup(void);
 
-void 
 
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
    char * tempBuffer = kmalloc(count, GFP_KERNEL);
-   struct process *newProcess, *tmp;
+   process *newProcess, *tmp, *thisProcess;
    int writeCount = 0;
    int temp;
    if(tempBuffer == NULL)
    {
-       printk(KERN_WARN "malloc failed");
+       printk(KERN_WARNING "malloc failed");
        return 0;
    }  
    
@@ -57,7 +56,7 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
    /******************************* LOOOOOOOOCK THISSSS *******************/
    list_for_each_entry_safe(thisProcess, tmp, &processList, list) {
 		
-	writeCount += snprintf(tempBuffer+writeCount,(count- writeCount) , "PID %d: %d", tmp->pid, tmp->cpu_use); 
+	writeCount += snprintf(tempBuffer+writeCount,(count- writeCount) , "PID %u: %lu", tmp->pid, tmp->cpu_use); 
 
 	/* If done, Null terminate and return */
 	if(writeCount >= count) {	
@@ -73,7 +72,7 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 
    /* Copy the string to user and return the right value */
    
-   temp = copy_to_user(buffer, tempBuffer, min(count, writeCount));
+   temp = copy_to_user(buffer, tempBuffer, min((int)count, writeCount));
 
    kfree(tempBuffer);
    return temp;
@@ -81,25 +80,26 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
-   struct process *newProcess, *tmp, *thisProcess;
+   process *newProcess, *tmp, *thisProcess;
    char tempBuffer[count];
-   newProcess = (process *)kmalloc(sizeof(struct process), GFP_KERNEL);
+   int newPID;
+   newProcess = kmalloc(sizeof(process), GFP_KERNEL);
 
    if (newProcess == NULL){
-      printk(KERN_WARN "malloc failed")
+      printk(KERN_WARNING "malloc failed");
       return -1;
    }
 
    copy_from_user(tempBuffer,buffer,count);
-   newProcess->pid = atoi(tempBuffer);     //register new PID
+   kstrtol(tempBuffer, 10,(long int *)&newProcess->pid);     //register new PID
    newProcess->cpu_use = 0;
    
    /* check if the list is empty and just append the new process if it is*/
    if (list_empty(&processList) != 0){
-      INIT_LIST_HEAD(newProcess->list);
+      INIT_LIST_HEAD(&newProcess->list);
 
       spin_lock(&list_lock);
-      list_add(newProcess, processList);     //add to new to head
+      list_add(&newProcess->list, &processList);     //add to new to head
       spin_unlock(&list_lock);
 
       //TODO   add reading PID from user
@@ -114,10 +114,10 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
          }
          //if not, add it in
          else if(tmp == &processList){
-            INIT_LIST_HEAD(newProcess->list);
+            INIT_LIST_HEAD(&newProcess->list);
             
             spin_lock(&list_lock);
-            list_add(newProcess, thisProcess);
+            list_add(&newProcess->list, &thisProcess->list);
             spin_unlock(&list_lock);
          }
       }
@@ -134,7 +134,7 @@ static const struct file_operations mp1_file = {
 // this function safely deletes and frees the linked list
 void list_cleanup(void) 
 {
-   struct process *aProcess, *tmp;
+   process *aProcess, *tmp;
 
    if (list_empty(&processList) == 0) {
       printk(KERN_INFO "Cleaning up processList\n");
