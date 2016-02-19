@@ -37,7 +37,7 @@ typedef struct process
 } process;
 
 static struct list_head processList;
-static process * currProcess;
+static int read_end;
 /* Function prototypes */
 void list_cleanup(void);
 int add_process (int pid);
@@ -46,42 +46,49 @@ int add_process (int pid);
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
    char * tempBuffer = kmalloc(count, GFP_KERNEL);
-   process *thisProcess;
-   int writeCount = 0;
-   int temp;
+   process * cursor;
+
    if(tempBuffer == NULL)
    {
        printk(KERN_WARNING "read malloc failed");
        return 0;
-   }  
+   }
 
-   printk(KERN_INFO "Read called\n");
-   
-   /* Iterate thorugh the list and print the list data into the string */
-   spin_lock(list_lock); 
-
-   //snprintf(tempBuffer, count, "PID: %u, CPU Time: %lu", currProcess->pid, currProcess->cpu_use);
-
-   if (currProcess == NULL)
-      currProcess = list_first_entry(&processList, process, list);   
-   else 
+   if (read_end == 0)
    {
-      currProcess = list_next_entry(currProcess, list);
+	  int bytes_copied = 0;
 
-	  if (&currProcess->list == &processList)
+      spin_lock(list_lock);
+   
+	  list_for_each_entry(cursor, &processList, list)
 	  {
-	     currProcess = NULL;
+	     //bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "titties\n"); the power of late night titties shall forever be enshrined here
+		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d / Use: %lu\n", cursor->pid, cursor->cpu_use);
+	  }
+
+	  spin_unlock(list_lock);
+	  read_end = 1;
+
+	  if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
+	  {
+         kfree(tempBuffer);
+	     return bytes_copied;
+	  }
+	  else
+	  {
+		 kfree(tempBuffer);
 		 return 0;
 	  }
-   }
-  
-   sprintf(tempBuffer, "Hello Jesse\n");
-   spin_unlock(list_lock);
-   /* Copy the string to user and return the right value */
+
+   } 
+   else // read_end == 1 means we just return 0 for formality
+   {
+      read_end = 0;
+	  kfree(tempBuffer);
+      return 0;	  
+   }   
+
    
-   temp = copy_to_user(buffer, tempBuffer, 13);
-   kfree(tempBuffer);
-   return 13;
 }
 
 int add_process (int pid)
@@ -133,7 +140,7 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 
 	return (temp == 0) ? 0 : count;
 write_fail:
-	printk(KERN_WARNING "write copy failed");
+	printk(KERN_WARNING "write failed");
 	kfree(tempBuffer);
 	return 0;	
 }
@@ -192,7 +199,7 @@ int __init mp1_init(void)
 
    INIT_LIST_HEAD(&processList);
 
-   currProcess = list_first_entry( &processList , process , list);
+   read_end = 0;
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system

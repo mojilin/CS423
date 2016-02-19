@@ -15,7 +15,7 @@ int main(int argc, char* argv[])
 	//memset(str, 0, 15);
 	printf("Current PID: %d\n", thePid);
 
-	printf("Read String:\n %s\n", str);
+	//printf("Read String:\n %s\n", str);
 
 	return 0;
 }

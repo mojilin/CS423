@@ -12,3 +12,4 @@ MP1/.tmp_versions
 #Executables
 userapp
 *.mod.c
+**/*.swp
