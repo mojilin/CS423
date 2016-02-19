@@ -25,7 +25,7 @@ MODULE_DESCRIPTION("CS-423 MP1");
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
-static struct time_list work_timer;
+//static struct time_list work_timer;
 
 spinlock_t *list_lock;
 
@@ -36,8 +36,8 @@ typedef struct process
    struct list_head list;
 } process;
 
-struct list_head processList;
-
+static struct list_head processList;
+static process * currProcess;
 /* Function prototypes */
 void list_cleanup(void);
 int add_process (int pid);
@@ -54,35 +54,34 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
        printk(KERN_WARNING "read malloc failed");
        return 0;
    }  
+
+   printk(KERN_INFO "Read called\n");
    
    /* Iterate thorugh the list and print the list data into the string */
    spin_lock(list_lock); 
-   list_for_each_entry(thisProcess, &processList, list) 
-   {
-		
-		writeCount += snprintf(tempBuffer+writeCount,(count- writeCount),
-					   	"PID %u: %lu", thisProcess->pid, thisProcess->cpu_use); 
 
-		/* If done, Null terminate and return */
-		if(writeCount >= count) 
-		{	
-			tempBuffer[count - 1] = '\0';
-			break;
-		}	
-		/* Else turn the NULL into a newline to continue the string */
-		else 
-		{
-			tempBuffer[writeCount - 1] = '\n';
-		}	
-				
+   //snprintf(tempBuffer, count, "PID: %u, CPU Time: %lu", currProcess->pid, currProcess->cpu_use);
+
+   if (currProcess == NULL)
+      currProcess = list_first_entry(&processList, process, list);   
+   else 
+   {
+      currProcess = list_next_entry(currProcess, list);
+
+	  if (&currProcess->list == &processList)
+	  {
+	     currProcess = NULL;
+		 return 0;
+	  }
    }
+  
+   sprintf(tempBuffer, "Hello Jesse\n");
    spin_unlock(list_lock);
    /* Copy the string to user and return the right value */
    
-   temp = copy_to_user(buffer, tempBuffer, min((int)count, writeCount));
-
+   temp = copy_to_user(buffer, tempBuffer, 13);
    kfree(tempBuffer);
-   return temp;
+   return 13;
 }
 
 int add_process (int pid)
@@ -99,10 +98,10 @@ int add_process (int pid)
 
 	/* Add to the linked list */
 	INIT_LIST_HEAD(&newProcess->list);
-
+	
 
 	spin_lock(list_lock);
-	list_add( &newProcess->list, &processList);
+	list_add_tail( &newProcess->list, &processList);
 	spin_unlock(list_lock);
 
 	return 1;
@@ -119,8 +118,9 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 		return 0;
 	}
 
+
 	temp = copy_from_user(tempBuffer, buffer, count);
-	if(temp == 0)
+	if(temp != 0)
 		goto write_fail;
 
 	/* Convert str to int */
@@ -191,6 +191,8 @@ int __init mp1_init(void)
    spin_lock_init(list_lock);
 
    INIT_LIST_HEAD(&processList);
+
+   currProcess = list_first_entry( &processList , process , list);
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system

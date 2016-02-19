@@ -2,14 +2,20 @@
 #include <sys/types.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+#include <string.h>
+
 int main(int argc, char* argv[])
 {
-	int handle = open("/proc/mp1/status");
+	FILE* handle = fopen("/proc/mp1/status","r+");
 	int thePid = (int) getpid();
 	char str[15];
-	int n = sprintf(str, "%d", thePid);
-	write(handle, str, n);
+	fprintf(handle, "%d", thePid);
 
+	//memset(str, 0, 15);
+	printf("Current PID: %d\n", thePid);
+
+	printf("Read String:\n %s\n", str);
 
 	return 0;
 }
