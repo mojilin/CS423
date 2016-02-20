@@ -25,7 +25,8 @@ MODULE_DESCRIPTION("CS-423 MP1");
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
-//static struct time_list work_timer;
+
+static struct timer_list work_timer;
 
 spinlock_t *list_lock;
 
@@ -41,7 +42,7 @@ static int read_end;
 /* Function prototypes */
 void list_cleanup(void);
 int add_process (int pid);
-
+void work_time_handler(unsigned long arg);
 
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
@@ -175,6 +176,13 @@ void list_cleanup(void)
    spin_unlock(list_lock);
 }
 
+/*Timer Callback*/
+void work_time_handler(unsigned long arg){
+   printk(KERN_INFO "MP1 Timer Callback\n");
+   //mod_timer(&work_timer, jiffies + 5*HZ);
+   return;
+}
+
 // mp1_init - Called when module is loaded
 int __init mp1_init(void)
 {
@@ -184,10 +192,10 @@ int __init mp1_init(void)
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
-   // init_timer(&work_timer);   //Initialize timer to wake up work queue
-   // work_timer.function = work_time_handler;
-   // work_timer.expires = jiffies + 5*HZ;
-   // work_timer.data = 0;
+   init_timer(&work_timer);   //Initialize timer to wake up work queue
+   work_timer.function = work_time_handler;
+   work_timer.expires = jiffies + 5*HZ;
+   work_timer.data = 0;
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
@@ -205,7 +213,7 @@ int __init mp1_init(void)
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp1_file);  //create entry in proc system
    
    printk(KERN_ALERT "MP1 MODULE LOADED\n");
-   // add_timer(&work_timer);
+   add_timer(&work_timer);
    return 0;   
 }
 
@@ -216,7 +224,8 @@ void __exit mp1_exit(void)
    printk(KERN_ALERT "MP1 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-
+   del_timer(&work_timer);
+   
    printk(KERN_INFO "See ya.\n");
    list_cleanup();
 
