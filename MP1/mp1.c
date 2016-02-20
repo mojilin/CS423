@@ -64,7 +64,7 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 	  list_for_each_entry(cursor, &processList, list)
 	  {
 	     //bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "titties\n"); the power of late night titties shall forever be enshrined here
-		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d / Use: %lu\n", cursor->pid, cursor->cpu_use);
+		 bytes_copied += snprintf(tempBuffer+bytes_copied, count - bytes_copied, "PID: %d CPU Use: %lu\n", cursor->pid, cursor->cpu_use);
 	  }
 
 	  spin_unlock(list_lock);
@@ -118,11 +118,11 @@ int add_process (int pid)
 
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
-	char * tempBuffer = kmalloc(count, GFP_KERNEL);
+	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
 	long int temp;	
 	if(tempBuffer == NULL)
 	{
-		printk(KERN_WARNING "write malloc failed");
+		printk(KERN_WARNING "write malloc failed\n");
 		return 0;
 	}
 
@@ -130,18 +130,23 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 	temp = copy_from_user(tempBuffer, buffer, count);
 	if(temp != 0)
 		goto write_fail;
-
+	
+	/* NULL terminate */
+	tempBuffer[count] = '\0';
 	/* Convert str to int */
 	if(kstrtol(tempBuffer, 10, &temp) != 0)
+	{
+		printk(KERN_WARNING "kstrtol fail\n");
 		goto write_fail;
+	}
 
 	temp = add_process(temp);
 
 	kfree(tempBuffer);
 
-	return (temp == 0) ? 0 : count;
+	return (temp) ?  count : 0;
 write_fail:
-	printk(KERN_WARNING "write failed");
+	printk(KERN_WARNING "write failed\n");
 	kfree(tempBuffer);
 	return 0;	
 }
