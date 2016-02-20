@@ -10,6 +10,7 @@
 #include <linux/timer.h>
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
+#include <linux/workqueue.h>
 #include "mp1_given.h"
 
 
@@ -30,6 +31,9 @@ static struct timer_list work_timer;
 
 spinlock_t *list_lock;
 
+struct workqueue_struct *cpu_wq;
+struct work_struct update_cpu_times;
+
 typedef struct process 
 {
    unsigned int pid;
@@ -43,6 +47,7 @@ static int read_end;
 void list_cleanup(void);
 int add_process (int pid);
 void work_time_handler(unsigned long arg);
+void cpu_time_updater_work(struct work_struct *work);
 
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
@@ -88,8 +93,6 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 	  kfree(tempBuffer);
       return 0;	  
    }   
-
-   
 }
 
 int add_process (int pid)
@@ -113,7 +116,6 @@ int add_process (int pid)
 	spin_unlock(list_lock);
 
 	return 1;
-
 }
 
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
@@ -178,8 +180,32 @@ void list_cleanup(void)
 
 /*Timer Callback*/
 void work_time_handler(unsigned long arg){
-   printk(KERN_INFO "MP1 Timer Callback");
-   // mod_timer(&work_timer, jiffies + 5*HZ);
+   printk(KERN_INFO "MP1 Timer Callback\n");
+
+   queue_work(cpu_wq, &update_cpu_times);
+   mod_timer(&work_timer, jiffies + 5*HZ);
+   return;
+}
+
+void cpu_time_updater_work(struct work_struct *work){
+   process *thisProcess, *next;
+
+   printk(KERN_INFO "MP1 workqueue handler!\n");
+
+   list_for_each_entry_safe(thisProcess, next, &processList, list){
+      spin_lock(list_lock);
+      printk(KERN_INFO "MP1 updating PID: %d\n", thisProcess->pid);
+      printk(KERN_INFO "MP1 cpu_use: %lu\n", thisProcess->cpu_use);
+      if(get_cpu_use(thisProcess->pid,&thisProcess->cpu_use)==0){
+         printk(KERN_INFO "MP1 updating time\n");
+      }
+      else{
+         list_del(&thisProcess->list);
+         kfree(thisProcess);
+         printk(KERN_INFO "MP1 deleting process - not running\n");
+      }
+      spin_unlock(list_lock);
+   }
    return;
 }
 
@@ -203,7 +229,19 @@ int __init mp1_init(void)
 		printk(KERN_WARNING "spinlock malloc failed");
 		return -1;
    }
+
+   //Init spin lock
    spin_lock_init(list_lock);
+
+   //Init workqueue
+   cpu_wq = alloc_workqueue("cpu", (unsigned int) 0, 1);
+   if(cpu_wq == NULL){
+      printk(KERN_WARNING "MP1 workqueue init failed");
+      return -1;
+   }
+
+   // Init entry to work queue
+   INIT_WORK(&update_cpu_times, cpu_time_updater_work);
 
    INIT_LIST_HEAD(&processList);
 
@@ -225,6 +263,9 @@ void __exit mp1_exit(void)
    #endif
    // Insert your code here ...
    del_timer(&work_timer);
+   
+   flush_workqueue(cpu_wq);
+   destroy_workqueue(cpu_wq);
 
    printk(KERN_INFO "See ya.\n");
    list_cleanup();
