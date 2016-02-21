@@ -69,7 +69,7 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
 	  list_for_each_entry(cursor, &processList, list)
 	  {
 	     //bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "titties\n"); the power of late night titties shall forever be enshrined here
-		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d / Use: %lu\n", cursor->pid, cursor->cpu_use);
+		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | CPU Use: %lu\n", cursor->pid, cursor->cpu_use);
 	  }
 
 	  spin_unlock(list_lock);
@@ -100,10 +100,11 @@ int add_process (int pid)
 	process * newProcess = kmalloc(sizeof(process), GFP_KERNEL);
 	if(newProcess == NULL)
 	{
-		printk(KERN_WARNING "add malloc failed");
+		printk(KERN_WARNING "add malloc failed\n");
 		return 0;
 	}
 
+	printk(KERN_INFO "Adding pid %d\n", pid);
 	newProcess->pid = pid;
 	newProcess->cpu_use = 0;
 
@@ -120,11 +121,11 @@ int add_process (int pid)
 
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
-	char * tempBuffer = kmalloc(count, GFP_KERNEL);
+	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
 	long int temp;	
 	if(tempBuffer == NULL)
 	{
-		printk(KERN_WARNING "write malloc failed");
+		printk(KERN_WARNING "write malloc failed\n");
 		return 0;
 	}
 
@@ -133,6 +134,8 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 	if(temp != 0)
 		goto write_fail;
 
+	/* NULL terminate string */
+	tempBuffer[count] = '\0';
 	/* Convert str to int */
 	if(kstrtol(tempBuffer, 10, &temp) != 0)
 		goto write_fail;
@@ -143,7 +146,7 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 
 	return (temp == 0) ? 0 : count;
 write_fail:
-	printk(KERN_WARNING "write failed");
+	printk(KERN_WARNING "write failed\n");
 	kfree(tempBuffer);
 	return 0;	
 }
@@ -187,19 +190,23 @@ void work_time_handler(unsigned long arg){
    return;
 }
 
-void cpu_time_updater_work(struct work_struct *work){
+void cpu_time_updater_work(struct work_struct *work)
+{
    process *thisProcess, *next;
 
    printk(KERN_INFO "MP1 workqueue handler!\n");
 
-   list_for_each_entry_safe(thisProcess, next, &processList, list){
+   list_for_each_entry_safe(thisProcess, next, &processList, list)
+   {
       spin_lock(list_lock);
       printk(KERN_INFO "MP1 updating PID: %d\n", thisProcess->pid);
       printk(KERN_INFO "MP1 cpu_use: %lu\n", thisProcess->cpu_use);
-      if(get_cpu_use(thisProcess->pid,&thisProcess->cpu_use)==0){
+      if(get_cpu_use(thisProcess->pid,&thisProcess->cpu_use)==0)
+	  {
          printk(KERN_INFO "MP1 updating time\n");
       }
-      else{
+      else
+	  {
          list_del(&thisProcess->list);
          kfree(thisProcess);
          printk(KERN_INFO "MP1 deleting process - not running\n");
@@ -235,7 +242,8 @@ int __init mp1_init(void)
 
    //Init workqueue
    cpu_wq = alloc_workqueue("cpu", (unsigned int) 0, 1);
-   if(cpu_wq == NULL){
+   if(cpu_wq == NULL)
+   {
       printk(KERN_WARNING "MP1 workqueue init failed");
       return -1;
    }
