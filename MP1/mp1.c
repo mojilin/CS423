@@ -49,9 +49,23 @@ int add_process (int pid);
 void work_time_handler(unsigned long arg);
 void cpu_time_updater_work(struct work_struct *work);
 
+
+/* mp1_read -- Callback function when reading from the proc file
+ *
+ * Inputs: buffer -- User space buffer to copy information to
+ * 			count -- Number of bytes to copy to the buffer
+ * Outputs: Copies the string to the user buffer
+ * CPU usage time in the following format:
+ * PID: xx | CPU Use: xxxxx
+ * PID: xx | CPU Use: xxxxx
+ *
+ * Side Effects: Holds the list_lock
+ * Return Value: Number of bytes written to the buffer.
+ */
+
 static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
-   char * tempBuffer = kmalloc(count, GFP_KERNEL);
+   char * tempBuffer = kmalloc(count, GFP_KERNEL); 
    process * cursor;
 
    if(tempBuffer == NULL)
@@ -59,22 +73,24 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
        printk(KERN_WARNING "read malloc failed");
        return 0;
    }
-
+	
+   /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
+	*  If 0 is returned, we reset the boolean */
    if (read_end == 0)
    {
 	  int bytes_copied = 0;
 
       spin_lock(list_lock);
    
+	  /* Output the string into tempBuffer for all entries in the list */
 	  list_for_each_entry(cursor, &processList, list)
 	  {
-	     //bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "titties\n"); the power of late night titties shall forever be enshrined here
 		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | CPU Use: %lu\n", cursor->pid, cursor->cpu_use);
 	  }
 
 	  spin_unlock(list_lock);
 	  read_end = 1;
-
+	  // Copy to user buffer
 	  if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
 	  {
          kfree(tempBuffer);
@@ -95,6 +111,12 @@ static ssize_t mp1_read (struct file *file, char __user *buffer, size_t count, l
    }   
 }
 
+/* add_process(int pid)
+ * Adds a new process with given pid to the linked list 
+ * Inputs:  pid -- The pid of the registered process
+ * Return Value: 1 on success, 0 on failure
+ * Side Effects: Holds the list_lock lock
+ */
 int add_process (int pid)
 {
 	process * newProcess = kmalloc(sizeof(process), GFP_KERNEL);
@@ -119,6 +141,12 @@ int add_process (int pid)
 	return 1;
 }
 
+/* mp1_write
+ * Registers a new process with pid given in the user buffer
+ * Inputs: buffer -- User buffer that contains the pid of the new process
+ * Return Value: number of bytes copied from the user
+ * Side effects: Calls add_process that holds list_lock
+ */
 static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
 	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
@@ -129,7 +157,7 @@ static ssize_t mp1_write (struct file *file, const char __user *buffer, size_t c
 		return 0;
 	}
 
-
+	/* Get pid from user and convert to int */
 	temp = copy_from_user(tempBuffer, buffer, count);
 	if(temp != 0)
 		goto write_fail;
@@ -158,7 +186,10 @@ static const struct file_operations mp1_file =
    .write = mp1_write,
 };
 
-// this function safely deletes and frees the linked list
+/* list_cleanup
+ * Helper function to delete the linked list upon kernel module removal
+ * Side Effects: Holds list lock and deletes the entire processList
+ */
 void list_cleanup(void) 
 {
    process *aProcess, *tmp;
@@ -166,7 +197,10 @@ void list_cleanup(void)
    spin_lock(list_lock);
    if (list_empty(&processList) == 0) 
    {
+	#ifdef DEBUG
       printk(KERN_INFO "Cleaning up processList\n");
+    #endif
+	  // Delete all entry
       list_for_each_entry_safe(aProcess, tmp, &processList, list) 
       {
          #ifdef DEBUG
@@ -181,8 +215,12 @@ void list_cleanup(void)
    spin_unlock(list_lock);
 }
 
-/*Timer Callback*/
-void work_time_handler(unsigned long arg){
+/* work_time_handler
+ * Call back function for the Kernel Timer
+ * Adds the bottom half to the workqueue and resets the timer
+ */
+void work_time_handler(unsigned long arg)
+{
    printk(KERN_INFO "MP1 Timer Callback\n");
 
    queue_work(cpu_wq, &update_cpu_times);
@@ -190,12 +228,19 @@ void work_time_handler(unsigned long arg){
    return;
 }
 
+/* cpu_time_updater_work
+ * Bottom half of timer interrupt handler placed in the work queue
+ * Side Effects: Acquires the list_lock and updates all the CPU usage
+ * 			values for all the processes in the list. If a process has
+ * 			finished, it removes the process from the list
+ */
 void cpu_time_updater_work(struct work_struct *work)
 {
    process *thisProcess, *next;
 
    printk(KERN_INFO "MP1 workqueue handler!\n");
 
+   // Update CPU time for all process
    list_for_each_entry_safe(thisProcess, next, &processList, list)
    {
       spin_lock(list_lock);
@@ -205,6 +250,7 @@ void cpu_time_updater_work(struct work_struct *work)
 	  {
          printk(KERN_INFO "MP1 updating time\n");
       }
+	  // If process has terminated, remove from list
       else
 	  {
          list_del(&thisProcess->list);
