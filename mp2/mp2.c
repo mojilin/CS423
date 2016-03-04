@@ -47,7 +47,7 @@ static struct list_head processList;
 
 static int read_end;
 
-static kmem_cache_t *PCB_cache;
+struct kmem_cache *PCB_cache;
 
 /* Function prototypes */
 void timer_handler(unsigned long task);
@@ -106,7 +106,7 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
 	  /* Output the string into tempBuffer for all entries in the list */
 	  list_for_each_entry(cursor, &processList, list)
 	  {
-		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %lu | Processing Time: %lu\n", cursor->pid, cursor->period, cursor->computation);
+		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %d | Processing Time: %d\n", cursor->pid, cursor->period, cursor->computation);
 	  }
 
 	  spin_unlock(list_lock);
@@ -253,7 +253,7 @@ void list_cleanup(void)
          #endif
 
          list_del(&aProcess->list);
-         kmem_cache_free(PCb_cache, aProcess);
+         kmem_cache_free(PCB_cache, aProcess);
       }
    }
 
@@ -282,7 +282,7 @@ int __init mp2_init(void)
    spin_lock_init(list_lock);
 
    /* Initialize Slab allocator*/
-   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, SLAB_HWCACHE_ALIGN, NULL, NULL);
+   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, SLAB_HWCACHE_ALIGN, NULL);
    if(!PCB_cache){
       kmem_cache_destroy(PCB_cache);
       return -ENOMEM;
@@ -319,4 +319,3 @@ void __exit mp2_exit(void)
 // Register init and exit funtions
 module_init(mp2_init);
 module_exit(mp2_exit);
->>>>>>> cea781d4baa464f1858a8ec2f0c6c753867ee19b
