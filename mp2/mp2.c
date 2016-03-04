@@ -2,6 +2,7 @@
 
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/proc_fs.h>
 #include "mp2_given.h"
 
 
@@ -109,8 +110,6 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	/* Convert str to int */
 	if(kstrtol(tempBuffer, 10, &temp) != 0)
 		goto write_fail;
-
-	temp = add_process(temp);
 
 	kfree(tempBuffer);
 
