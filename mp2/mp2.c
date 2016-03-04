@@ -52,6 +52,7 @@ void timer_handler(unsigned long task)
 {
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
+	//needs to wake up dispatcher thread, but thats pretty much it
 	
 }
 /* mp2_read -- Callback function when reading from the proc file
