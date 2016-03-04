@@ -22,10 +22,23 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define FILENAME "status"
 #define DIRECTORY "mp2"
 
+//
+
+
+typedef struct  {
+struct task_struct* linux_task; 
+struct timer_list wakeup_timer; 
+int period;  //p
+int computation; //c
+int pid;
+enum {READY, RUNNING, SLEEPING} status;
+} mp2_task_struct;
+
 
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
+
 
 static int read_end;
 /* Function prototypes */
