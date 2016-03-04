@@ -40,12 +40,8 @@ static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
 
-static int read_end;
 /* Function prototypes */
 void timer_handler(unsigned long task);
-
-
-
 
 
 void timer_handler(unsigned long task)
@@ -142,23 +138,24 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	/* NULL terminate string */
 	tempBuffer[count] = '\0';
 
+	printk(KERN_INFO "%s", tempBuffer);
    sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
 	/* Convert str to int */
    switch (op){
       case 'R':
-         printk(KERN_INFO "MP2 Registration");
+         printk(KERN_INFO "MP2 Registration\n");
          break;
 
       case 'Y':
-         printk(KERN_INFO "MP2 Yield");
+         printk(KERN_INFO "MP2 Yield\n");
          break;
 
       case 'D':
-         printk(KERN_INFO "MP2 De-Registration");
+         printk(KERN_INFO "MP2 De-Registration\n");
          break;
 
       default:
-         printk(KERN_WARNING "MP2 write fail");
+         printk(KERN_WARNING "MP2 write fail\n");
          goto write_fail;
          break;
    }
