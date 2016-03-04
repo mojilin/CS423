@@ -24,6 +24,7 @@ MODULE_DESCRIPTION("CS-423 MP2");
 
 //
 
+task_struct * kernel_thread;
 
 typedef struct  {
 struct task_struct* linux_task; 
@@ -41,17 +42,24 @@ static struct proc_dir_entry *proc_entry;
 
 
 static int read_end;
+
 /* Function prototypes */
 void timer_handler(unsigned long task);
+int kernel_thread_fn(void *data);
 
 
 
 
-
+int kernel_thread_fn(void *data)
+{
+	//dispatcher
+return 0;
+}
 void timer_handler(unsigned long task)
 {
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
+
 	//needs to wake up dispatcher thread, but thats pretty much it
 	
 }
@@ -185,6 +193,8 @@ int __init mp2_init(void)
    #ifdef DEBUG
    printk(KERN_ALERT "mp2 MODULE LOADING\n");
    #endif
+   //create kthread
+   kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
    
@@ -202,7 +212,7 @@ void __exit mp2_exit(void)
    printk(KERN_ALERT "mp2 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-
+kthread_create()
    remove_proc_entry(FILENAME, proc_dir);
    proc_remove(proc_dir);
 
