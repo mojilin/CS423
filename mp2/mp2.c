@@ -195,12 +195,8 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	/* Convert str to int */
    switch (op){
       case 'R':
-<<<<<<< HEAD
-         printk(KERN_INFO "MP2 Registration");
-         add_process(PID, period, comp_time);
-=======
          printk(KERN_INFO "MP2 Registration\n");
->>>>>>> 1ecd0954080c782e0261227bc9a73466e746c566
+         add_process(PID, period, comp_time);
          break;
 
       case 'Y':
