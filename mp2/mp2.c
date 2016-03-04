@@ -31,7 +31,7 @@ struct timer_list wakeup_timer;
 int period;  //p
 int computation; //c
 int pid;
-enum {READY, RUNNING, SLEEPING} status;
+enum int status {READY, RUNNING, SLEEPING} status;
 } mp2_task_struct;
 
 
