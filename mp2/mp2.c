@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define DIRECTORY "mp2"
 
 //
-
+enum STATUS {READY, RUNNING, SLEEPING};
 
 typedef struct  {
 struct task_struct* linux_task; 
@@ -31,7 +31,7 @@ struct timer_list wakeup_timer;
 int period;  //p
 int computation; //c
 int pid;
-enum int status {READY, RUNNING, SLEEPING} status;
+enum STATUS status;
 } mp2_task_struct;
 
 
