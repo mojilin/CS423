@@ -11,6 +11,7 @@
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
 #include <linux/workqueue.h>
+#include <linux/kthread.h>
 #include "mp2_given.h"
 
 
@@ -24,7 +25,7 @@ MODULE_DESCRIPTION("CS-423 MP2");
 
 //
 
-task_struct * kernel_thread;
+struct task_struct* mp2_kernel_thread;
 
 typedef struct  {
 struct task_struct* linux_task; 
@@ -189,7 +190,7 @@ int __init mp2_init(void)
    printk(KERN_ALERT "mp2 MODULE LOADING\n");
    #endif
    //create kthread
-   kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
+   mp2_kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
    
@@ -207,7 +208,6 @@ void __exit mp2_exit(void)
    printk(KERN_ALERT "mp2 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-kthread_create()
    remove_proc_entry(FILENAME, proc_dir);
    proc_remove(proc_dir);
 
