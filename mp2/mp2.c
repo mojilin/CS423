@@ -51,7 +51,7 @@ static kmem_cache_t *PCB_cache;
 
 /* Function prototypes */
 void timer_handler(unsigned long task);
-int add_process (int pid);
+int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 
@@ -319,3 +319,4 @@ void __exit mp2_exit(void)
 // Register init and exit funtions
 module_init(mp2_init);
 module_exit(mp2_exit);
+>>>>>>> cea781d4baa464f1858a8ec2f0c6c753867ee19b
