@@ -46,50 +46,50 @@ static int read_end;
 
 static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
-   char * tempBuffer = kmalloc(count, GFP_KERNEL); 
-   process * cursor;
+ //   char * tempBuffer = kmalloc(count, GFP_KERNEL); 
+ //   process * cursor;
 
-   if(tempBuffer == NULL)
-   {
-       printk(KERN_WARNING "read malloc failed");
-       return 0;
-   }
+ //   if(tempBuffer == NULL)
+ //   {
+ //       printk(KERN_WARNING "read malloc failed");
+ //       return 0;
+ //   }
 	
-   /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
-	*  If 0 is returned, we reset the boolean */
-   if (read_end == 0)
-   {
-	  int bytes_copied = 0;
+ //   /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
+	// *  If 0 is returned, we reset the boolean */
+ //   if (read_end == 0)
+ //   {
+	//   int bytes_copied = 0;
 
-      spin_lock(list_lock);
+ //      spin_lock(list_lock);
    
-	  /* Output the string into tempBuffer for all entries in the list */
-	  list_for_each_entry(cursor, &processList, list)
-	  {
-		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | CPU Use: %lu\n", cursor->pid, cursor->cpu_use);
-	  }
+	//   /* Output the string into tempBuffer for all entries in the list */
+	//   list_for_each_entry(cursor, &processList, list)
+	//   {
+	// 	 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | CPU Use: %lu\n", cursor->pid, cursor->cpu_use);
+	//   }
 
-	  spin_unlock(list_lock);
-	  read_end = 1;
-	  // Copy to user buffer
-	  if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
-	  {
-         kfree(tempBuffer);
-	     return bytes_copied;
-	  }
-	  else
-	  {
-		 kfree(tempBuffer);
-		 return 0;
-	  }
+	//   spin_unlock(list_lock);
+	//   read_end = 1;
+	//   // Copy to user buffer
+	//   if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
+	//   {
+ //         kfree(tempBuffer);
+	//      return bytes_copied;
+	//   }
+	//   else
+	//   {
+	// 	 kfree(tempBuffer);
+	// 	 return 0;
+	//   }
 
-   } 
-   else // read_end == 1 means we just return 0 for formality
-   {
-      read_end = 0;
-	  kfree(tempBuffer);
-      return 0;	  
-   }   
+ //   } 
+ //   else // read_end == 1 means we just return 0 for formality
+ //   {
+ //      read_end = 0;
+	//   kfree(tempBuffer);
+ //      return 0;	  
+ //   }   
 }
 
 /* mp2_write
