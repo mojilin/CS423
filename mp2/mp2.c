@@ -54,6 +54,7 @@ void timer_handler(unsigned long task);
 int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
+int de_register(int pid);
 
 // int kernel_thread_fn(void *data)
 // {
@@ -178,13 +179,14 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	long int temp;
    int PID, period, comp_time;
    char op;
+   int ok;
 	if(tempBuffer == NULL)
 	{
-		printk(KERN_WARNING "write malloc failed\n");
+		printk(KERN_WARNING "mp2 write malloc failed\n");
 		return 0;
 	}
 
-	/* Get pid from user and convert to int */
+	/* Get info from user */
 	temp = copy_from_user(tempBuffer, buffer, count);
 	if(temp != 0)
 		goto write_fail;
@@ -193,8 +195,10 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	tempBuffer[count] = '\0';
 
 	printk(KERN_INFO "%s", tempBuffer);
-   sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
-	/* Convert str to int */
+   if (sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time) != 4)
+      printk(KERN_WARNING "MP2 Parse incomplete");
+
+	/* parse string */
    switch (op){
       case 'R':
          printk(KERN_INFO "MP2 Registration\n");
@@ -207,6 +211,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
       case 'D':
          printk(KERN_INFO "MP2 De-Registration\n");
+         de_register(PID);
          break;
 
       default:
@@ -230,6 +235,27 @@ static const struct file_operations mp2_file =
    .read = mp2_read,
    .write = mp2_write,
 };
+
+/* de_register 
+ * Removes a process from being scheduled.
+ * Input: pid -- process to be removed
+ * Return Value: 1 on success, 0 on failure
+*/
+int de_register(int pid){
+   process *thisProcess, *next;
+
+   printk(KERN_INFO "MP1 workqueue handler!\n");
+
+   list_for_each_entry_safe(thisProcess, next, &processList, list)
+   {
+      spin_lock(list_lock);
+      list_del(&thisProcess->list);
+      kmem_cache_free(PCB_cache, thisProcess);
+      printk(KERN_INFO "MP2 deleting process %d\n", pid);
+      spin_unlock(list_lock);
+   }
+}
+
 
 /* list_cleanup
  * Helper function to delete the linked list upon kernel module removal
