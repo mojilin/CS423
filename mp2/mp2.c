@@ -23,7 +23,7 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define DIRECTORY "mp2"
 
 //
-enum STATUS {READY, RUNNING, SLEEPING};
+
 
 typedef struct  {
 struct task_struct* linux_task; 
@@ -31,7 +31,7 @@ struct timer_list wakeup_timer;
 int period;  //p
 int computation; //c
 int pid;
-enum STATUS status;
+enum {READY, RUNNING, SLEEPING} status;
 } mp2_task_struct;
 
 
@@ -51,7 +51,7 @@ void timer_handler(unsigned long task);
 void timer_handler(unsigned long task)
 {
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
-	task -> status = READY;
+	the_task -> status = READY;
 	
 }
 /* mp2_read -- Callback function when reading from the proc file
