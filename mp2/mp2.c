@@ -26,12 +26,13 @@ MODULE_DESCRIPTION("CS-423 MP2");
 
 
 typedef struct  {
-struct task_struct* linux_task; 
-struct timer_list wakeup_timer; 
-int period;  //p
-int computation; //c
-int pid;
-enum {READY, RUNNING, SLEEPING} status;
+   struct task_struct* linux_task; 
+   struct timer_list wakeup_timer; 
+   int period;  //p
+   int computation; //c
+   int pid;
+   enum {READY, RUNNING, SLEEPING} status;
+   struct list_head list;
 } mp2_task_struct;
 
 
@@ -39,13 +40,16 @@ enum {READY, RUNNING, SLEEPING} status;
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
+static struct list_head processList;
 
 static int read_end;
+
+kmem_cache_t *PCB_cache;
+
 /* Function prototypes */
 void timer_handler(unsigned long task);
-
-
-
+int add_process (int pid);
+void list_cleanup(void);
 
 
 void timer_handler(unsigned long task)
@@ -55,6 +59,8 @@ void timer_handler(unsigned long task)
 	//needs to wake up dispatcher thread, but thats pretty much it
 	
 }
+
+
 /* mp2_read -- Callback function when reading from the proc file
  *
  * Inputs: buffer -- User space buffer to copy information to
@@ -116,6 +122,40 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
  //   }   
 }
 
+
+/* add_process(int pid)
+ * Adds a new process with given pid to the linked list 
+ * Inputs:  pid -- The pid of the registered process
+ * Return Value: 1 on success, 0 on failure
+ * Side Effects: Holds the list_lock lock
+ */
+int add_process (int pid, int computation, int period)
+{
+   process * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
+   if(!newProcess)
+   {
+      printk(KERN_WARNING "add malloc failed\n");
+      return 0;
+   }
+
+   printk(KERN_INFO "Adding pid %d\n", pid);
+
+   /* Add to the linked list */
+   INIT_LIST_HEAD(&newProcess->list);
+   newProcess->computation = computation;
+   newProcess->period = period;
+   newProcess->pid = pid;
+   newProcess->status = SLEEPING;
+   newProcess->linux_task = find_task_by_pid(pid);
+
+   spin_lock(list_lock);
+   list_add_tail( &newProcess->list, &processList);
+   spin_unlock(list_lock);
+
+   return 1;
+}
+
+
 /* mp2_write
  * Registers a new process with pid given in the user buffer
  * Inputs: buffer -- User buffer that contains the pid of the new process
@@ -147,6 +187,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
    switch (op){
       case 'R':
          printk(KERN_INFO "MP2 Registration");
+         add_process(PID, period, comp_time);
          break;
 
       case 'Y':
@@ -179,6 +220,35 @@ static const struct file_operations mp2_file =
    .write = mp2_write,
 };
 
+/* list_cleanup
+ * Helper function to delete the linked list upon kernel module removal
+ * Side Effects: Holds list lock and deletes the entire processList
+ */
+void list_cleanup(void) 
+{
+   process *aProcess, *tmp;
+
+   spin_lock(list_lock);
+   if (list_empty(&processList) == 0) 
+   {
+   #ifdef DEBUG
+      printk(KERN_INFO "Cleaning up processList\n");
+    #endif
+     // Delete all entry
+      list_for_each_entry_safe(aProcess, tmp, &processList, list) 
+      {
+         #ifdef DEBUG
+         printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+         #endif
+
+         list_del(&aProcess->list);
+         kmem_cache_free(PCb_cache, aProcess);
+      }
+   }
+
+   spin_unlock(list_lock);
+}
+
 // mp2_init - Called when module is loaded
 int __init mp2_init(void)
 {
@@ -187,7 +257,26 @@ int __init mp2_init(void)
    #endif
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
+
+   list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
+   if(list_lock == NULL)
+   {
+      printk(KERN_WARNING "spinlock malloc failed");
+      return -1;
+   }
+
+   //Init spin lock
+   spin_lock_init(list_lock);
+
+   /* Initialize Slab allocator*/
+   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, SLAB_HWCACHE_ALIGN, NULL, NULL);
+   if(!PCB_cache){
+      kmem_cache_destroy(PCB_cache);
+      return -ENOMEM;
+   }
    
+   INIT_LIST_HEAD(&processList);
+
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp2_file);  //create entry in proc system
    
