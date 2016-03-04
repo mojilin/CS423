@@ -118,7 +118,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	/* NULL terminate string */
 	tempBuffer[count] = '\0';
 
-   sscanf(tempBuffer, "%s, %d, %d, %d", op, PID, period, comp_time);
+   sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
 	/* Convert str to int */
    switch (op){
       case 'R':
