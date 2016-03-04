@@ -2,7 +2,15 @@
 
 #include <linux/module.h>
 #include <linux/kernel.h>
+#include <linux/list.h>
+#include <linux/slab.h>
 #include <linux/proc_fs.h>
+#include <linux/fs.h>
+#include <linux/spinlock.h>
+#include <linux/timer.h>
+#include <linux/jiffies.h>
+#include <linux/uaccess.h>
+#include <linux/workqueue.h>
 #include "mp2_given.h"
 
 
