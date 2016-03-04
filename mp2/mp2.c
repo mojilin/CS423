@@ -24,7 +24,9 @@ MODULE_DESCRIPTION("CS-423 MP2");
 
 //
 
-task_struct * kernel_thread;
+// task_struct * kernel_thread;
+
+spinlock_t *list_lock;
 
 typedef struct  {
    struct task_struct* linux_task; 
@@ -45,28 +47,28 @@ static struct list_head processList;
 
 static int read_end;
 
-kmem_cache_t *PCB_cache;
+static kmem_cache_t *PCB_cache;
 
 /* Function prototypes */
 void timer_handler(unsigned long task);
-int add_process (int pid);
+int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 
-int kernel_thread_fn(void *data)
-{
-	//dispatcher
-return 0;
-}
+// int kernel_thread_fn(void *data)
+// {
+// 	//dispatcher
+// return 0;
+// }
 
-void timer_handler(unsigned long task)
-{
-	mp2_task_struct * the_task = (mp2_task_struct *) task;
-	the_task -> status = READY;
+// void timer_handler(unsigned long task)
+// {
+// 	mp2_task_struct * the_task = (mp2_task_struct *) task;
+// 	the_task -> status = READY;
 
-	//needs to wake up dispatcher thread, but thats pretty much it
+// 	//needs to wake up dispatcher thread, but thats pretty much it
 	
-}
+// }
 
 
 /* mp2_read -- Callback function when reading from the proc file
@@ -85,7 +87,7 @@ void timer_handler(unsigned long task)
 static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
    char * tempBuffer = kmalloc(count, GFP_KERNEL); 
-   process * cursor;
+   mp2_task_struct * cursor;
 
    if(tempBuffer == NULL)
    {
@@ -139,7 +141,7 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
  */
 int add_process (int pid, int computation, int period)
 {
-   process * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
+   mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
    if(!newProcess)
    {
       printk(KERN_WARNING "add malloc failed\n");
@@ -235,7 +237,7 @@ static const struct file_operations mp2_file =
  */
 void list_cleanup(void) 
 {
-   process *aProcess, *tmp;
+   mp2_task_struct *aProcess, *tmp;
 
    spin_lock(list_lock);
    if (list_empty(&processList) == 0) 
@@ -265,7 +267,7 @@ int __init mp2_init(void)
    printk(KERN_ALERT "mp2 MODULE LOADING\n");
    #endif
    //create kthread
-   kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
+   // kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
@@ -302,7 +304,7 @@ void __exit mp2_exit(void)
    printk(KERN_ALERT "mp2 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-   kthread_create()
+   // kthread_create();
 
    list_cleanup();
    kmem_cache_destroy(PCB_cache);
