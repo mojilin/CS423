@@ -147,7 +147,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
          break;
 
       default:
-         prink(KERN_WARNING "MP2 write fail");
+         printk(KERN_WARNING "MP2 write fail");
          goto write_fail;
          break;
    }
