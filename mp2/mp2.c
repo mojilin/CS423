@@ -42,8 +42,17 @@ static struct proc_dir_entry *proc_entry;
 
 static int read_end;
 /* Function prototypes */
+void timer_handler(unsigned long task);
 
 
+
+
+
+void timer_handler(unsigned long task)
+{
+	mp2_task_struct * the_task = (mp2_task_struct *) task;
+	
+}
 /* mp2_read -- Callback function when reading from the proc file
  *
  * Inputs: buffer -- User space buffer to copy information to
