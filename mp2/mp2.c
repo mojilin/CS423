@@ -101,7 +101,9 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
 static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
 	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
-	long int temp;	
+	long int temp;
+   int PID, period, comp_time;
+   char op;
 	if(tempBuffer == NULL)
 	{
 		printk(KERN_WARNING "write malloc failed\n");
@@ -115,9 +117,27 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
 	/* NULL terminate string */
 	tempBuffer[count] = '\0';
+
+   sscanf(tempBuffer, "%s, %d, %d, %d", op, PID, period, comp_time);
 	/* Convert str to int */
-	if(kstrtol(tempBuffer, 10, &temp) != 0)
-		goto write_fail;
+   switch (op){
+      case 'R':
+         printk(KERN_INFO "MP2 Registration");
+         break;
+
+      case 'Y':
+         printk(KERN_INFO "MP2 Yield");
+         break;
+
+      case 'D':
+         printk(KERN_INFO "MP2 De-Registration");
+         break;
+
+      default:
+         prink(KERN_WARNING "MP2 write fail");
+         goto write_fail;
+         break;
+   }
 
 	kfree(tempBuffer);
 
