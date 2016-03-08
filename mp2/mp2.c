@@ -310,7 +310,7 @@ int __init mp2_init(void)
    spin_lock_init(list_lock);
 
    /* Initialize Slab allocator*/
-   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, SLAB_HWCACHE_ALIGN, NULL);
+   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, 0, NULL);
    if(!PCB_cache){
       kmem_cache_destroy(PCB_cache);
       return -ENOMEM;
