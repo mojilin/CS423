@@ -43,7 +43,7 @@ static struct list_head processList;
 
 static int read_end;
 
-struct kmem_cache *PCB_cache;
+static struct kmem_cache *PCB_cache;
 
 /* Function prototypes */
 void timer_handler(unsigned long task);
