@@ -34,13 +34,13 @@ int main(int argc, char* argv[])
 	int n = 50;
 	/* Registration */
 	fprintf(handle, "R, %d, %d, %d", thePid, period, computation);
-	fclose(handle);
+	// fclose(handle);
 
 	printf("Current PID: %d\n", thePid);
 	
-	printf("Fib:%d = %lld\n", n, fib(n));
+	// printf("Fib:%d = %lld\n", n, fib(n));
 
-	handle = fopen(proc_filename, "r+");
+	// handle = fopen(proc_filename, "r+");
 	fprintf(handle, "D, %d", thePid);
 
 

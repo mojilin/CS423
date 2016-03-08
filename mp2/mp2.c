@@ -10,7 +10,6 @@
 #include <linux/timer.h>
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
-#include <linux/workqueue.h>
 #include "mp2_given.h"
 
 
@@ -22,9 +21,11 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define FILENAME "status"
 #define DIRECTORY "mp2"
 
-//
-
 // task_struct * kernel_thread;
+
+//structs for proc filesystem
+static struct proc_dir_entry *proc_dir;
+static struct proc_dir_entry *proc_entry;
 
 spinlock_t *list_lock;
 
@@ -37,11 +38,6 @@ typedef struct  {
    enum {READY, RUNNING, SLEEPING} status;
    struct list_head list;
 } mp2_task_struct;
-
-
-//structs for proc filesystem
-static struct proc_dir_entry *proc_dir;
-static struct proc_dir_entry *proc_entry;
 
 static struct list_head processList;
 
@@ -145,7 +141,7 @@ int add_process (int pid, int computation, int period)
    mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
    if(!newProcess)
    {
-      printk(KERN_WARNING "add malloc failed\n");
+      printk(KERN_WARNING "mp2 add malloc failed\n");
       return 0;
    }
 
@@ -244,18 +240,22 @@ static const struct file_operations mp2_file =
 int de_register(int pid){
    mp2_task_struct *thisProcess, *next;
 
-   printk(KERN_INFO "MP1 workqueue handler!\n");
+   printk(KERN_INFO "MP2 De-Registration\n");
 
    list_for_each_entry_safe(thisProcess, next, &processList, list)
    {
-      spin_lock(list_lock);
-      list_del(&thisProcess->list);
-      kmem_cache_free(PCB_cache, thisProcess);
-      printk(KERN_INFO "MP2 deleting process %d\n", pid);
-      spin_unlock(list_lock);
+      if (pid == thisProcess->pid){
+         spin_lock(list_lock);
+         list_del(&thisProcess->list);
+         kmem_cache_free(PCB_cache, thisProcess);
+         printk(KERN_INFO "MP2 deleting process %d\n", pid);
+         spin_unlock(list_lock);
+         return 1;
+      }
    }
    
-   return 1;
+   printk(KERN_WARNING "MP2 Did not find PID\n");
+   return 0;
 }
 
 
