@@ -179,7 +179,6 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	long int temp;
    int PID, period, comp_time;
    char op;
-   int ok;
 	if(tempBuffer == NULL)
 	{
 		printk(KERN_WARNING "mp2 write malloc failed\n");
@@ -198,6 +197,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
    if (sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time) != 4)
       printk(KERN_WARNING "MP2 Parse incomplete");
 
+   printk(KERN_INFO "MP2 OP: %c, PID: %d, Period: %d, Comp: %d", op, PID, period, comp_time);
 	/* parse string */
    switch (op){
       case 'R':
@@ -302,7 +302,7 @@ int __init mp2_init(void)
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
    {
-      printk(KERN_WARNING "spinlock malloc failed");
+      printk(KERN_WARNING "spinlock malloc failed\n");
       return -1;
    }
 
