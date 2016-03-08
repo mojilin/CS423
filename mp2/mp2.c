@@ -179,6 +179,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	long int temp;
    int PID, period, comp_time;
    char op;
+   int ok;
 	if(tempBuffer == NULL)
 	{
 		printk(KERN_WARNING "mp2 write malloc failed\n");
