@@ -209,7 +209,7 @@ int add_process (int pid, int computation, int period)
     init_timer(&(newProcess->wakeup_timer)); 
     //Initialize timer to wake up work queue
    (newProcess->wakeup_timer).function = timer_handler;
-   (newProcess->wakeup_timer).expires = 0; //needs to be set appropriately
+   (newProcess->wakeup_timer).expires = period; //app must be switched off after 1 period
    (newProcess->wakeup_timer).data = (unsigned long)(newProcess);
 
 
