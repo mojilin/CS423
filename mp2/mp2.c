@@ -85,8 +85,8 @@ struct mp2_task_struct * getNextTask()
 }
 int kernel_thread_fn(void *data)
 {
-  struct mp2_task_struct * nextTask = getNextTask();
-  struct mp2_task_struct * curTask = getCurrentTask();
+   mp2_task_struct * nextTask = getNextTask();
+   mp2_task_struct * curTask = getCurrentTask();
   if(nextTask != NULL)
   {
     struct sched_param sparam; 
