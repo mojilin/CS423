@@ -312,7 +312,6 @@ int do_yield(int pid){
          }
       }
    }
-}
    return 0;
 }
 
