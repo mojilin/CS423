@@ -149,11 +149,19 @@ int add_process (int pid, int computation, int period)
 
     /* Add to the linked list */
     INIT_LIST_HEAD(&newProcess->list);
+
     newProcess->computation = computation;
     newProcess->period = period;
     newProcess->pid = pid;
     newProcess->status = SLEEPING;
     newProcess->linux_task = find_task_by_pid(pid);
+
+    init_timer(&(newProcess->wakeup_timer)); 
+    //Initialize timer to wake up work queue
+   (newProcess->wakeup_timer).function = timer_handler;
+   (newProcess->wakeup_timer).expires = 0;
+   (newProcess->wakeup_timer).work_timer.data = (unsigned long)(newProcess);
+
 
     spin_lock(list_lock);
     list_add_tail( &newProcess->list, &processList);
