@@ -37,6 +37,7 @@ typedef struct  {
    int pid;
    enum {READY, RUNNING, SLEEPING} status;
    struct list_head list;
+   unsigned long start_time;
 } mp2_task_struct;
 
 static struct list_head processList;
@@ -51,9 +52,11 @@ int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
+int do_yield(int pid);
 mp2_task_struct * getCurrentTask(void);
 mp2_task_struct * getNextTask(void);
- mp2_task_struct * activeTask = NULL;
+mp2_task_struct * activeTask = NULL;
+
 //gets the task marked RUNNING or NULL if no running task
 mp2_task_struct * getCurrentTask(void)
 {
@@ -65,6 +68,7 @@ mp2_task_struct * getCurrentTask(void)
     }
     return NULL;
 }
+
 //gets the READY task with the lowest period according to spec or NULL if no tasks to run
 mp2_task_struct * getNextTask(void)
 {
@@ -85,6 +89,7 @@ mp2_task_struct * getNextTask(void)
     else
       return curLowest;
 }
+
 int kernel_thread_fn(void *data)
 {
    mp2_task_struct * nextTask = getNextTask();
@@ -261,7 +266,8 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
       case 'Y':
          printk(KERN_INFO "MP2 Yield\n");
-   		 sscanf(tempBuffer, "%c, %d", &op, &PID);
+         sscanf(tempBuffer, "%c, %d", &op, &PID);
+         do_yield(PID);
          break;
 
       case 'D':
@@ -283,6 +289,31 @@ write_fail:
 	printk(KERN_WARNING "write failed\n");
 	kfree(tempBuffer);
 	return 0;	
+}
+
+int do_yield(int pid){
+   mp2_task_struct *thisProcess;
+
+   list_for_each_entry(thisProcess, &processList, list)
+     {
+      if(thisProcess->pid == pid)
+      {
+         thisProcess->status = SLEEPING;
+         set_task_state(thisProcess->linux_task, TASK_UNINTERRUPTIBLE);
+         if ((thisProcess->start_time + thisProcess->period) > jiffies){
+            printk(KERN_WARNING "MP2 Deadline Miss");
+            //wake up next iteration in 1 period's time
+            mod_timer(&thisProcess->wakeup_timer,jiffies + thisProcess->period);
+         }
+         else{
+            //time until next period
+            //assumes that start_time is continuously updated
+            mod_timer(&thisProcess->wakeup_timer, thisProcess->start_time + thisProcess->period - jiffies);
+         }
+      }
+   }
+}
+   return 0;
 }
 
 static const struct file_operations mp2_file = 
