@@ -51,9 +51,38 @@ int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
+struct mp2_task_struct * getCurrentTask()
+{
+  mp2_task_struct *thisProcess;
+ list_for_each_entry(thisProcess, &processList, list)
+     {
+      if(thisProcess->status == RUNNING)
+         return thisProcess;
+    }
+    return NULL;
+}
+struct mp2_task_struct * getNextTask()
+{
+  int lowestPeriod = 999999999;
+  mp2_task_struct * curLowest;
+  mp2_task_struct *thisProcess;
 
+ list_for_each_entry(thisProcess, &processList, list)
+     {
+      if(thisProcess->status == READY && (thisProcess->period < lowestPeriod))
+      {
+        lowestPeriod = thisProcess -> period;
+        curLowest = thisProcess;
+      }
+    }
+    if(lowestPeriod == 999999999)
+      return NULL;
+    else
+      return curLowest;
+}
 int kernel_thread_fn(void *data)
 {
+
 	//dispatcher
 	return 0;
 }
@@ -159,7 +188,7 @@ int add_process (int pid, int computation, int period)
     init_timer(&(newProcess->wakeup_timer)); 
     //Initialize timer to wake up work queue
    (newProcess->wakeup_timer).function = timer_handler;
-   (newProcess->wakeup_timer).expires = 0;
+   (newProcess->wakeup_timer).expires = 0; //needs to be set appropriately
    (newProcess->wakeup_timer).work_timer.data = (unsigned long)(newProcess);
 
 
