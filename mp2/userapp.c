@@ -27,21 +27,23 @@ int factorial(int n)
 
 int main(int argc, char* argv[])
 {
-	FILE* handle = fopen(proc_filename ,"r+");
+	FILE* handle;
+	handle = fopen("/proc/mp2/status" ,"r+");
 	int thePid = (int) getpid();
 	int period = 100;	/* Period of the job in milliseconds*/
 	int computation = 10; /* Processing time of job in milliseconds*/
-	int n = 50;
+	int n = 5;
 	/* Registration */
 	fprintf(handle, "R, %d, %d, %d", thePid, period, computation);
+	// printf("DEBUGGING\n");
 	// fclose(handle);
 
 	printf("Current PID: %d\n", thePid);
 	
-	// printf("Fib:%d = %lld\n", n, fib(n));
+	 printf("Fib:%d = %lld\n", n, fib(n));
 
 	// handle = fopen(proc_filename, "r+");
-	fprintf(handle, "D, %d", thePid);
+	// fprintf(handle, "D, %d", thePid);
 
 
 	return 0;

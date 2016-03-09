@@ -52,20 +52,20 @@ void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
 
-// int kernel_thread_fn(void *data)
-// {
-// 	//dispatcher
-// return 0;
-// }
+int kernel_thread_fn(void *data)
+{
+	//dispatcher
+	return 0;
+}
 
-// void timer_handler(unsigned long task)
-// {
-// 	mp2_task_struct * the_task = (mp2_task_struct *) task;
-// 	the_task -> status = READY;
+void timer_handler(unsigned long task)
+{
+	mp2_task_struct * the_task = (mp2_task_struct *) task;
+	the_task -> status = READY;
 
-// 	//needs to wake up dispatcher thread, but thats pretty much it
-	
-// }
+	//needs to wake up dispatcher thread, but thats pretty much it
+ 
+}
 
 
 /* mp2_read -- Callback function when reading from the proc file
@@ -83,50 +83,50 @@ int de_register(int pid);
 
 static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, loff_t *data) 
 {
-   char * tempBuffer = kmalloc(count, GFP_KERNEL); 
-   mp2_task_struct * cursor;
+    char * tempBuffer = kmalloc(count, GFP_KERNEL); 
+    mp2_task_struct * cursor;
 
-   if(tempBuffer == NULL)
-   {
-       printk(KERN_WARNING "read malloc failed");
-       return 0;
-   }
-	
-   /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
-	*  If 0 is returned, we reset the boolean */
-   if (read_end == 0)
-   {
-	  int bytes_copied = 0;
+    if(tempBuffer == NULL)
+    {
+        printk(KERN_WARNING "read malloc failed");
+        return 0;
+    }
+  
+    /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
+   *  If 0 is returned, we reset the boolean */
+  if (read_end == 0)
+  {
+     int bytes_copied = 0;
 
-      spin_lock(list_lock);
+     spin_lock(list_lock);
    
-	  /* Output the string into tempBuffer for all entries in the list */
-	  list_for_each_entry(cursor, &processList, list)
-	  {
-		 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %d | Processing Time: %d\n", cursor->pid, cursor->period, cursor->computation);
-	  }
+	   /* Output the string into tempBuffer for all entries in the list */
+	   list_for_each_entry(cursor, &processList, list)
+	   {
+	 	 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %d | Processing Time: %d\n", cursor->pid, cursor->period, cursor->computation);
+	   }
 
-	  spin_unlock(list_lock);
-	  read_end = 1;
-	  // Copy to user buffer
-	  if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
-	  {
-         kfree(tempBuffer);
-	     return bytes_copied;
-	  }
-	  else
-	  {
-		 kfree(tempBuffer);
-		 return 0;
-	  }
+	   spin_unlock(list_lock);
+	   read_end = 1;
+	   // Copy to user buffer
+	   if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
+	   {
+          kfree(tempBuffer);
+        return bytes_copied;
+     }
+     else
+     {
+   	 kfree(tempBuffer);
+   	 return 0;
+     }
 
-   } 
-   else // read_end == 1 means we just return 0 for formality
-   {
-      read_end = 0;
-	  kfree(tempBuffer);
-      return 0;	  
-   }   
+  } 
+  else // read_end == 1 means we just return 0 for formality
+  {
+     read_end = 0;
+     kfree(tempBuffer);
+       return 0;	  
+    }   
 }
 
 
@@ -138,28 +138,28 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
  */
 int add_process (int pid, int computation, int period)
 {
-   mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
-   if(!newProcess)
-   {
-      printk(KERN_WARNING "mp2 add malloc failed\n");
-      return 0;
-   }
+    mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
+    if(!newProcess)
+    {
+       printk(KERN_WARNING "mp2 add malloc failed\n");
+       return 0;
+    }
 
-   printk(KERN_INFO "Adding pid %d\n", pid);
+    printk(KERN_INFO "Adding pid %d\n", pid);
 
-   /* Add to the linked list */
-   INIT_LIST_HEAD(&newProcess->list);
-   newProcess->computation = computation;
-   newProcess->period = period;
-   newProcess->pid = pid;
-   newProcess->status = SLEEPING;
-   newProcess->linux_task = find_task_by_pid(pid);
+    /* Add to the linked list */
+    INIT_LIST_HEAD(&newProcess->list);
+    newProcess->computation = computation;
+    newProcess->period = period;
+    newProcess->pid = pid;
+    newProcess->status = SLEEPING;
+    newProcess->linux_task = find_task_by_pid(pid);
 
-   spin_lock(list_lock);
-   list_add_tail( &newProcess->list, &processList);
-   spin_unlock(list_lock);
+    spin_lock(list_lock);
+    list_add_tail( &newProcess->list, &processList);
+    spin_unlock(list_lock);
 
-   return 1;
+    return 1;
 }
 
 
@@ -171,8 +171,7 @@ int add_process (int pid, int computation, int period)
  */
 static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
-	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
-	long int temp;
+   char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
    int PID, period, comp_time;
    char op;
 	if(tempBuffer == NULL)
@@ -180,25 +179,25 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 		printk(KERN_WARNING "mp2 write malloc failed\n");
 		return 0;
 	}
+   printk("Hello\n");
 
 	/* Get info from user */
-	temp = copy_from_user(tempBuffer, buffer, count);
-	if(temp != 0)
+	  
+	if(copy_from_user(tempBuffer, buffer, count) != 0)
 		goto write_fail;
 
 	/* NULL terminate string */
 	tempBuffer[count] = '\0';
 
-	printk(KERN_INFO "%s", tempBuffer);
-   if (sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time) != 4)
-      printk(KERN_WARNING "MP2 Parse incomplete");
+	printk(KERN_INFO "MP2 Command: %s", tempBuffer);
+   sscanf(tempBuffer, "%c", &op);
 
-   printk(KERN_INFO "MP2 OP: %c, PID: %d, Period: %d, Comp: %d", op, PID, period, comp_time);
+   printk(KERN_INFO "MP2 OP: %c\n", op);
 	/* parse string */
    switch (op){
       case 'R':
          printk(KERN_INFO "MP2 Registration\n");
-         add_process(PID, period, comp_time);
+         //add_process(PID, period, comp_time);
          break;
 
       case 'Y':
@@ -207,7 +206,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
       case 'D':
          printk(KERN_INFO "MP2 De-Registration\n");
-         de_register(PID);
+         //de_register(PID);
          break;
 
       default:
@@ -218,7 +217,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
 	kfree(tempBuffer);
 
-	return (temp == 0) ? 0 : count;
+	return  count;
 write_fail:
 	printk(KERN_WARNING "write failed\n");
 	kfree(tempBuffer);
@@ -277,7 +276,7 @@ void list_cleanup(void)
       list_for_each_entry_safe(aProcess, tmp, &processList, list) 
       {
          #ifdef DEBUG
-         printk(KERN_INFO "MP1 freeing PID %d\n", aProcess->pid);
+         printk(KERN_INFO "MP2 freeing PID %d\n", aProcess->pid);
          #endif
 
          list_del(&aProcess->list);
@@ -310,11 +309,11 @@ int __init mp2_init(void)
    spin_lock_init(list_lock);
 
    /* Initialize Slab allocator*/
-   PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, 0, NULL);
-   if(!PCB_cache){
-      kmem_cache_destroy(PCB_cache);
-      return -ENOMEM;
-   }
+    PCB_cache = kmem_cache_create("PCB", sizeof(mp2_task_struct), 0, 0, NULL);
+    if(!PCB_cache){
+       kmem_cache_destroy(PCB_cache);
+       return -ENOMEM;
+    }
    
    INIT_LIST_HEAD(&processList);
 
