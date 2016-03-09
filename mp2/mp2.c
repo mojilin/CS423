@@ -51,6 +51,9 @@ int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
+mp2_task_struct * getCurrentTask();
+mp2_task_struct * getNextTask();
+
  struct mp2_task_struct * activeTask = NULL;
 //gets the task marked RUNNING or NULL if no running task
 mp2_task_struct * getCurrentTask()
