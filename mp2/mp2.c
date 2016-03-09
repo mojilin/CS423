@@ -51,6 +51,8 @@ int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
+
+//gets the task marked RUNNING
 struct mp2_task_struct * getCurrentTask()
 {
   mp2_task_struct *thisProcess;
@@ -61,6 +63,7 @@ struct mp2_task_struct * getCurrentTask()
     }
     return NULL;
 }
+//gets the READY task with the lowest period according to spec
 struct mp2_task_struct * getNextTask()
 {
   int lowestPeriod = 999999999;
