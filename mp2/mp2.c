@@ -52,7 +52,7 @@ void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
 struct mp2_task_struct * getCurrentTask();
-struct mp2_task_struct * getCurrentTask();
+struct mp2_task_struct * getNextTask();
  struct mp2_task_struct * activeTask = NULL;
 //gets the task marked RUNNING or NULL if no running task
 struct mp2_task_struct * getCurrentTask()
@@ -66,7 +66,7 @@ struct mp2_task_struct * getCurrentTask()
     return NULL;
 }
 //gets the READY task with the lowest period according to spec or NULL if no tasks to run
-struct mp2_task_struct * getCurrentTask()
+struct mp2_task_struct * getNextTask()
 {
   int lowestPeriod = 999999999;
   mp2_task_struct * curLowest;
