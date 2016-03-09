@@ -51,7 +51,7 @@ int add_process (int pid, int computation, int period);
 void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
-
+ struct mp2_task_struct * activeTask = NULL;
 //gets the task marked RUNNING or NULL if no running task
 struct mp2_task_struct * getCurrentTask()
 {
@@ -85,7 +85,23 @@ struct mp2_task_struct * getNextTask()
 }
 int kernel_thread_fn(void *data)
 {
-
+  struct mp2_task_struct * nextTask = getNextTask();
+  struct mp2_task_struct * curTask = getCurrentTask();
+  if(nextTask != NULL)
+  {
+    struct sched_param sparam; 
+    wake_up_process(nextTask->linux_task); 
+    sparam.sched_priority=99;
+    sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
+    nextTask->status = RUNNING;
+  }
+  if(curTask != NULL)
+  {
+    struct sched_param sparam;
+    sparam.sched_priority=0; 
+    sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
+    nextTask->status = READY;
+  }
 	//dispatcher
 	return 0;
 }
@@ -192,7 +208,7 @@ int add_process (int pid, int computation, int period)
     //Initialize timer to wake up work queue
    (newProcess->wakeup_timer).function = timer_handler;
    (newProcess->wakeup_timer).expires = 0; //needs to be set appropriately
-   (newProcess->wakeup_timer).work_timer.data = (unsigned long)(newProcess);
+   (newProcess->wakeup_timer).data = (unsigned long)(newProcess);
 
 
     spin_lock(list_lock);
