@@ -73,7 +73,7 @@ mp2_task_struct * getCurrentTask(void)
 mp2_task_struct * getNextTask(void)
 {
   int lowestPeriod = 999999999;
-  mp2_task_struct * curLowest;
+  mp2_task_struct * curLowest = NULL;
   mp2_task_struct *thisProcess;
 
  list_for_each_entry(thisProcess, &processList, list)
@@ -252,7 +252,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 	/* NULL terminate string */
 	tempBuffer[count] = '\0';
 
-	printk(KERN_INFO "MP2 Command: %s", tempBuffer);
+	printk(KERN_INFO "MP2 Command: %s\n", tempBuffer);
    sscanf(tempBuffer, "%c", &op);
 
    printk(KERN_INFO "MP2 OP: %c\n", op);
@@ -260,17 +260,20 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
    switch (op){
       case 'R':
          printk(KERN_INFO "MP2 Registration\n");
-         //add_process(PID, period, comp_time);
+   		 sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
+         add_process(PID, period, comp_time);
          break;
 
       case 'Y':
          printk(KERN_INFO "MP2 Yield\n");
+         sscanf(tempBuffer, "%c, %d", &op, &PID);
          do_yield(PID);
          break;
 
       case 'D':
          printk(KERN_INFO "MP2 De-Registration\n");
-         //de_register(PID);
+   		 sscanf(tempBuffer, "%c, %d", &op, &PID);
+         de_register(PID);
          break;
 
       default:
