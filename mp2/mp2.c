@@ -23,6 +23,7 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define DIRECTORY "mp2"
 
 #define UBBOUND 693
+#define FCONV 1000
 
 struct task_struct* mp2_dispatcher;
 
@@ -72,10 +73,10 @@ int admin_ctrl(int period, int comp_time){
    mp2_task_struct *thisProcess;
    int running_sum = 0;
    list_for_each_entry(thisProcess, &processList, list){
-      running_sum += (thisProcess->computation*1000)/(thisProcess->period*1000);
+      running_sum += (thisProcess->computation*FCONV)/(thisProcess->period*FCONV);
    }
-   running_sum += (msecs_to_jiffies(comp_time)*1000)/(msecs_to_jiffies(period)*1000);
-   if((running_sum*1000) <= UBBOUND){
+   running_sum += (msecs_to_jiffies(comp_time)*FCONV)/(msecs_to_jiffies(period)*FCONV);
+   if((running_sum*FCONV) <= UBBOUND){
       return 0;
    }
    return -1;
