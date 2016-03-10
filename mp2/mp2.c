@@ -71,12 +71,15 @@ mp2_task_struct * activeTask = NULL;
  */
 int admin_ctrl(int period, int comp_time){
    mp2_task_struct *thisProcess;
-   int running_sum = 0;
+   int comp_sum = 0;
+   int period_sum = 0;
    list_for_each_entry(thisProcess, &processList, list){
-      running_sum += (thisProcess->computation*FCONV)/(thisProcess->period*FCONV);
+      comp_sum += (thisProcess->computation);
+	  period_sum += (thisProcess->period);
    }
-   running_sum += (msecs_to_jiffies(comp_time)*FCONV)/(msecs_to_jiffies(period)*FCONV);
-   if((running_sum*FCONV) <= UBBOUND){
+   comp_sum += (msecs_to_jiffies(comp_time));
+   period_sum += (msecs_to_jiffies(period));
+   if((comp_sum*FCONV/period_sum) <= UBBOUND){
       return 0;
    }
    return -1;
