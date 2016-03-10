@@ -332,7 +332,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
    		sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
          if(admin_ctrl(period, comp_time) != 0)
 		 {
-			printk(KERN_INFO "Failed admin ctrl");
+			printk(KERN_INFO "Failed admin ctrl\n");
 			kfree(tempBuffer);
 			return count;
 		 }
