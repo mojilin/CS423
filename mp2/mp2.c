@@ -173,6 +173,7 @@ int kernel_thread_fn(void *data)
  */
 void timer_handler(unsigned long task)
 {
+   printk(KERN_INFO "MP2 Timer");
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
 
