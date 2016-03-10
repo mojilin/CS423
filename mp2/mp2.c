@@ -63,13 +63,18 @@ mp2_task_struct * getCurrentTask(void);
 mp2_task_struct * getNextTask(void);
 mp2_task_struct * activeTask = NULL;
 
+/* admin_ctrl
+ * Admission control for Real-Time Scheduler
+ * INPUTS: period -- period of task to be added, comp_time --  computation time of task to be added
+ * OUTPUtS: 0 -- new task is schedulable, -1 -- new task is not schedulable
+ */
 int admin_ctrl(int period, int comp_time){
    mp2_task_struct *thisProcess;
    int running_sum = 0;
    list_for_each_entry(thisProcess, &processList, list){
-      running_sum += (thisProcess->period*1000)/(thisProcess->computation*1000);
+      running_sum += (thisProcess->computation*1000)/(thisProcess->period*1000);
    }
-   running_sum += (msecs_to_jiffies(period)*1000)/(msecs_to_jiffies(comp_time)*1000);
+   running_sum += (msecs_to_jiffies(comp_time)*1000)/(msecs_to_jiffies(period)*1000);
    if((running_sum*1000) <= UBBOUND){
       return 0;
    }
@@ -95,7 +100,7 @@ mp2_task_struct * getCurrentTask(void)
 }
 
 /*
- * getCurrentTask
+ * getNextTask
  * gets the READY task with the lowest period according to spec
  * Inputs -- NONE
  * Return Value -- The pointer to the READY process with shortest period.
@@ -131,7 +136,7 @@ mp2_task_struct * getNextTask(void)
  */
 int kernel_thread_fn(void *data)
 {
-
+   printk(KERN_INFO "MP2 Dispatching Thread");
    mp2_task_struct * nextTask = getNextTask();
    mp2_task_struct * curTask = getCurrentTask();
    while(!kthread_should_stop())
@@ -145,6 +150,7 @@ int kernel_thread_fn(void *data)
          sparam.sched_priority=99;
          sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
          nextTask->status = RUNNING;
+         nextTask->start_time = jiffies;
       }
       if(curTask != NULL)
       {
@@ -171,7 +177,7 @@ void timer_handler(unsigned long task)
 	the_task -> status = READY;
 
 	//needs to wake up dispatcher thread, but thats pretty much it
-  	 wake_up_process(mp2_dispatcher);
+  	wake_up_process(mp2_dispatcher);
 }
 
 
@@ -366,8 +372,9 @@ int do_yield(int pid){
       if(thisProcess->pid == pid)
       {
          thisProcess->status = SLEEPING;
-         if (((thisProcess->start_time) + msecs_to_jiffies(thisProcess->period)) < jiffies)
-		 {
+         if (time_after_eq(jiffies,thisProcess->start_time + thisProcess->period))
+		   {
+            //I don't think we should ever technically get into this conditional
             printk(KERN_WARNING "MP2 Deadline Miss");
             //wake up next iteration in 1 period's time
             mod_timer(&thisProcess->wakeup_timer,jiffies + thisProcess->period);
