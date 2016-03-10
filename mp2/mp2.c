@@ -115,7 +115,6 @@ mp2_task_struct * getNextTask(void)
 
  list_for_each_entry(thisProcess, &processList, list)
   {
-	printk("nextTask search, pid = %d, status = %d", thisProcess->pid, thisProcess->status);
       if(thisProcess->status == READY && (thisProcess->period < lowestPeriod))
       {
         lowestPeriod = thisProcess -> period;
@@ -144,7 +143,7 @@ int kernel_thread_fn(void *data)
    mp2_task_struct * nextTask = getNextTask();
    mp2_task_struct * curTask = getCurrentTask();
 
-	  printk("SUP\n");
+	 // printk("SUP\n");
       if(nextTask != NULL)
       {
          struct sched_param sparam; 
@@ -153,7 +152,7 @@ int kernel_thread_fn(void *data)
          sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
          nextTask->status = RUNNING;
          nextTask->start_time = jiffies;
-		 printk("nextTask -- %d\n", nextTask->pid);
+	//	 printk("nextTask -- %d\n", nextTask->pid);
       }
       if(curTask != NULL)
       {
@@ -161,7 +160,7 @@ int kernel_thread_fn(void *data)
          sparam.sched_priority=0; 
          sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
          nextTask->status = READY;
-		 printk("curTask -- %d\n", curTask->pid);
+	//	 printk("curTask -- %d\n", curTask->pid);
       }
 	  set_current_state(TASK_INTERRUPTIBLE);
 	  schedule();
