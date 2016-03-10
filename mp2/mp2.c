@@ -33,7 +33,8 @@ static struct proc_dir_entry *proc_entry;
 spinlock_t *list_lock;
 
 //all times are stored as jiffies
-typedef struct  {
+typedef struct  
+{
    struct task_struct* linux_task; 
    struct timer_list wakeup_timer; 
    int period;  //p
@@ -75,7 +76,13 @@ int admin_ctrl(int period, int comp_time){
    return -1;
 }
 
-//gets the task marked RUNNING or NULL if no running task
+/*
+ * getCurrentTask
+ * Gets current RUNNING process
+ * Inputs -- NONE
+ * Return Value -- The pointer to the current RUNNING process.
+ * 		Returns NULL, if no such process exists
+ */
 mp2_task_struct * getCurrentTask(void)
 {
   mp2_task_struct *thisProcess;
@@ -87,7 +94,13 @@ mp2_task_struct * getCurrentTask(void)
     return NULL;
 }
 
-//gets the READY task with the lowest period according to spec or NULL if no tasks to run
+/*
+ * getCurrentTask
+ * gets the READY task with the lowest period according to spec
+ * Inputs -- NONE
+ * Return Value -- The pointer to the READY process with shortest period.
+ * 		Returns NULL, if no such process exists
+ */
 mp2_task_struct * getNextTask(void)
 {
   int lowestPeriod = 999999999;
@@ -108,6 +121,14 @@ mp2_task_struct * getNextTask(void)
       return curLowest;
 }
 
+/* 
+ * kernel_thread_fn
+ * Kernel thread that, when woken up does the scheduling routine.
+ * It prempts the currently running task with the next READY task, 
+ * if available 
+ * INPUTS -- NONE
+ * RETURN VALUE -- 0 on completion
+ */
 int kernel_thread_fn(void *data)
 {
    mp2_task_struct * nextTask = getNextTask();
@@ -132,13 +153,18 @@ int kernel_thread_fn(void *data)
 	return 0;
 }
 
+/* 
+ * timer_handler
+ * INPUTS: task -- Pointer to the task to be set to READY
+ * SIDE EFFECTS: wakes up the Kernel thread
+ */
 void timer_handler(unsigned long task)
 {
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
 
 	//needs to wake up dispatcher thread, but thats pretty much it
-   wake_up_process(mp2_dispatcher);
+  	 wake_up_process(mp2_dispatcher);
 }
 
 
@@ -148,8 +174,8 @@ void timer_handler(unsigned long task)
  * 			count -- Number of bytes to copy to the buffer
  * Outputs: Copies the string to the user buffer
  * CPU usage time in the following format:
- * PID: xx | CPU Use: xxxxx
- * PID: xx | CPU Use: xxxxx
+ * PID: xx | Period : xxxxx | Processing Time: xxxx
+ * PID: xx | Period : xxxxx | Processing Time: xxxx
  *
  * Side Effects: Holds the list_lock
  * Return Value: Number of bytes written to the buffer.
@@ -313,6 +339,13 @@ write_fail:
 	return 0;	
 }
 
+/* do_yield
+ * Handler for the Yield function of a process
+ * Inputs: pid -- Pid of the process that is yielding
+ * Return Value -- 0 o nsuccess
+ * Side Effects -- Puts the process into UNINTERRUPTIBLE sleep
+ * 		until the next timer
+ */
 int do_yield(int pid){
    mp2_task_struct *thisProcess;
 
