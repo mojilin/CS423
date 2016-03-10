@@ -136,9 +136,9 @@ mp2_task_struct * getNextTask(void)
  */
 int kernel_thread_fn(void *data)
 {
-   printk(KERN_INFO "MP2 Dispatching Thread");
    mp2_task_struct * nextTask = getNextTask();
    mp2_task_struct * curTask = getCurrentTask();
+   printk(KERN_INFO "MP2 Dispatching Thread");
    while(!kthread_should_stop())
    {
 
@@ -176,6 +176,7 @@ void timer_handler(unsigned long task)
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
 
+	printk(KERN_INFO "Timer\n -- PID: %d", the_task->pid);
 	//needs to wake up dispatcher thread, but thats pretty much it
   	wake_up_process(mp2_dispatcher);
 }
