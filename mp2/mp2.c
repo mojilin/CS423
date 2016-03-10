@@ -10,6 +10,7 @@
 #include <linux/timer.h>
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
+#include <linux/kthread.h>
 #include "mp2_given.h"
 
 
@@ -21,7 +22,9 @@ MODULE_DESCRIPTION("CS-423 MP2");
 #define FILENAME "status"
 #define DIRECTORY "mp2"
 
-// task_struct * kernel_thread;
+#define UBBOUND 693
+
+struct task_struct* mp2_dispatcher;
 
 //structs for proc filesystem
 static struct proc_dir_entry *proc_dir;
@@ -29,6 +32,7 @@ static struct proc_dir_entry *proc_entry;
 
 spinlock_t *list_lock;
 
+//all times are stored as jiffies
 typedef struct  {
    struct task_struct* linux_task; 
    struct timer_list wakeup_timer; 
@@ -53,9 +57,23 @@ void list_cleanup(void);
 int kernel_thread_fn(void *data);
 int de_register(int pid);
 int do_yield(int pid);
+int admin_ctrl(int period, int comp_time);
 mp2_task_struct * getCurrentTask(void);
 mp2_task_struct * getNextTask(void);
 mp2_task_struct * activeTask = NULL;
+
+int admin_ctrl(int period, int comp_time){
+   mp2_task_struct *thisProcess;
+   int running_sum = 0;
+   list_for_each_entry(thisProcess, &processList, list){
+      running_sum += (thisProcess->period*1000)/(thisProcess->computation*1000);
+   }
+   running_sum += (msecs_to_jiffies(period)*1000)/(msecs_to_jiffies(comp_time)*1000);
+   if((running_sum*1000) <= UBBOUND){
+      return 0;
+   }
+   return -1;
+}
 
 //gets the task marked RUNNING or NULL if no running task
 mp2_task_struct * getCurrentTask(void)
@@ -94,22 +112,23 @@ int kernel_thread_fn(void *data)
 {
    mp2_task_struct * nextTask = getNextTask();
    mp2_task_struct * curTask = getCurrentTask();
-  if(nextTask != NULL)
-  {
-    struct sched_param sparam; 
-    wake_up_process(nextTask->linux_task); 
-    sparam.sched_priority=99;
-    sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
-    nextTask->status = RUNNING;
-  }
-  if(curTask != NULL)
-  {
-    struct sched_param sparam;
-    sparam.sched_priority=0; 
-    sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
-    nextTask->status = READY;
-  }
-	//dispatcher
+   while(!kthread_should_stop()){
+      if(nextTask != NULL)
+      {
+         struct sched_param sparam; 
+         wake_up_process(nextTask->linux_task); 
+         sparam.sched_priority=99;
+         sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
+         nextTask->status = RUNNING;
+      }
+      if(curTask != NULL)
+      {
+         struct sched_param sparam;
+         sparam.sched_priority=0; 
+         sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
+         nextTask->status = READY;
+      }
+   }
 	return 0;
 }
 
@@ -119,7 +138,7 @@ void timer_handler(unsigned long task)
 	the_task -> status = READY;
 
 	//needs to wake up dispatcher thread, but thats pretty much it
- 
+   wake_up_process(mp2_dispatcher);
 }
 
 
@@ -158,7 +177,8 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
 	   /* Output the string into tempBuffer for all entries in the list */
 	   list_for_each_entry(cursor, &processList, list)
 	   {
-	 	 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %d | Processing Time: %d\n", cursor->pid, cursor->period, cursor->computation);
+	 	 bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d | Period: %d | Processing Time: %d\n", cursor->pid, 
+         jiffies_to_msecs(cursor->period), jiffies_to_msecs(cursor->computation));
 	   }
 
 	   spin_unlock(list_lock);
@@ -193,36 +213,38 @@ static ssize_t mp2_read (struct file *file, char __user *buffer, size_t count, l
  */
 int add_process (int pid, int computation, int period)
 {
-    mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
-    if(!newProcess)
-    {
-       printk(KERN_WARNING "mp2 add malloc failed\n");
-       return 0;
-    }
+   mp2_task_struct * newProcess = kmem_cache_alloc(PCB_cache, GFP_KERNEL);
+   if(!newProcess)
+   {
+      printk(KERN_WARNING "mp2 add malloc failed\n");
+      return 0;
+   }
 
-    printk(KERN_INFO "Adding pid %d\n", pid);
+   printk(KERN_INFO "Adding pid %d\n", pid);
 
-    /* Add to the linked list */
-    INIT_LIST_HEAD(&newProcess->list);
+   /* Add to the linked list */
+   INIT_LIST_HEAD(&newProcess->list);
 
-    newProcess->computation = computation;
-    newProcess->period = period;
-    newProcess->pid = pid;
-    newProcess->status = SLEEPING;
-    newProcess->linux_task = find_task_by_pid(pid);
+   newProcess->computation = msecs_to_jiffies(computation);
+   newProcess->period = msecs_to_jiffies(period);
+   newProcess->pid = pid;
+   newProcess->status = SLEEPING;
+   newProcess->linux_task = find_task_by_pid(pid);
 
-    init_timer(&(newProcess->wakeup_timer)); 
-    //Initialize timer to wake up work queue
+   init_timer(&(newProcess->wakeup_timer)); 
+   //Initialize timer to wake up work queue
    (newProcess->wakeup_timer).function = timer_handler;
-   (newProcess->wakeup_timer).expires = period; //app must be switched off after 1 period
+   (newProcess->wakeup_timer).expires = jiffies + newProcess->period; //app must be switched off after 1 period
    (newProcess->wakeup_timer).data = (unsigned long)(newProcess);
 
+   //When the process started running
+   newProcess->start_time = jiffies;
 
-    spin_lock(list_lock);
-    list_add_tail( &newProcess->list, &processList);
-    spin_unlock(list_lock);
+   spin_lock(list_lock);
+   list_add_tail( &newProcess->list, &processList);
+   spin_unlock(list_lock);
 
-    return 1;
+   return 1;
 }
 
 
@@ -242,7 +264,6 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 		printk(KERN_WARNING "mp2 write malloc failed\n");
 		return 0;
 	}
-   printk("Hello\n");
 
 	/* Get info from user */
 	  
@@ -260,7 +281,8 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
    switch (op){
       case 'R':
          printk(KERN_INFO "MP2 Registration\n");
-   		 sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
+   		sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
+         admin_ctrl(period, comp_time);
          add_process(PID, period, comp_time);
          break;
 
@@ -272,7 +294,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 
       case 'D':
          printk(KERN_INFO "MP2 De-Registration\n");
-   		 sscanf(tempBuffer, "%c, %d", &op, &PID);
+   		sscanf(tempBuffer, "%c, %d", &op, &PID);
          de_register(PID);
          break;
 
@@ -306,6 +328,7 @@ int do_yield(int pid){
             mod_timer(&thisProcess->wakeup_timer,jiffies + thisProcess->period);
          }
          else{
+            printk(KERN_INFO "MP2 made Deadline");
             //time until next period
             //assumes that start_time is continuously updated
             mod_timer(&thisProcess->wakeup_timer, thisProcess->start_time + thisProcess->period - jiffies);
@@ -336,6 +359,7 @@ int de_register(int pid){
    {
       if (pid == thisProcess->pid){
          spin_lock(list_lock);
+         del_timer(&thisProcess->wakeup_timer);
          list_del(&thisProcess->list);
          kmem_cache_free(PCB_cache, thisProcess);
          printk(KERN_INFO "MP2 deleting process %d\n", pid);
@@ -371,6 +395,7 @@ void list_cleanup(void)
          #endif
 
          list_del(&aProcess->list);
+         del_timer(&aProcess->wakeup_timer);
          kmem_cache_free(PCB_cache, aProcess);
       }
    }
@@ -384,10 +409,10 @@ int __init mp2_init(void)
    #ifdef DEBUG
    printk(KERN_ALERT "mp2 MODULE LOADING\n");
    #endif
+
    //create kthread
-   // kernel_thread = kthread_create(kernel_thread_fn,NULL,"MP2 dispatcher");
-   // Insert your code here ...
-   printk(KERN_INFO "Hello World!\n");
+   mp2_dispatcher = kthread_run(&kernel_thread_fn,NULL,"MP2_dispatcher_thread");
+   printk(KERN_INFO "MP2 Hello World!\n");
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
@@ -422,7 +447,8 @@ void __exit mp2_exit(void)
    printk(KERN_ALERT "mp2 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-   // kthread_create();
+   //stop the kernel thread
+   kthread_stop(mp2_dispatcher);
 
    list_cleanup();
    kmem_cache_destroy(PCB_cache);
