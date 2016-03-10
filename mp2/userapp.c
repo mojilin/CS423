@@ -53,7 +53,7 @@ int main(int argc, char* argv[])
 	/* Read into a string until a newline, then check if the PID matches
 	 * current PID
 	 */
-	while(1)
+	while(0)
 	{
 			fscanf(handle, "%[^\n]%*c", tempstring);
 			sscanf(tempstring, "%*s %d", &tempPID);
@@ -76,9 +76,8 @@ int main(int argc, char* argv[])
 	fclose(handle);
 
 	printf("Current PID: %d\n", thePid);
-	while(num_jobs > 0)
+	while(num_jobs-- > 0)
 	{
-		printf("Job%d = %lld\n",num_jobs-- , fib(n));
 		/* YIELD */
 		handle = fopen(proc_filename ,"r+");
 		fprintf(handle, "Y, %d", thePid);
