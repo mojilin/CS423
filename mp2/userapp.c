@@ -28,10 +28,10 @@ int factorial(int n)
 int main(int argc, char* argv[])
 {
 	FILE* handle;
-	int thePid = (int) getpid();
+	int thePid = 4568;//(int) getpid();
 	int period = 100;	/* Period of the job in milliseconds*/
 	int computation = 10; /* Processing time of job in milliseconds*/
-	int n = 45;
+	int n = 40;
 	char tempstring[100]; /* temp string */
 	int i = 0;
 	char temp[5];
@@ -53,20 +53,15 @@ int main(int argc, char* argv[])
 	/* Read into a string until a newline, then check if the PID matches
 	 * current PID
 	 */
-	while((tempstring[i] = fgetc(handle)) != EOF)
+	while(1)
 	{
-		i++;
-		if(tempstring[i - 1] == '\n')
-		{
-			tempstring[i - 1] = '\0';
-			i = 0;
-			sscanf(tempstring, "%s %d", temp, &tempPID);
+			fscanf(handle, "%[^\n]%*c", tempstring);
+			sscanf(tempstring, "%*s %d", &tempPID);
 			if(tempPID == thePid)
 			{
 				printf("Registration successful!\n");
 				break;
 			}
-		}
 		if(feof(handle))
 		{
 			printf("FILE registration failed\n");

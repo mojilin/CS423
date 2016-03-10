@@ -131,9 +131,13 @@ mp2_task_struct * getNextTask(void)
  */
 int kernel_thread_fn(void *data)
 {
+
    mp2_task_struct * nextTask = getNextTask();
    mp2_task_struct * curTask = getCurrentTask();
-   while(!kthread_should_stop()){
+   while(!kthread_should_stop())
+   {
+
+	  printk("SUP\n");
       if(nextTask != NULL)
       {
          struct sched_param sparam; 
@@ -149,6 +153,9 @@ int kernel_thread_fn(void *data)
          sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
          nextTask->status = READY;
       }
+	  set_current_state(TASK_INTERRUPTIBLE);
+	  schedule();
+
    }
 	return 0;
 }
@@ -308,7 +315,12 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
       case 'R':
          printk(KERN_INFO "MP2 Registration\n");
    		sscanf(tempBuffer, "%c, %d, %d, %d", &op, &PID, &period, &comp_time);
-         admin_ctrl(period, comp_time);
+         if(admin_ctrl(period, comp_time) != 0)
+		 {
+			printk(KERN_INFO "Failed admin ctrl");
+			kfree(tempBuffer);
+			return count;
+		 }
          add_process(PID, period, comp_time);
          break;
 
@@ -354,8 +366,8 @@ int do_yield(int pid){
       if(thisProcess->pid == pid)
       {
          thisProcess->status = SLEEPING;
-         set_task_state(thisProcess->linux_task, TASK_UNINTERRUPTIBLE);
-         if ((thisProcess->start_time + thisProcess->period) > jiffies){
+         if (((thisProcess->start_time) + msecs_to_jiffies(thisProcess->period)) < jiffies)
+		 {
             printk(KERN_WARNING "MP2 Deadline Miss");
             //wake up next iteration in 1 period's time
             mod_timer(&thisProcess->wakeup_timer,jiffies + thisProcess->period);
@@ -366,6 +378,7 @@ int do_yield(int pid){
             //assumes that start_time is continuously updated
             mod_timer(&thisProcess->wakeup_timer, thisProcess->start_time + thisProcess->period - jiffies);
          }
+         set_task_state(thisProcess->linux_task, TASK_UNINTERRUPTIBLE);
       }
    }
    return 0;
@@ -444,7 +457,7 @@ int __init mp2_init(void)
    #endif
 
    //create kthread
-   mp2_dispatcher = kthread_run(&kernel_thread_fn,NULL,"MP2_dispatcher_thread");
+   mp2_dispatcher = kthread_create(kernel_thread_fn,NULL,"MP2_dispatcher_thread");
    printk(KERN_INFO "MP2 Hello World!\n");
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
@@ -469,6 +482,7 @@ int __init mp2_init(void)
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp2_file);  //create entry in proc system
    
+   wake_up_process(mp2_dispatcher);
    printk(KERN_ALERT "mp2 MODULE LOADED\n");
    return 0;   
 }
