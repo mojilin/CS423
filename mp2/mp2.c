@@ -113,16 +113,17 @@ mp2_task_struct * getNextTask(void)
   mp2_task_struct *thisProcess;
 
  list_for_each_entry(thisProcess, &processList, list)
-     {
+  {
+	printk("nextTask search, pid = %d, status = %d", thisProcess->pid, thisProcess->status);
       if(thisProcess->status == READY && (thisProcess->period < lowestPeriod))
       {
         lowestPeriod = thisProcess -> period;
         curLowest = thisProcess;
       }
-    }
-    if(lowestPeriod == 999999999)
+  }
+  if(lowestPeriod == 999999999)
       return NULL;
-    else
+  else
       return curLowest;
 }
 
@@ -136,11 +137,11 @@ mp2_task_struct * getNextTask(void)
  */
 int kernel_thread_fn(void *data)
 {
-   mp2_task_struct * nextTask = getNextTask();
-   mp2_task_struct * curTask = getCurrentTask();
-   printk(KERN_INFO "MP2 Dispatching Thread");
+   printk( "MP2 Dispatching Thread\n");
    while(!kthread_should_stop())
    {
+   mp2_task_struct * nextTask = getNextTask();
+   mp2_task_struct * curTask = getCurrentTask();
 
 	  printk("SUP\n");
       if(nextTask != NULL)
@@ -151,6 +152,7 @@ int kernel_thread_fn(void *data)
          sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
          nextTask->status = RUNNING;
          nextTask->start_time = jiffies;
+		 printk("nextTask -- %d\n", nextTask->pid);
       }
       if(curTask != NULL)
       {
@@ -158,6 +160,7 @@ int kernel_thread_fn(void *data)
          sparam.sched_priority=0; 
          sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
          nextTask->status = READY;
+		 printk("curTask -- %d\n", curTask->pid);
       }
 	  set_current_state(TASK_INTERRUPTIBLE);
 	  schedule();
@@ -173,11 +176,10 @@ int kernel_thread_fn(void *data)
  */
 void timer_handler(unsigned long task)
 {
-   printk(KERN_INFO "MP2 Timer");
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
 	the_task -> status = READY;
 
-	printk(KERN_INFO "Timer\n -- PID: %d", the_task->pid);
+	printk(KERN_INFO "Timer -- PID: %d\n", the_task->pid);
 	//needs to wake up dispatcher thread, but thats pretty much it
   	wake_up_process(mp2_dispatcher);
 }
