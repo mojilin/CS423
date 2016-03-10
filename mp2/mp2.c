@@ -60,8 +60,8 @@ int kernel_thread_fn(void *data);
 int de_register(int pid);
 int do_yield(int pid);
 int admin_ctrl(int period, int comp_time);
-mp2_task_struct * getCurrentTask(void);
-mp2_task_struct * getNextTask(void);
+mp2_task_struct * _getCurrentTask(void);
+mp2_task_struct * _getNextTask(void);
 mp2_task_struct * activeTask = NULL;
 
 /* admin_ctrl
@@ -89,7 +89,7 @@ int admin_ctrl(int period, int comp_time){
  * Return Value -- The pointer to the current RUNNING process.
  * 		Returns NULL, if no such process exists
  */
-mp2_task_struct * getCurrentTask(void)
+mp2_task_struct* _getCurrentTask(void)
 {
   mp2_task_struct *thisProcess;
  list_for_each_entry(thisProcess, &processList, list)
@@ -107,7 +107,7 @@ mp2_task_struct * getCurrentTask(void)
  * Return Value -- The pointer to the READY process with shortest period.
  * 		Returns NULL, if no such process exists
  */
-mp2_task_struct * getNextTask(void)
+mp2_task_struct* _getNextTask(void)
 {
   int lowestPeriod = 999999999;
   mp2_task_struct * curLowest = NULL;
@@ -140,18 +140,19 @@ int kernel_thread_fn(void *data)
    printk( "MP2 Dispatching Thread\n");
    while(!kthread_should_stop())
    {
-   mp2_task_struct * nextTask = getNextTask();
-   mp2_task_struct * curTask = getCurrentTask();
+   mp2_task_struct * nextTask = _getNextTask();
+   mp2_task_struct * curTask = _getCurrentTask();
 
-	 // printk("SUP\n");
       if(nextTask != NULL)
       {
          struct sched_param sparam; 
          wake_up_process(nextTask->linux_task); 
          sparam.sched_priority=99;
          sched_setscheduler(nextTask->linux_task, SCHED_FIFO, &sparam);
+         spin_lock(list_lock);
          nextTask->status = RUNNING;
          nextTask->start_time = jiffies;
+         spin_unlock(list_lock);
 	//	 printk("nextTask -- %d\n", nextTask->pid);
       }
       if(curTask != NULL)
@@ -159,7 +160,9 @@ int kernel_thread_fn(void *data)
          struct sched_param sparam;
          sparam.sched_priority=0; 
          sched_setscheduler(curTask->linux_task, SCHED_NORMAL, &sparam);
+         spin_lock(list_lock);
          nextTask->status = READY;
+         spin_unlock(list_lock);
 	//	 printk("curTask -- %d\n", curTask->pid);
       }
 	  set_current_state(TASK_INTERRUPTIBLE);
@@ -177,7 +180,9 @@ int kernel_thread_fn(void *data)
 void timer_handler(unsigned long task)
 {
 	mp2_task_struct * the_task = (mp2_task_struct *) task;
+   spin_lock(list_lock);
 	the_task -> status = READY;
+   spin_unlock(list_lock);
 
 	printk(KERN_INFO "Timer -- PID: %d\n", the_task->pid);
 	//needs to wake up dispatcher thread, but thats pretty much it
@@ -375,19 +380,25 @@ int do_yield(int pid){
      {
       if(thisProcess->pid == pid)
       {
+         spin_lock(list_lock);
          thisProcess->status = SLEEPING;
+         spin_unlock(list_lock);
          if (time_after_eq(jiffies,thisProcess->start_time + thisProcess->period))
 		   {
             //I don't think we should ever technically get into this conditional
             printk(KERN_WARNING "MP2 Deadline Miss");
             //wake up next iteration in 1 period's time
+            spin_lock(list_lock);
             mod_timer(&thisProcess->wakeup_timer,jiffies + thisProcess->period);
+            spin_unlock(list_lock);
          }
          else{
             printk(KERN_INFO "MP2 made Deadline");
             //time until next period
             //assumes that start_time is continuously updated
+            spin_lock(list_lock);
             mod_timer(&thisProcess->wakeup_timer, thisProcess->start_time + thisProcess->period - jiffies);
+            spin_unlock(list_lock);
          }
          set_task_state(thisProcess->linux_task, TASK_UNINTERRUPTIBLE);
       }
