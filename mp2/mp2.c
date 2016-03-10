@@ -339,7 +339,7 @@ static ssize_t mp2_write (struct file *file, const char __user *buffer, size_t c
 			kfree(tempBuffer);
 			return count;
 		 }
-         add_process(PID, period, comp_time);
+         add_process(PID,comp_time, period);
          break;
 
       case 'Y':
