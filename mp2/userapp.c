@@ -28,13 +28,13 @@ int factorial(int n)
 int main(int argc, char* argv[])
 {
 	FILE* handle;
-	int thePid = 4568;//(int) getpid();
+	int thePid = (int) getpid();
 	int period = 100;	/* Period of the job in milliseconds*/
 	int computation = 10; /* Processing time of job in milliseconds*/
-	int n = 40;
+	int n = 20;
 	char tempstring[100]; /* temp string */
 	int i = 0;
-	char temp[5];
+	int num_jobs = 100;
 	int tempPID;
 
 
@@ -76,7 +76,15 @@ int main(int argc, char* argv[])
 	fclose(handle);
 
 	printf("Current PID: %d\n", thePid);
-	printf("Fib:%d = %lld\n", n, fib(n));
+	while(num_jobs > 0)
+	{
+		printf("Job%d = %lld\n",num_jobs-- , fib(n));
+		/* YIELD */
+		handle = fopen(proc_filename ,"r+");
+		fprintf(handle, "Y, %d", thePid);
+		fclose(handle);
+		
+	}
 
 	handle = fopen(proc_filename, "r+");
 	fprintf(handle, "D, %d", thePid);
