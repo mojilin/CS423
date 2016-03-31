@@ -11,6 +11,7 @@
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
 #include <linux/workqueue.h>
+#include <linux/vmalloc.h>
 #include "mp3_given.h"
 
 
@@ -39,8 +40,7 @@ static struct kmem_cache *PCB_cache;
 //all times are stored as jiffies
 typedef struct  
 {
-   struct task_struct* linux_task; 
-   struct timer_list wakeup_timer; 
+   struct task_struct* linux_task;
    int minor_fault_count;
    int major_fault_count;
    int processor_utilization;
@@ -52,11 +52,15 @@ static struct list_head processList;
 
 static int read_end;
 
+
 /* Function prototypes */
 void list_cleanup(void);
 int add_process (int pid);
 void work_time_handler(unsigned long arg);
 void profile_updater_work(struct work_struct *work);
+
+unsigned char* mem_buf; // memory buffer used between monitor and kernel
+
 
 /* mp3_read -- Callback function when reading from the proc file
  *
@@ -118,6 +122,7 @@ static ssize_t mp3_read (struct file *file, char __user *buffer, size_t count, l
 	}   
 }
 
+
 /* work_time_handler
  * Call back function for the Kernel Timer
  * Adds the bottom half to the workqueue and resets the timer
@@ -130,6 +135,7 @@ void work_time_handler(unsigned long arg)
    mod_timer(&work_timer, jiffies + HZ/20);
    return;
 }
+
 
 /* cpu_time_updater_work
  * Bottom half of timer interrupt handler placed in the work queue
@@ -178,15 +184,13 @@ int add_process (int pid)
    newProcess->linux_task = find_task_by_pid(pid);
 
 	if (list_empty(&processList) != 0){
+		add_timer(&work_timer);
 		queue_work(cpu_wq, &profiler_struct);
    	}
 
    spin_lock(list_lock);
    list_add_tail( &newProcess->list, &processList);
-   spin_unlock(list_lock);
-
-   add_timer(&work_timer);
-   queue_work(cpu_wq, &profiler_struct);
+   spin_unlock(list_lock);   
 
    return 1;
 }
@@ -218,7 +222,6 @@ int remove_process (int pid)
 	}
 	return 1;
 }
-
 
 /* mp3_write
  * Registers a new process with pid given in the user buffer
@@ -357,6 +360,15 @@ int __init mp3_init(void)
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp3_file);  //create entry in proc system
+
+   mem_buf = (unsigned char*)vmalloc(128 * 4000); // 128 * 4 KB in Step 5
+
+   if (!mem_buf) {
+		   printk(KERN_WARNING "Memory buffer allocation fail.\n");
+		   return -1;
+   } 
+
+   // TODO not sure if we need to do anything explicit with PG_reserved
    
    printk(KERN_ALERT "MP3 MODULE LOADED\n");
    return 0;   
