@@ -361,6 +361,11 @@ int __init mp3_init(void)
    printk(KERN_ALERT "MP3 MODULE LOADING\n");
    #endif
    // Insert your code here ...
+   static struct file_operations char_dev_fops = {
+    .open = char_dev_open,
+    .release = char_dev_close,
+    .mmap = char_dev_mmap
+   };
 
   init_timer(&work_timer);   //Initialize timer to wake up work queue
   work_timer.function = work_time_handler;
@@ -396,12 +401,6 @@ int __init mp3_init(void)
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp3_file);  //create entry in proc system
 
    printk(KERN_INFO "Initializing character device.\n");
-
-   static struct file_operations char_dev_fops = {
-    .open = char_dev_open,
-    .release = char_dev_close,
-    .mmap = char_dev_mmap
-   };
 
    major_num = register_chrdev(0, "mp3_char_dev", &char_dev_fops);
 
