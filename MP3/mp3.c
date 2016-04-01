@@ -193,44 +193,6 @@ void profile_updater_work(struct work_struct *work)
    return;
 }
 
-
-/* work_time_handler
- * Call back function for the Kernel Timer
- * Adds the bottom half to the workqueue and resets the timer
- */
-void work_time_handler(unsigned long arg)
-{
-   printk(KERN_INFO "MP3 Timer Callback\n");
-
-   queue_work(cpu_wq, &profiler_struct);
-   mod_timer(&work_timer, jiffies + HZ/20);
-   return;
-}
-
-
-/* cpu_time_updater_work
- * Bottom half of timer interrupt handler placed in the work queue
- * Side Effects: Acquires the list_lock and updates all the CPU usage
- *      values for all the processes in the list. If a process has
- *      finished, it removes the process from the list
- */
-void profile_updater_work(struct work_struct *work)
-{
-   mp3_task_struct *thisProcess, *next;
-
-   printk(KERN_INFO "MP3 workqueue handler!\n");
-
-   // Update CPU time for all process
-   list_for_each_entry_safe(thisProcess, next, &processList, list)
-   {
-      spin_lock(list_lock);
-      // TODO
-      spin_unlock(list_lock);
-   }
-   return;
-}
-
-
 /* add_process(int pid)
  * Adds a new process with given pid to the linked list 
  * Inputs:  pid -- The pid of the registered process
@@ -439,7 +401,7 @@ int __init mp3_init(void)
     .open = char_dev_open,
     .release = char_dev_close,
     .mmap = char_dev_mmap
-   }
+   };
 
    major_num = register_chrdev(0, "mp3_char_dev", &char_dev_fops);
 
