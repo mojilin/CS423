@@ -11,6 +11,8 @@
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
 #include <linux/workqueue.h>
+#include <linux/vmalloc.h>
+#include <linux/mm.h>
 #include "mp3_given.h"
 
 
@@ -57,12 +59,49 @@ int add_process (int pid);
 void work_time_handler(unsigned long arg);
 void profile_updater_work(struct work_struct *work);
 
+// character device related 
+static int char_dev_open(struct inode* inode, struct file* file);
+static int char_dev_close(struct inode* inode, struct file* file);
+static int char_dev_mmap(struct file* file, struct vm_area_struct* vm_area);
+
+int major_num;
+
 unsigned char* mem_buf; // memory buffer used between monitor and kernel
+
+// TODO function header
+static int char_dev_open(struct inode* inode, struct file* file) 
+{
+  return 0;
+}
+
+// TODO function header
+static int char_dev_close(struct inode* inode, struct file* file) 
+{
+  return 0;
+}
+
+// TODO function header
+static int char_dev_mmap(struct file* file, struct vm_area_struct* vm_area) 
+{
+  unsigned long curr_addr = vm_area -> vm_start;
+  void * page_ptr = mem_buf;
+  struct page * page;
+
+  while (curr_addr != vm_area -> vm_end) 
+  {
+    page = vmalloc_to_page(page_ptr);
+    vm_insert_page(vm_area, curr_addr, page);
+    curr_addr += PAGE_SIZE;
+    page_ptr += PAGE_SIZE;
+  }
+
+  return 0;
+}
 
 /* mp3_read -- Callback function when reading from the proc file
  *
  * Inputs: buffer -- User space buffer to copy information to
- * 			count -- Number of bytes to copy to the buffer
+ *      count -- Number of bytes to copy to the buffer
  * Outputs: Copies the string to the user buffer
  * CPU usage time in the following format:
  * PID: xx
@@ -83,40 +122,40 @@ static ssize_t mp3_read (struct file *file, char __user *buffer, size_t count, l
     }
   
     /* Based on read_end, we decide whether to return 0 (to indicate we are done reading)
-	*  If 0 is returned, we reset the boolean */
-	if (read_end == 0)
-	{
-    	int bytes_copied = 0;
+  *  If 0 is returned, we reset the boolean */
+  if (read_end == 0)
+  {
+      int bytes_copied = 0;
 
-    	spin_lock(list_lock);
+      spin_lock(list_lock);
    
-	/* Output the string into tempBuffer for all entries in the list */
-		list_for_each_entry(cursor, &processList, list)
-		{
-			bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d\n", cursor->pid);
-		}
+  /* Output the string into tempBuffer for all entries in the list */
+    list_for_each_entry(cursor, &processList, list)
+    {
+      bytes_copied += snprintf(&tempBuffer[bytes_copied], count - bytes_copied, "PID: %d\n", cursor->pid);
+    }
 
-		spin_unlock(list_lock);
-		read_end = 1;
-	// Copy to user buffer
-		if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
-		{
-			kfree(tempBuffer);
-			return bytes_copied;
-    	}
-    	else
-    	{
-   			kfree(tempBuffer);
-   			return 0;
-    	}
+    spin_unlock(list_lock);
+    read_end = 1;
+  // Copy to user buffer
+    if (copy_to_user(buffer, tempBuffer, bytes_copied) == 0) // success
+    {
+      kfree(tempBuffer);
+      return bytes_copied;
+      }
+      else
+      {
+        kfree(tempBuffer);
+        return 0;
+      }
 
-	} 
-	else // read_end == 1 means we just return 0 for formality
-	{
-    	read_end = 0;
-    	kfree(tempBuffer);
-    	return 0;	  
-	}   
+  } 
+  else // read_end == 1 means we just return 0 for formality
+  {
+      read_end = 0;
+      kfree(tempBuffer);
+      return 0;   
+  }   
 }
 
 /* work_time_handler
@@ -135,8 +174,8 @@ void work_time_handler(unsigned long arg)
 /* cpu_time_updater_work
  * Bottom half of timer interrupt handler placed in the work queue
  * Side Effects: Acquires the list_lock and updates all the CPU usage
- * 			values for all the processes in the list. If a process has
- * 			finished, it removes the process from the list
+ *      values for all the processes in the list. If a process has
+ *      finished, it removes the process from the list
  */
 void profile_updater_work(struct work_struct *work)
 {
@@ -172,8 +211,8 @@ void work_time_handler(unsigned long arg)
 /* cpu_time_updater_work
  * Bottom half of timer interrupt handler placed in the work queue
  * Side Effects: Acquires the list_lock and updates all the CPU usage
- * 			values for all the processes in the list. If a process has
- * 			finished, it removes the process from the list
+ *      values for all the processes in the list. If a process has
+ *      finished, it removes the process from the list
  */
 void profile_updater_work(struct work_struct *work)
 {
@@ -215,9 +254,9 @@ int add_process (int pid)
    newProcess->pid = pid;
    newProcess->linux_task = find_task_by_pid(pid);
 
-	if (list_empty(&processList) != 0){
-		queue_work(cpu_wq, &profiler_struct);
-   	}
+  if (list_empty(&processList) != 0){
+    queue_work(cpu_wq, &profiler_struct);
+    }
 
    spin_lock(list_lock);
    list_add_tail( &newProcess->list, &processList);
@@ -237,24 +276,24 @@ int add_process (int pid)
  */
 int remove_process (int pid)
 {
-	mp3_task_struct *thisProcess, *next;
+  mp3_task_struct *thisProcess, *next;
 
-  	printk(KERN_INFO "MP3 workqueue handler!\n");
+    printk(KERN_INFO "MP3 workqueue handler!\n");
 
    // Update CPU time for all process
-	list_for_each_entry_safe(thisProcess, next, &processList, list)
-	{
-		spin_lock(list_lock);
-			list_del(&thisProcess->list);
-			kfree(thisProcess);
-			printk(KERN_INFO "MP3 deleting process - not running\n");
-		spin_unlock(list_lock);
-	}
+  list_for_each_entry_safe(thisProcess, next, &processList, list)
+  {
+    spin_lock(list_lock);
+      list_del(&thisProcess->list);
+      kfree(thisProcess);
+      printk(KERN_INFO "MP3 deleting process - not running\n");
+    spin_unlock(list_lock);
+  }
 
-	if (list_empty(&processList) != 0){
-		flush_workqueue(cpu_wq);				//"destroy" workqueue if there are no more PCBs in the list
-	}
-	return 1;
+  if (list_empty(&processList) != 0){
+    flush_workqueue(cpu_wq);        //"destroy" workqueue if there are no more PCBs in the list
+  }
+  return 1;
 }
 
 /* mp3_write
@@ -265,54 +304,54 @@ int remove_process (int pid)
  */
 static ssize_t mp3_write (struct file *file, const char __user *buffer, size_t count, loff_t *data) 
 {
-	char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
-	int PID;
-	char op;
-	if(tempBuffer == NULL)
-	{
-		printk(KERN_WARNING "mp3 write malloc failed\n");
-		return 0;
-	}
+  char * tempBuffer = kmalloc(count+1, GFP_KERNEL);
+  int PID;
+  char op;
+  if(tempBuffer == NULL)
+  {
+    printk(KERN_WARNING "mp3 write malloc failed\n");
+    return 0;
+  }
 
-	/* Get info from user */
-	  
-	if(copy_from_user(tempBuffer, buffer, count) != 0)
-		goto write_fail;
+  /* Get info from user */
+    
+  if(copy_from_user(tempBuffer, buffer, count) != 0)
+    goto write_fail;
 
-	/* NULL terminate string */
-	tempBuffer[count] = '\0';
+  /* NULL terminate string */
+  tempBuffer[count] = '\0';
 
-	printk(KERN_INFO "mp3 Command: %s\n", tempBuffer);
-   	sscanf(tempBuffer, "%c", &op);
+  printk(KERN_INFO "mp3 Command: %s\n", tempBuffer);
+    sscanf(tempBuffer, "%c", &op);
 
-   	printk(KERN_INFO "mp3 OP: %c\n", op);
-	/* parse string */
-   	switch (op){
-    	case 'R':
-	        printk(KERN_INFO "mp3 Registration\n");
-	   		sscanf(tempBuffer, "%c, %d", &op, &PID);
-	        add_process(PID);
-	        break;
+    printk(KERN_INFO "mp3 OP: %c\n", op);
+  /* parse string */
+    switch (op){
+      case 'R':
+          printk(KERN_INFO "mp3 Registration\n");
+          sscanf(tempBuffer, "%c, %d", &op, &PID);
+          add_process(PID);
+          break;
 
-    	case 'U':
-        	printk(KERN_INFO "mp3 Unregistration\n");
-        	sscanf(tempBuffer, "%c, %d", &op, &PID);
-        	remove_process(PID);
-        	break;
+      case 'U':
+          printk(KERN_INFO "mp3 Unregistration\n");
+          sscanf(tempBuffer, "%c, %d", &op, &PID);
+          remove_process(PID);
+          break;
 
-      	default:
-			printk(KERN_WARNING "mp3 write fail\n");
-			goto write_fail;
-			break;
+        default:
+          printk(KERN_WARNING "mp3 write fail\n");
+          goto write_fail;
+          break;
    }
 
-	kfree(tempBuffer);
+  kfree(tempBuffer);
 
-	return  count;
+  return  count;
 write_fail:
-	printk(KERN_WARNING "write failed\n");
-	kfree(tempBuffer);
-	return 0;	
+  printk(KERN_WARNING "write failed\n");
+  kfree(tempBuffer);
+  return 0; 
 }
 
 static const struct file_operations mp3_file = 
@@ -334,10 +373,10 @@ void list_cleanup(void)
    spin_lock(list_lock);
    if (list_empty(&processList) == 0) 
    {
-	#ifdef DEBUG
+  #ifdef DEBUG
       printk(KERN_INFO "Cleaning up processList\n");
     #endif
-	  // Delete all entry
+    // Delete all entry
       list_for_each_entry_safe(aProcess, tmp, &processList, list) 
       {
          #ifdef DEBUG
@@ -360,18 +399,17 @@ int __init mp3_init(void)
    printk(KERN_ALERT "MP3 MODULE LOADING\n");
    #endif
    // Insert your code here ...
-   printk(KERN_INFO "Hello World!\n");
 
-	init_timer(&work_timer);   //Initialize timer to wake up work queue
-	work_timer.function = work_time_handler;
-	work_timer.expires = jiffies + HZ/20;
-	work_timer.data = 0;
+  init_timer(&work_timer);   //Initialize timer to wake up work queue
+  work_timer.function = work_time_handler;
+  work_timer.expires = jiffies + HZ/20;
+  work_timer.data = 0;
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
    {
-		printk(KERN_WARNING "spinlock malloc failed");
-		return -1;
+    printk(KERN_WARNING "spinlock malloc failed");
+    return -1;
    }
 
    //Init spin lock
@@ -394,6 +432,32 @@ int __init mp3_init(void)
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp3_file);  //create entry in proc system
+
+   printk(KERN_INFO "Initializing character device.\n");
+
+   static struct file_operations char_dev_fops = {
+    .open = char_dev_open,
+    .release = char_dev_close,
+    .mmap = char_dev_mmap
+   }
+
+   major_num = register_chrdev(0, "mp3_char_dev", &char_dev_fops);
+
+   if (major_num < 0) 
+   {
+    printk(KERN_ALERT "Character device registration failed.\n");
+    return major_num;
+   }
+
+   printk(KERN_INFO "Character device initialized.\n");
+
+   mem_buf = vmalloc(128 * 4096); // TODO pg_reserved???
+
+   if (!mem_buf) 
+   {
+    printk(KERN_ALERT "Shared buffer allocation failed.\n");
+    return 1;
+   }
    
    printk(KERN_ALERT "MP3 MODULE LOADED\n");
    return 0;   
@@ -410,13 +474,14 @@ void __exit mp3_exit(void)
    
    flush_workqueue(cpu_wq);
    destroy_workqueue(cpu_wq);
-
-   printk(KERN_INFO "See ya.\n");
    list_cleanup();
 
    remove_proc_entry(FILENAME, proc_dir);
    proc_remove(proc_dir);
    kfree(list_lock);
+
+   unregister_chrdev(major_num, "mp3_char_dev");
+   vfree(mem_buf);
 
    printk(KERN_ALERT "MP3 MODULE UNLOADED\n");
 }
