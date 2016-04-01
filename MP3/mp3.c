@@ -11,7 +11,6 @@
 #include <linux/jiffies.h>
 #include <linux/uaccess.h>
 #include <linux/workqueue.h>
-#include <linux/vmalloc.h>
 #include "mp3_given.h"
 
 
@@ -28,9 +27,12 @@ MODULE_DESCRIPTION("CS-423 MP3");
 static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
+static struct timer_list work_timer;
+
 spinlock_t *list_lock;
 
 struct workqueue_struct *cpu_wq;
+struct work_struct profiler_struct;
 
 static struct kmem_cache *PCB_cache;
 
@@ -38,7 +40,7 @@ static struct kmem_cache *PCB_cache;
 typedef struct  
 {
    struct task_struct* linux_task; 
-   //struct timer_list wakeup_timer; 
+   struct timer_list wakeup_timer; 
    int minor_fault_count;
    int major_fault_count;
    int processor_utilization;
@@ -50,7 +52,11 @@ static struct list_head processList;
 
 static int read_end;
 
-unsigned char* mem_buf; // memory buffer used between monitor and kernel
+/* Function prototypes */
+void list_cleanup(void);
+int add_process (int pid);
+void work_time_handler(unsigned long arg);
+void profile_updater_work(struct work_struct *work);
 
 /* mp3_read -- Callback function when reading from the proc file
  *
@@ -100,7 +106,7 @@ static ssize_t mp3_read (struct file *file, char __user *buffer, size_t count, l
     	else
     	{
    			kfree(tempBuffer);
-			return 0;
+   			return 0;
     	}
 
 	} 
@@ -110,6 +116,41 @@ static ssize_t mp3_read (struct file *file, char __user *buffer, size_t count, l
     	kfree(tempBuffer);
     	return 0;	  
 	}   
+}
+
+/* work_time_handler
+ * Call back function for the Kernel Timer
+ * Adds the bottom half to the workqueue and resets the timer
+ */
+void work_time_handler(unsigned long arg)
+{
+   printk(KERN_INFO "MP3 Timer Callback\n");
+
+   queue_work(cpu_wq, &profiler_struct);
+   mod_timer(&work_timer, jiffies + HZ/20);
+   return;
+}
+
+/* cpu_time_updater_work
+ * Bottom half of timer interrupt handler placed in the work queue
+ * Side Effects: Acquires the list_lock and updates all the CPU usage
+ * 			values for all the processes in the list. If a process has
+ * 			finished, it removes the process from the list
+ */
+void profile_updater_work(struct work_struct *work)
+{
+   mp3_task_struct *thisProcess, *next;
+
+   printk(KERN_INFO "MP3 workqueue handler!\n");
+
+   // Update CPU time for all process
+   list_for_each_entry_safe(thisProcess, next, &processList, list)
+   {
+      spin_lock(list_lock);
+      // TODO
+      spin_unlock(list_lock);
+   }
+   return;
 }
 
 
@@ -136,13 +177,46 @@ int add_process (int pid)
    newProcess->pid = pid;
    newProcess->linux_task = find_task_by_pid(pid);
 
-   // TODO add to work queue? what do we do about the other variables? 
+	if (list_empty(&processList) != 0){
+		queue_work(cpu_wq, &profiler_struct);
+   	}
 
    spin_lock(list_lock);
    list_add_tail( &newProcess->list, &processList);
    spin_unlock(list_lock);
 
+   add_timer(&work_timer);
+   queue_work(cpu_wq, &profiler_struct);
+
    return 1;
+}
+
+/* remove_process(int pid)
+ * Removes a PCB from the PCB list
+ * Inputs:  pid -- the pid of the process to be removed
+ * Return value: 1 on success, 0 on failure
+ * Side Effects: Holds the list_lock lock
+ */
+int remove_process (int pid)
+{
+	mp3_task_struct *thisProcess, *next;
+
+  	printk(KERN_INFO "MP3 workqueue handler!\n");
+
+   // Update CPU time for all process
+	list_for_each_entry_safe(thisProcess, next, &processList, list)
+	{
+		spin_lock(list_lock);
+			list_del(&thisProcess->list);
+			kfree(thisProcess);
+			printk(KERN_INFO "MP3 deleting process - not running\n");
+		spin_unlock(list_lock);
+	}
+
+	if (list_empty(&processList) != 0){
+		flush_workqueue(cpu_wq);				//"destroy" workqueue if there are no more PCBs in the list
+	}
+	return 1;
 }
 
 
@@ -186,7 +260,7 @@ static ssize_t mp3_write (struct file *file, const char __user *buffer, size_t c
     	case 'U':
         	printk(KERN_INFO "mp3 Unregistration\n");
         	sscanf(tempBuffer, "%c, %d", &op, &PID);
-        	// TODO
+        	remove_process(PID);
         	break;
 
       	default:
@@ -251,10 +325,10 @@ int __init mp3_init(void)
    // Insert your code here ...
    printk(KERN_INFO "Hello World!\n");
 
-   // init_timer(&work_timer);   //Initialize timer to wake up work queue
-   // work_timer.function = work_time_handler;
-   // work_timer.expires = jiffies + 5*HZ;
-   // work_timer.data = 0;
+	init_timer(&work_timer);   //Initialize timer to wake up work queue
+	work_timer.function = work_time_handler;
+	work_timer.expires = jiffies + HZ/20;
+	work_timer.data = 0;
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
@@ -275,7 +349,7 @@ int __init mp3_init(void)
    }
 
    // Init entry to work queue
-   // INIT_WORK(&update_cpu_times, cpu_time_updater_work);
+   INIT_WORK(&profiler_struct, profile_updater_work);
 
    INIT_LIST_HEAD(&processList);
 
@@ -283,29 +357,19 @@ int __init mp3_init(void)
    
    proc_dir = proc_mkdir(DIRECTORY, NULL);
    proc_entry = proc_create(FILENAME, 0666, proc_dir, &mp3_file);  //create entry in proc system
-
-   mem_buf = (unsigned char*)vmalloc(128 * 4000); // 128 * 4 KB in Step 5
-
-   if (!mem_buf) {
-		   printk(KERN_WARNING "Memory buffer allocation fail.\n");
-		   return -1;
-   } 
-
-   // TODO not sure if we need to do anything explicit with PG_reserved
    
    printk(KERN_ALERT "MP3 MODULE LOADED\n");
-   // add_timer(&work_timer);
    return 0;   
 }
 
 // mp3_exit - Called when module is unloaded
 void __exit mp3_exit(void)
 {
-#ifdef DEBUG
+   #ifdef DEBUG
    printk(KERN_ALERT "MP3 MODULE UNLOADING\n");
    #endif
    // Insert your code here ...
-   // del_timer(&work_timer);
+   del_timer(&work_timer);
    
    flush_workqueue(cpu_wq);
    destroy_workqueue(cpu_wq);
