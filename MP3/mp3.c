@@ -39,8 +39,7 @@ static struct kmem_cache *PCB_cache;
 //all times are stored as jiffies
 typedef struct  
 {
-   struct task_struct* linux_task; 
-   struct timer_list wakeup_timer; 
+   struct task_struct* linux_task;
    int minor_fault_count;
    int major_fault_count;
    int processor_utilization;
@@ -57,6 +56,8 @@ void list_cleanup(void);
 int add_process (int pid);
 void work_time_handler(unsigned long arg);
 void profile_updater_work(struct work_struct *work);
+
+unsigned char* mem_buf; // memory buffer used between monitor and kernel
 
 /* mp3_read -- Callback function when reading from the proc file
  *
@@ -154,6 +155,43 @@ void profile_updater_work(struct work_struct *work)
 }
 
 
+/* work_time_handler
+ * Call back function for the Kernel Timer
+ * Adds the bottom half to the workqueue and resets the timer
+ */
+void work_time_handler(unsigned long arg)
+{
+   printk(KERN_INFO "MP3 Timer Callback\n");
+
+   queue_work(cpu_wq, &profiler_struct);
+   mod_timer(&work_timer, jiffies + HZ/20);
+   return;
+}
+
+
+/* cpu_time_updater_work
+ * Bottom half of timer interrupt handler placed in the work queue
+ * Side Effects: Acquires the list_lock and updates all the CPU usage
+ * 			values for all the processes in the list. If a process has
+ * 			finished, it removes the process from the list
+ */
+void profile_updater_work(struct work_struct *work)
+{
+   mp3_task_struct *thisProcess, *next;
+
+   printk(KERN_INFO "MP3 workqueue handler!\n");
+
+   // Update CPU time for all process
+   list_for_each_entry_safe(thisProcess, next, &processList, list)
+   {
+      spin_lock(list_lock);
+      // TODO
+      spin_unlock(list_lock);
+   }
+   return;
+}
+
+
 /* add_process(int pid)
  * Adds a new process with given pid to the linked list 
  * Inputs:  pid -- The pid of the registered process
@@ -183,7 +221,7 @@ int add_process (int pid)
 
    spin_lock(list_lock);
    list_add_tail( &newProcess->list, &processList);
-   spin_unlock(list_lock);
+   spin_unlock(list_lock);   
 
    add_timer(&work_timer);
    queue_work(cpu_wq, &profiler_struct);
@@ -218,7 +256,6 @@ int remove_process (int pid)
 	}
 	return 1;
 }
-
 
 /* mp3_write
  * Registers a new process with pid given in the user buffer
