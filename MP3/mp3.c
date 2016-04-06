@@ -171,7 +171,7 @@ void work_time_handler(unsigned long arg)
    return;
 }
 
-/* cpu_time_updater_work
+/* profile_updater_work
  * Bottom half of timer interrupt handler placed in the work queue
  * Side Effects: Acquires the list_lock and updates all the CPU usage
  *      values for all the processes in the list. If a process has
