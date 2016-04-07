@@ -30,7 +30,6 @@ static struct proc_dir_entry *proc_dir;
 static struct proc_dir_entry *proc_entry;
 
 static struct timer_list work_timer;
-
 spinlock_t *list_lock;
 
 spinlock_t *sharedmemlock;
@@ -50,7 +49,7 @@ typedef struct
 } mp3_task_struct;
 
 static struct list_head processList;
-
+static unsigned long lastwork = 1;
 static int read_end;
 
 /* Function prototypes */
@@ -189,6 +188,7 @@ void profile_updater_work(struct work_struct *work)
    unsigned long total_maj_flt = 0;
    unsigned long total_stime = 0;
    unsigned long total_utime = 0;
+
    list_for_each_entry_safe(thisProcess, next, &processList, list)
    {
       spin_lock(list_lock);
@@ -209,10 +209,14 @@ void profile_updater_work(struct work_struct *work)
       // TODO
       spin_unlock(list_lock);
    }
-printk(KERN_INFO "mp3 data: %u,%u,%u,%u",jiffies,total_min_flt,total_maj_flt,((total_stime+total_utime)*1000) / jiffies);
+//printk(KERN_INFO "mp3 data: %u,%u,%u,%u",jiffies,total_min_flt,total_maj_flt,((total_stime+total_utime)*100) / elapsedjiffies);
    unsigned long * curpointer =(unsigned long *)((unsigned long) mem_buf + sampleCount*4*sizeof(unsigned long));
 	
 spin_lock(sharedmemlock);
+ unsigned long elapsed = jiffies;
+        elapsed  -= lastwork; 
+
+      lastwork = jiffies;    
 curpointer[0] = jiffies;
 //   *curpointer = jiffies;
 
@@ -221,7 +225,7 @@ curpointer[0] = jiffies;
  //  curpointer += sizeof(unsigned long);
    curpointer[2] = total_maj_flt;
    //curpointer += sizeof(unsigned long);
-   curpointer[3] = ((total_stime+total_utime)*1000) / jiffies;
+   curpointer[3] = ((total_stime+total_utime)*100)/elapsed;
    
 sampleCount++;
    if(sampleCount == 12000)
@@ -256,6 +260,9 @@ int add_process (int pid)
   if (list_empty(&processList) != 0){
     add_timer(&work_timer);
     queue_work(cpu_wq, &profiler_struct);
+    spin_lock(sharedmemlock);
+  lastwork = jiffies;
+  spin_unlock(sharedmemlock);
   }
 
    spin_lock(list_lock);
