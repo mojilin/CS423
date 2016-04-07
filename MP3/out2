@@ -1,0 +1,3605 @@
+[    0.000000] Initializing cgroup subsys cpuset
+[    0.000000] Initializing cgroup subsys cpu
+[    0.000000] Initializing cgroup subsys cpuacct
+[    0.000000] Linux version 3.19.0-25-generic (buildd@lgw01-20) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #26~14.04.1-Ubuntu SMP Fri Jul 24 21:16:20 UTC 2015 (Ubuntu 3.19.0-25.26~14.04.1-generic 3.19.8-ckt2)
+[    0.000000] Command line: BOOT_IMAGE=/boot/vmlinuz-3.19.0-25-generic root=UUID=4c999b69-1166-45d8-ab62-a89b017d852e ro quiet splash
+[    0.000000] KERNEL supported cpus:
+[    0.000000]   Intel GenuineIntel
+[    0.000000]   AMD AuthenticAMD
+[    0.000000]   Centaur CentaurHauls
+[    0.000000] Disabled fast string operations
+[    0.000000] e820: BIOS-provided physical RAM map:
+[    0.000000] BIOS-e820: [mem 0x0000000000000000-0x000000000009f3ff] usable
+[    0.000000] BIOS-e820: [mem 0x000000000009f400-0x000000000009ffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000000dc000-0x00000000000fffff] reserved
+[    0.000000] BIOS-e820: [mem 0x0000000000100000-0x000000005feeffff] usable
+[    0.000000] BIOS-e820: [mem 0x000000005fef0000-0x000000005fefefff] ACPI data
+[    0.000000] BIOS-e820: [mem 0x000000005feff000-0x000000005fefffff] ACPI NVS
+[    0.000000] BIOS-e820: [mem 0x000000005ff00000-0x000000005fffffff] usable
+[    0.000000] BIOS-e820: [mem 0x00000000f0000000-0x00000000f7ffffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fec00000-0x00000000fec0ffff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fee00000-0x00000000fee00fff] reserved
+[    0.000000] BIOS-e820: [mem 0x00000000fffe0000-0x00000000ffffffff] reserved
+[    0.000000] NX (Execute Disable) protection: active
+[    0.000000] SMBIOS 2.4 present.
+[    0.000000] DMI: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 09/21/2015
+[    0.000000] Hypervisor detected: VMware
+[    0.000000] e820: update [mem 0x00000000-0x00000fff] usable ==> reserved
+[    0.000000] e820: remove [mem 0x000a0000-0x000fffff] usable
+[    0.000000] AGP: No AGP bridge found
+[    0.000000] e820: last_pfn = 0x60000 max_arch_pfn = 0x400000000
+[    0.000000] MTRR default type: uncachable
+[    0.000000] MTRR fixed ranges enabled:
+[    0.000000]   00000-9FFFF write-back
+[    0.000000]   A0000-BFFFF uncachable
+[    0.000000]   C0000-CFFFF write-protect
+[    0.000000]   D0000-EFFFF uncachable
+[    0.000000]   F0000-FFFFF write-protect
+[    0.000000] MTRR variable ranges enabled:
+[    0.000000]   0 base 00000000000 mask 3FFC0000000 write-back
+[    0.000000]   1 base 00040000000 mask 3FFE0000000 write-back
+[    0.000000]   2 disabled
+[    0.000000]   3 disabled
+[    0.000000]   4 disabled
+[    0.000000]   5 disabled
+[    0.000000]   6 disabled
+[    0.000000]   7 disabled
+[    0.000000] PAT configuration [0-7]: WB  WC  UC- UC  WB  WC  UC- UC  
+[    0.000000] found SMP MP-table at [mem 0x000f6b30-0x000f6b3f] mapped at [ffff8800000f6b30]
+[    0.000000] Scanning 1 areas for low memory corruption
+[    0.000000] Base memory trampoline at [ffff880000099000] 99000 size 24576
+[    0.000000] Using GB pages for direct mapping
+[    0.000000] init_memory_mapping: [mem 0x00000000-0x000fffff]
+[    0.000000]  [mem 0x00000000-0x000fffff] page 4k
+[    0.000000] BRK [0x01fd4000, 0x01fd4fff] PGTABLE
+[    0.000000] BRK [0x01fd5000, 0x01fd5fff] PGTABLE
+[    0.000000] BRK [0x01fd6000, 0x01fd6fff] PGTABLE
+[    0.000000] init_memory_mapping: [mem 0x5fc00000-0x5fdfffff]
+[    0.000000]  [mem 0x5fc00000-0x5fdfffff] page 2M
+[    0.000000] BRK [0x01fd7000, 0x01fd7fff] PGTABLE
+[    0.000000] init_memory_mapping: [mem 0x40000000-0x5fbfffff]
+[    0.000000]  [mem 0x40000000-0x5fbfffff] page 2M
+[    0.000000] init_memory_mapping: [mem 0x20000000-0x3fffffff]
+[    0.000000]  [mem 0x20000000-0x3fffffff] page 2M
+[    0.000000] init_memory_mapping: [mem 0x00100000-0x1fffffff]
+[    0.000000]  [mem 0x00100000-0x001fffff] page 4k
+[    0.000000]  [mem 0x00200000-0x1fffffff] page 2M
+[    0.000000] init_memory_mapping: [mem 0x5fe00000-0x5feeffff]
+[    0.000000]  [mem 0x5fe00000-0x5feeffff] page 4k
+[    0.000000] BRK [0x01fd8000, 0x01fd8fff] PGTABLE
+[    0.000000] init_memory_mapping: [mem 0x5ff00000-0x5fffffff]
+[    0.000000]  [mem 0x5ff00000-0x5fffffff] page 4k
+[    0.000000] RAMDISK: [mem 0x35a30000-0x36d0ffff]
+[    0.000000] ACPI: Early table checksum verification disabled
+[    0.000000] ACPI: RSDP 0x00000000000F6AC0 000024 (v02 PTLTD )
+[    0.000000] ACPI: XSDT 0x000000005FEF114C 00005C (v01 INTEL  440BX    06040000 VMW  01324272)
+[    0.000000] ACPI: FACP 0x000000005FEFEE73 0000F4 (v04 INTEL  440BX    06040000 PTL  000F4240)
+[    0.000000] ACPI: DSDT 0x000000005FEF13B4 00DABF (v01 PTLTD  Custom   06040000 MSFT 03000001)
+[    0.000000] ACPI: FACS 0x000000005FEFFFC0 000040
+[    0.000000] ACPI: BOOT 0x000000005FEF138C 000028 (v01 PTLTD  $SBFTBL$ 06040000  LTP 00000001)
+[    0.000000] ACPI: APIC 0x000000005FEF133C 000050 (v01 PTLTD  ? APIC   06040000  LTP 00000000)
+[    0.000000] ACPI: MCFG 0x000000005FEF1300 00003C (v01 PTLTD  $PCITBL$ 06040000  LTP 00000001)
+[    0.000000] ACPI: SRAT 0x000000005FEF1248 0000B8 (v02 VMWARE MEMPLUG  06040000 VMW  00000001)
+[    0.000000] ACPI: HPET 0x000000005FEF1210 000038 (v01 VMWARE VMW HPET 06040000 VMW  00000001)
+[    0.000000] ACPI: WAET 0x000000005FEF11E8 000028 (v01 VMWARE VMW WAET 06040000 VMW  00000001)
+[    0.000000] ACPI: Local APIC address 0xfee00000
+[    0.000000] SRAT: PXM 0 -> APIC 0x00 -> Node 0
+[    0.000000] SRAT: Node 0 PXM 0 [mem 0x00000000-0x0009ffff]
+[    0.000000] SRAT: Node 0 PXM 0 [mem 0x00100000-0x0fffffff]
+[    0.000000] SRAT: Node 0 PXM 0 [mem 0x10000000-0x5fffffff]
+[    0.000000] NUMA: Node 0 [mem 0x00000000-0x0009ffff] + [mem 0x00100000-0x0fffffff] -> [mem 0x00000000-0x0fffffff]
+[    0.000000] NUMA: Node 0 [mem 0x00000000-0x0fffffff] + [mem 0x10000000-0x5fffffff] -> [mem 0x00000000-0x5fffffff]
+[    0.000000] NODE_DATA(0) allocated [mem 0x5fffb000-0x5fffffff]
+[    0.000000]  [ffffea0000000000-ffffea00017fffff] PMD -> [ffff88005de00000-ffff88005f5fffff] on node 0
+[    0.000000] Zone ranges:
+[    0.000000]   DMA      [mem 0x00001000-0x00ffffff]
+[    0.000000]   DMA32    [mem 0x01000000-0x5fffffff]
+[    0.000000]   Normal   empty
+[    0.000000] Movable zone start for each node
+[    0.000000] Early memory node ranges
+[    0.000000]   node   0: [mem 0x00001000-0x0009efff]
+[    0.000000]   node   0: [mem 0x00100000-0x5feeffff]
+[    0.000000]   node   0: [mem 0x5ff00000-0x5fffffff]
+[    0.000000] Initmem setup node 0 [mem 0x00001000-0x5fffffff]
+[    0.000000] On node 0 totalpages: 393102
+[    0.000000]   DMA zone: 64 pages used for memmap
+[    0.000000]   DMA zone: 21 pages reserved
+[    0.000000]   DMA zone: 3998 pages, LIFO batch:0
+[    0.000000]   DMA32 zone: 6080 pages used for memmap
+[    0.000000]   DMA32 zone: 389104 pages, LIFO batch:31
+[    0.000000] ACPI: PM-Timer IO Port: 0x1008
+[    0.000000] ACPI: Local APIC address 0xfee00000
+[    0.000000] ACPI: LAPIC (acpi_id[0x00] lapic_id[0x00] enabled)
+[    0.000000] ACPI: LAPIC_NMI (acpi_id[0x00] high edge lint[0x1])
+[    0.000000] ACPI: IOAPIC (id[0x01] address[0xfec00000] gsi_base[0])
+[    0.000000] IOAPIC[0]: apic_id 1, version 17, address 0xfec00000, GSI 0-23
+[    0.000000] ACPI: INT_SRC_OVR (bus 0 bus_irq 0 global_irq 2 high edge)
+[    0.000000] ACPI: IRQ0 used by override.
+[    0.000000] ACPI: IRQ9 used by override.
+[    0.000000] Using ACPI (MADT) for SMP configuration information
+[    0.000000] ACPI: HPET id: 0x8086af01 base: 0xfed00000
+[    0.000000] smpboot: Allowing 1 CPUs, 0 hotplug CPUs
+[    0.000000] PM: Registered nosave memory: [mem 0x00000000-0x00000fff]
+[    0.000000] PM: Registered nosave memory: [mem 0x0009f000-0x0009ffff]
+[    0.000000] PM: Registered nosave memory: [mem 0x000a0000-0x000dbfff]
+[    0.000000] PM: Registered nosave memory: [mem 0x000dc000-0x000fffff]
+[    0.000000] PM: Registered nosave memory: [mem 0x5fef0000-0x5fefefff]
+[    0.000000] PM: Registered nosave memory: [mem 0x5feff000-0x5fefffff]
+[    0.000000] e820: [mem 0x60000000-0xefffffff] available for PCI devices
+[    0.000000] Booting paravirtualized kernel on bare hardware
+[    0.000000] setup_percpu: NR_CPUS:256 nr_cpumask_bits:256 nr_cpu_ids:1 nr_node_ids:1
+[    0.000000] PERCPU: Embedded 31 pages/cpu @ffff88005fc00000 s86144 r8192 d32640 u2097152
+[    0.000000] pcpu-alloc: s86144 r8192 d32640 u2097152 alloc=1*2097152
+[    0.000000] pcpu-alloc: [0] 0 
+[    0.000000] Built 1 zonelists in Node order, mobility grouping on.  Total pages: 386937
+[    0.000000] Policy zone: DMA32
+[    0.000000] Kernel command line: BOOT_IMAGE=/boot/vmlinuz-3.19.0-25-generic root=UUID=4c999b69-1166-45d8-ab62-a89b017d852e ro quiet splash
+[    0.000000] PID hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.000000] xsave: enabled xstate_bv 0x7, cntxt size 0x340 using standard form
+[    0.000000] AGP: Checking aperture...
+[    0.000000] AGP: No AGP bridge found
+[    0.000000] Calgary: detecting Calgary via BIOS EBDA area
+[    0.000000] Calgary: Unable to locate Rio Grande table in EBDA - bailing!
+[    0.000000] Memory: 1511792K/1572408K available (7918K kernel code, 1172K rwdata, 3752K rodata, 1408K init, 1292K bss, 60616K reserved, 0K cma-reserved)
+[    0.000000] SLUB: HWalign=64, Order=0-3, MinObjects=0, CPUs=1, Nodes=1
+[    0.000000] Hierarchical RCU implementation.
+[    0.000000] 	RCU dyntick-idle grace-period acceleration is enabled.
+[    0.000000] 	RCU restricting CPUs from NR_CPUS=256 to nr_cpu_ids=1.
+[    0.000000] RCU: Adjusting geometry for rcu_fanout_leaf=16, nr_cpu_ids=1
+[    0.000000] NR_IRQS:16640 nr_irqs:256 16
+[    0.000000] 	Offload RCU callbacks from all CPUs
+[    0.000000] 	Offload RCU callbacks from CPUs: 0.
+[    0.000000] Console: colour VGA+ 80x25
+[    0.000000] console [tty0] enabled
+[    0.000000] hpet clockevent registered
+[    0.000000] TSC freq read from hypervisor : 2299.998 MHz
+[    0.000000] tsc: Detected 2299.998 MHz processor
+[    0.000078] Calibrating delay loop (skipped) preset value.. 4599.99 BogoMIPS (lpj=9199992)
+[    0.000081] pid_max: default: 32768 minimum: 301
+[    0.000085] ACPI: Core revision 20141107
+[    0.008100] ACPI: All ACPI Tables successfully acquired
+[    0.009985] Security Framework initialized
+[    0.009998] AppArmor: AppArmor initialized
+[    0.009999] Yama: becoming mindful.
+[    0.010135] Dentry cache hash table entries: 262144 (order: 9, 2097152 bytes)
+[    0.010477] Inode-cache hash table entries: 131072 (order: 8, 1048576 bytes)
+[    0.010625] Mount-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.010628] Mountpoint-cache hash table entries: 4096 (order: 3, 32768 bytes)
+[    0.010795] Initializing cgroup subsys memory
+[    0.010800] Initializing cgroup subsys devices
+[    0.010802] Initializing cgroup subsys freezer
+[    0.010804] Initializing cgroup subsys net_cls
+[    0.010806] Initializing cgroup subsys blkio
+[    0.010807] Initializing cgroup subsys perf_event
+[    0.010809] Initializing cgroup subsys net_prio
+[    0.010811] Initializing cgroup subsys hugetlb
+[    0.010855] Disabled fast string operations
+[    0.010857] CPU: Physical Processor ID: 0
+[    0.010864] ENERGY_PERF_BIAS: Set to 'normal', was 'performance'
+[    0.010864] ENERGY_PERF_BIAS: View and update with x86_energy_perf_policy(8)
+[    0.011618] mce: CPU supports 0 MCE banks
+[    0.011645] Last level iTLB entries: 4KB 1024, 2MB 1024, 4MB 1024
+[    0.011645] Last level dTLB entries: 4KB 1024, 2MB 1024, 4MB 1024, 1GB 4
+[    0.021664] Freeing SMP alternatives memory: 32K (ffffffff81e87000 - ffffffff81e8f000)
+[    0.024147] ftrace: allocating 29988 entries in 118 pages
+[    0.045674] Enabling x2apic
+[    0.046340] Enabled x2apic
+[    0.046405] Switched APIC routing to physical x2apic.
+[    0.046815] ..TIMER: vector=0x30 apic1=0 pin1=2 apic2=-1 pin2=-1
+[    0.086481] smpboot: CPU0: Intel(R) Xeon(R) CPU E5-2670 v3 @ 2.30GHz (fam: 06, model: 3f, stepping: 02)
+[    0.086524] TSC deadline timer enabled
+[    0.086548] Performance Events: 16-deep LBR, Haswell events, core PMU driver.
+[    0.086585] perf_event_intel: CPUID marked event: 'cpu cycles' unavailable
+[    0.086586] perf_event_intel: CPUID marked event: 'instructions' unavailable
+[    0.086587] perf_event_intel: CPUID marked event: 'bus cycles' unavailable
+[    0.086587] perf_event_intel: CPUID marked event: 'cache references' unavailable
+[    0.086588] perf_event_intel: CPUID marked event: 'cache misses' unavailable
+[    0.086589] perf_event_intel: CPUID marked event: 'branch instructions' unavailable
+[    0.086589] perf_event_intel: CPUID marked event: 'branch misses' unavailable
+[    0.086592] ... version:                1
+[    0.086592] ... bit width:              48
+[    0.086593] ... generic registers:      4
+[    0.086594] ... value mask:             0000ffffffffffff
+[    0.086594] ... max period:             000000007fffffff
+[    0.086595] ... fixed-purpose events:   0
+[    0.086595] ... event mask:             000000000000000f
+[    0.087269] x86: Booted up 1 node, 1 CPUs
+[    0.087270] smpboot: Total of 1 processors activated (4599.99 BogoMIPS)
+[    0.087384] NMI watchdog: disabled (cpu0): hardware events not enabled
+[    0.087425] devtmpfs: initialized
+[    0.089880] evm: security.selinux
+[    0.089881] evm: security.SMACK64
+[    0.089882] evm: security.SMACK64EXEC
+[    0.089882] evm: security.SMACK64TRANSMUTE
+[    0.089883] evm: security.SMACK64MMAP
+[    0.089883] evm: security.ima
+[    0.089884] evm: security.capability
+[    0.089923] PM: Registering ACPI NVS region [mem 0x5feff000-0x5fefffff] (4096 bytes)
+[    0.090028] pinctrl core: initialized pinctrl subsystem
+[    0.090163] RTC time:  1:19:51, date: 04/07/16
+[    0.090253] NET: Registered protocol family 16
+[    0.090399] cpuidle: using governor ladder
+[    0.090401] cpuidle: using governor menu
+[    0.090440] ACPI: bus type PCI registered
+[    0.090442] acpiphp: ACPI Hot Plug PCI Controller Driver version: 0.5
+[    0.090618] PCI: MMCONFIG for domain 0000 [bus 00-7f] at [mem 0xf0000000-0xf7ffffff] (base 0xf0000000)
+[    0.090620] PCI: MMCONFIG at [mem 0xf0000000-0xf7ffffff] reserved in E820
+[    0.090756] PCI: Using configuration type 1 for base access
+[    0.091834] ACPI: Added _OSI(Module Device)
+[    0.091836] ACPI: Added _OSI(Processor Device)
+[    0.091837] ACPI: Added _OSI(3.0 _SCP Extensions)
+[    0.091838] ACPI: Added _OSI(Processor Aggregator Device)
+[    0.097319] [Firmware Bug]: ACPI: BIOS _OSI(Linux) query ignored
+[    0.098676] ACPI: Interpreter enabled
+[    0.098683] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S2_] (20141107/hwxface-580)
+[    0.098686] ACPI Exception: AE_NOT_FOUND, While evaluating Sleep State [\_S3_] (20141107/hwxface-580)
+[    0.098691] ACPI: (supports S0 S1 S4 S5)
+[    0.098692] ACPI: Using IOAPIC for interrupt routing
+[    0.098708] PCI: Using host bridge windows from ACPI; if necessary, use "pci=nocrs" and report a bug
+[    0.133512] ACPI: PCI Root Bridge [PCI0] (domain 0000 [bus 00-7f])
+[    0.133517] acpi PNP0A03:00: _OSC: OS supports [ExtendedConfig ASPM ClockPM Segments MSI]
+[    0.133661] acpi PNP0A03:00: _OSC: platform does not support [AER]
+[    0.133778] acpi PNP0A03:00: _OSC: OS now controls [PCIeHotplug PME PCIeCapability]
+[    0.135461] PCI host bridge to bus 0000:00
+[    0.135464] pci_bus 0000:00: root bus resource [bus 00-7f]
+[    0.135466] pci_bus 0000:00: root bus resource [mem 0x000a0000-0x000bffff]
+[    0.135467] pci_bus 0000:00: root bus resource [mem 0x000d0000-0x000d3fff]
+[    0.135468] pci_bus 0000:00: root bus resource [mem 0x000d4000-0x000d7fff]
+[    0.135469] pci_bus 0000:00: root bus resource [mem 0x000d8000-0x000dbfff]
+[    0.135470] pci_bus 0000:00: root bus resource [mem 0x60000000-0xfebfffff]
+[    0.135471] pci_bus 0000:00: root bus resource [io  0x0000-0x0cf7]
+[    0.135472] pci_bus 0000:00: root bus resource [io  0x0d00-0xfeff]
+[    0.135523] pci 0000:00:00.0: [8086:7190] type 00 class 0x060000
+[    0.135944] pci 0000:00:01.0: [8086:7191] type 01 class 0x060400
+[    0.136315] pci 0000:00:07.0: [8086:7110] type 00 class 0x060100
+[    0.136820] pci 0000:00:07.1: [8086:7111] type 00 class 0x01018a
+[    0.137802] pci 0000:00:07.1: reg 0x20: [io  0x1060-0x106f]
+[    0.138205] pci 0000:00:07.1: legacy IDE quirk: reg 0x10: [io  0x01f0-0x01f7]
+[    0.138206] pci 0000:00:07.1: legacy IDE quirk: reg 0x14: [io  0x03f6]
+[    0.138207] pci 0000:00:07.1: legacy IDE quirk: reg 0x18: [io  0x0170-0x0177]
+[    0.138208] pci 0000:00:07.1: legacy IDE quirk: reg 0x1c: [io  0x0376]
+[    0.138360] pci 0000:00:07.3: [8086:7113] type 00 class 0x068000
+[    0.139470] pci 0000:00:07.3: can't claim BAR 13 [io  0x1000-0x103f]: address conflict with ACPI PM1a_EVT_BLK [io  0x1000-0x1003]
+[    0.139479] pci 0000:00:07.3: quirk: [io  0x1040-0x104f] claimed by PIIX4 SMB
+[    0.139709] pci 0000:00:07.7: [15ad:0740] type 00 class 0x088000
+[    0.140241] pci 0000:00:07.7: reg 0x10: [io  0x1080-0x10bf]
+[    0.140732] pci 0000:00:07.7: reg 0x14: [mem 0xfebfe000-0xfebfffff 64bit]
+[    0.143014] pci 0000:00:0f.0: [15ad:0405] type 00 class 0x030000
+[    0.144673] pci 0000:00:0f.0: reg 0x10: [io  0x1070-0x107f]
+[    0.146326] pci 0000:00:0f.0: reg 0x14: [mem 0xe8000000-0xefffffff pref]
+[    0.148008] pci 0000:00:0f.0: reg 0x18: [mem 0xfe000000-0xfe7fffff]
+[    0.154285] pci 0000:00:0f.0: reg 0x30: [mem 0x00000000-0x00007fff pref]
+[    0.154673] pci 0000:00:10.0: [1000:0030] type 00 class 0x010000
+[    0.155460] pci 0000:00:10.0: reg 0x10: [io  0x1400-0x14ff]
+[    0.156240] pci 0000:00:10.0: reg 0x14: [mem 0xfeba0000-0xfebbffff 64bit]
+[    0.157013] pci 0000:00:10.0: reg 0x1c: [mem 0xfebc0000-0xfebdffff 64bit]
+[    0.158481] pci 0000:00:10.0: reg 0x30: [mem 0x00000000-0x00003fff pref]
+[    0.158782] pci 0000:00:11.0: [15ad:0790] type 01 class 0x060401
+[    0.159207] pci 0000:00:11.0: System wakeup disabled by ACPI
+[    0.159336] pci 0000:00:15.0: [15ad:07a0] type 01 class 0x060400
+[    0.159871] pci 0000:00:15.0: PME# supported from D0 D3hot D3cold
+[    0.160008] pci 0000:00:15.0: System wakeup disabled by ACPI
+[    0.160115] pci 0000:00:15.1: [15ad:07a0] type 01 class 0x060400
+[    0.160654] pci 0000:00:15.1: PME# supported from D0 D3hot D3cold
+[    0.160793] pci 0000:00:15.1: System wakeup disabled by ACPI
+[    0.160899] pci 0000:00:15.2: [15ad:07a0] type 01 class 0x060400
+[    0.161421] pci 0000:00:15.2: PME# supported from D0 D3hot D3cold
+[    0.161560] pci 0000:00:15.2: System wakeup disabled by ACPI
+[    0.161669] pci 0000:00:15.3: [15ad:07a0] type 01 class 0x060400
+[    0.162191] pci 0000:00:15.3: PME# supported from D0 D3hot D3cold
+[    0.162327] pci 0000:00:15.3: System wakeup disabled by ACPI
+[    0.162437] pci 0000:00:15.4: [15ad:07a0] type 01 class 0x060400
+[    0.162966] pci 0000:00:15.4: PME# supported from D0 D3hot D3cold
+[    0.163103] pci 0000:00:15.4: System wakeup disabled by ACPI
+[    0.163210] pci 0000:00:15.5: [15ad:07a0] type 01 class 0x060400
+[    0.163736] pci 0000:00:15.5: PME# supported from D0 D3hot D3cold
+[    0.163872] pci 0000:00:15.5: System wakeup disabled by ACPI
+[    0.163981] pci 0000:00:15.6: [15ad:07a0] type 01 class 0x060400
+[    0.164523] pci 0000:00:15.6: PME# supported from D0 D3hot D3cold
+[    0.164660] pci 0000:00:15.6: System wakeup disabled by ACPI
+[    0.164767] pci 0000:00:15.7: [15ad:07a0] type 01 class 0x060400
+[    0.165290] pci 0000:00:15.7: PME# supported from D0 D3hot D3cold
+[    0.165430] pci 0000:00:15.7: System wakeup disabled by ACPI
+[    0.165536] pci 0000:00:16.0: [15ad:07a0] type 01 class 0x060400
+[    0.166058] pci 0000:00:16.0: PME# supported from D0 D3hot D3cold
+[    0.166201] pci 0000:00:16.0: System wakeup disabled by ACPI
+[    0.166306] pci 0000:00:16.1: [15ad:07a0] type 01 class 0x060400
+[    0.166828] pci 0000:00:16.1: PME# supported from D0 D3hot D3cold
+[    0.166967] pci 0000:00:16.1: System wakeup disabled by ACPI
+[    0.167073] pci 0000:00:16.2: [15ad:07a0] type 01 class 0x060400
+[    0.167595] pci 0000:00:16.2: PME# supported from D0 D3hot D3cold
+[    0.167735] pci 0000:00:16.2: System wakeup disabled by ACPI
+[    0.167844] pci 0000:00:16.3: [15ad:07a0] type 01 class 0x060400
+[    0.168394] pci 0000:00:16.3: PME# supported from D0 D3hot D3cold
+[    0.168532] pci 0000:00:16.3: System wakeup disabled by ACPI
+[    0.168643] pci 0000:00:16.4: [15ad:07a0] type 01 class 0x060400
+[    0.169167] pci 0000:00:16.4: PME# supported from D0 D3hot D3cold
+[    0.169307] pci 0000:00:16.4: System wakeup disabled by ACPI
+[    0.169421] pci 0000:00:16.5: [15ad:07a0] type 01 class 0x060400
+[    0.169943] pci 0000:00:16.5: PME# supported from D0 D3hot D3cold
+[    0.170083] pci 0000:00:16.5: System wakeup disabled by ACPI
+[    0.170188] pci 0000:00:16.6: [15ad:07a0] type 01 class 0x060400
+[    0.170710] pci 0000:00:16.6: PME# supported from D0 D3hot D3cold
+[    0.170849] pci 0000:00:16.6: System wakeup disabled by ACPI
+[    0.170959] pci 0000:00:16.7: [15ad:07a0] type 01 class 0x060400
+[    0.171481] pci 0000:00:16.7: PME# supported from D0 D3hot D3cold
+[    0.171617] pci 0000:00:16.7: System wakeup disabled by ACPI
+[    0.171727] pci 0000:00:17.0: [15ad:07a0] type 01 class 0x060400
+[    0.172249] pci 0000:00:17.0: PME# supported from D0 D3hot D3cold
+[    0.172400] pci 0000:00:17.0: System wakeup disabled by ACPI
+[    0.172506] pci 0000:00:17.1: [15ad:07a0] type 01 class 0x060400
+[    0.173037] pci 0000:00:17.1: PME# supported from D0 D3hot D3cold
+[    0.173176] pci 0000:00:17.1: System wakeup disabled by ACPI
+[    0.173282] pci 0000:00:17.2: [15ad:07a0] type 01 class 0x060400
+[    0.173805] pci 0000:00:17.2: PME# supported from D0 D3hot D3cold
+[    0.173941] pci 0000:00:17.2: System wakeup disabled by ACPI
+[    0.174053] pci 0000:00:17.3: [15ad:07a0] type 01 class 0x060400
+[    0.174576] pci 0000:00:17.3: PME# supported from D0 D3hot D3cold
+[    0.174717] pci 0000:00:17.3: System wakeup disabled by ACPI
+[    0.174821] pci 0000:00:17.4: [15ad:07a0] type 01 class 0x060400
+[    0.175345] pci 0000:00:17.4: PME# supported from D0 D3hot D3cold
+[    0.175488] pci 0000:00:17.4: System wakeup disabled by ACPI
+[    0.175601] pci 0000:00:17.5: [15ad:07a0] type 01 class 0x060400
+[    0.176124] pci 0000:00:17.5: PME# supported from D0 D3hot D3cold
+[    0.176263] pci 0000:00:17.5: System wakeup disabled by ACPI
+[    0.176379] pci 0000:00:17.6: [15ad:07a0] type 01 class 0x060400
+[    0.176907] pci 0000:00:17.6: PME# supported from D0 D3hot D3cold
+[    0.177044] pci 0000:00:17.6: System wakeup disabled by ACPI
+[    0.177151] pci 0000:00:17.7: [15ad:07a0] type 01 class 0x060400
+[    0.177674] pci 0000:00:17.7: PME# supported from D0 D3hot D3cold
+[    0.177814] pci 0000:00:17.7: System wakeup disabled by ACPI
+[    0.177919] pci 0000:00:18.0: [15ad:07a0] type 01 class 0x060400
+[    0.178442] pci 0000:00:18.0: PME# supported from D0 D3hot D3cold
+[    0.178578] pci 0000:00:18.0: System wakeup disabled by ACPI
+[    0.178683] pci 0000:00:18.1: [15ad:07a0] type 01 class 0x060400
+[    0.179206] pci 0000:00:18.1: PME# supported from D0 D3hot D3cold
+[    0.179345] pci 0000:00:18.1: System wakeup disabled by ACPI
+[    0.179456] pci 0000:00:18.2: [15ad:07a0] type 01 class 0x060400
+[    0.179979] pci 0000:00:18.2: PME# supported from D0 D3hot D3cold
+[    0.180122] pci 0000:00:18.2: System wakeup disabled by ACPI
+[    0.180227] pci 0000:00:18.3: [15ad:07a0] type 01 class 0x060400
+[    0.180757] pci 0000:00:18.3: PME# supported from D0 D3hot D3cold
+[    0.180898] pci 0000:00:18.3: System wakeup disabled by ACPI
+[    0.181004] pci 0000:00:18.4: [15ad:07a0] type 01 class 0x060400
+[    0.181527] pci 0000:00:18.4: PME# supported from D0 D3hot D3cold
+[    0.181665] pci 0000:00:18.4: System wakeup disabled by ACPI
+[    0.181771] pci 0000:00:18.5: [15ad:07a0] type 01 class 0x060400
+[    0.182294] pci 0000:00:18.5: PME# supported from D0 D3hot D3cold
+[    0.182433] pci 0000:00:18.5: System wakeup disabled by ACPI
+[    0.182538] pci 0000:00:18.6: [15ad:07a0] type 01 class 0x060400
+[    0.183067] pci 0000:00:18.6: PME# supported from D0 D3hot D3cold
+[    0.183204] pci 0000:00:18.6: System wakeup disabled by ACPI
+[    0.183315] pci 0000:00:18.7: [15ad:07a0] type 01 class 0x060400
+[    0.183839] pci 0000:00:18.7: PME# supported from D0 D3hot D3cold
+[    0.183975] pci 0000:00:18.7: System wakeup disabled by ACPI
+[    0.184331] pci 0000:00:01.0: PCI bridge to [bus 01]
+[    0.184639] acpiphp: Slot [32] registered
+[    0.184656] acpiphp: Slot [33] registered
+[    0.184671] acpiphp: Slot [34] registered
+[    0.184685] acpiphp: Slot [35] registered
+[    0.184699] acpiphp: Slot [36] registered
+[    0.184713] acpiphp: Slot [37] registered
+[    0.184728] acpiphp: Slot [38] registered
+[    0.184742] acpiphp: Slot [39] registered
+[    0.184756] acpiphp: Slot [40] registered
+[    0.184770] acpiphp: Slot [41] registered
+[    0.184784] acpiphp: Slot [42] registered
+[    0.184798] acpiphp: Slot [43] registered
+[    0.184812] acpiphp: Slot [44] registered
+[    0.184828] acpiphp: Slot [45] registered
+[    0.184843] acpiphp: Slot [46] registered
+[    0.184857] acpiphp: Slot [47] registered
+[    0.184871] acpiphp: Slot [48] registered
+[    0.184885] acpiphp: Slot [49] registered
+[    0.184902] acpiphp: Slot [50] registered
+[    0.184917] acpiphp: Slot [51] registered
+[    0.184932] acpiphp: Slot [52] registered
+[    0.184948] acpiphp: Slot [53] registered
+[    0.184962] acpiphp: Slot [54] registered
+[    0.184975] acpiphp: Slot [55] registered
+[    0.184990] acpiphp: Slot [56] registered
+[    0.185004] acpiphp: Slot [57] registered
+[    0.185018] acpiphp: Slot [58] registered
+[    0.185033] acpiphp: Slot [59] registered
+[    0.185047] acpiphp: Slot [60] registered
+[    0.185061] acpiphp: Slot [61] registered
+[    0.185074] acpiphp: Slot [62] registered
+[    0.185088] acpiphp: Slot [63] registered
+[    0.185192] pci 0000:02:01.0: [15ad:07e0] type 00 class 0x010601
+[    0.187344] pci 0000:02:01.0: reg 0x24: [mem 0xfd5ff000-0xfd5fffff]
+[    0.187689] pci 0000:02:01.0: reg 0x30: [mem 0x00000000-0x0000ffff pref]
+[    0.188007] pci 0000:02:01.0: PME# supported from D3hot
+[    0.188117] pci 0000:02:01.0: System wakeup disabled by ACPI
+[    0.188361] pci 0000:00:11.0: PCI bridge to [bus 02] (subtractive decode)
+[    0.188376] pci 0000:00:11.0:   bridge window [io  0x2000-0x3fff]
+[    0.188391] pci 0000:00:11.0:   bridge window [mem 0xfd500000-0xfdffffff]
+[    0.188420] pci 0000:00:11.0:   bridge window [mem 0xe7b00000-0xe7ffffff 64bit pref]
+[    0.188422] pci 0000:00:11.0:   bridge window [mem 0x000a0000-0x000bffff] (subtractive decode)
+[    0.188423] pci 0000:00:11.0:   bridge window [mem 0x000d0000-0x000d3fff] (subtractive decode)
+[    0.188424] pci 0000:00:11.0:   bridge window [mem 0x000d4000-0x000d7fff] (subtractive decode)
+[    0.188425] pci 0000:00:11.0:   bridge window [mem 0x000d8000-0x000dbfff] (subtractive decode)
+[    0.188426] pci 0000:00:11.0:   bridge window [mem 0x60000000-0xfebfffff] (subtractive decode)
+[    0.188427] pci 0000:00:11.0:   bridge window [io  0x0000-0x0cf7] (subtractive decode)
+[    0.188428] pci 0000:00:11.0:   bridge window [io  0x0d00-0xfeff] (subtractive decode)
+[    0.188803] pci 0000:03:00.0: [15ad:07b0] type 00 class 0x020000
+[    0.189864] pci 0000:03:00.0: reg 0x10: [mem 0xfd4fc000-0xfd4fcfff]
+[    0.190883] pci 0000:03:00.0: reg 0x14: [mem 0xfd4fd000-0xfd4fdfff]
+[    0.191899] pci 0000:03:00.0: reg 0x18: [mem 0xfd4fe000-0xfd4fffff]
+[    0.192943] pci 0000:03:00.0: reg 0x1c: [io  0x4000-0x400f]
+[    0.196000] pci 0000:03:00.0: reg 0x30: [mem 0x00000000-0x0000ffff pref]
+[    0.196328] pci 0000:03:00.0: supports D1 D2
+[    0.196330] pci 0000:03:00.0: PME# supported from D0 D1 D2 D3hot D3cold
+[    0.196445] pci 0000:03:00.0: System wakeup disabled by ACPI
+[    0.196481] pci 0000:03:00.0: disabling ASPM on pre-1.1 PCIe device.  You can enable it with 'pcie_aspm=force'
+[    0.196519] pci 0000:00:15.0: PCI bridge to [bus 03]
+[    0.196533] pci 0000:00:15.0:   bridge window [io  0x4000-0x4fff]
+[    0.196548] pci 0000:00:15.0:   bridge window [mem 0xfd400000-0xfd4fffff]
+[    0.196889] pci 0000:00:15.1: PCI bridge to [bus 04]
+[    0.196904] pci 0000:00:15.1:   bridge window [io  0x8000-0x8fff]
+[    0.196919] pci 0000:00:15.1:   bridge window [mem 0xfd000000-0xfd0fffff]
+[    0.196947] pci 0000:00:15.1:   bridge window [mem 0xe7700000-0xe77fffff 64bit pref]
+[    0.197251] pci 0000:00:15.2: PCI bridge to [bus 05]
+[    0.197266] pci 0000:00:15.2:   bridge window [io  0xc000-0xcfff]
+[    0.197281] pci 0000:00:15.2:   bridge window [mem 0xfcc00000-0xfccfffff]
+[    0.197309] pci 0000:00:15.2:   bridge window [mem 0xe7300000-0xe73fffff 64bit pref]
+[    0.197611] pci 0000:00:15.3: PCI bridge to [bus 06]
+[    0.197640] pci 0000:00:15.3:   bridge window [mem 0xfc800000-0xfc8fffff]
+[    0.197668] pci 0000:00:15.3:   bridge window [mem 0xe6f00000-0xe6ffffff 64bit pref]
+[    0.197968] pci 0000:00:15.4: PCI bridge to [bus 07]
+[    0.197996] pci 0000:00:15.4:   bridge window [mem 0xfc400000-0xfc4fffff]
+[    0.198025] pci 0000:00:15.4:   bridge window [mem 0xe6b00000-0xe6bfffff 64bit pref]
+[    0.198335] pci 0000:00:15.5: PCI bridge to [bus 08]
+[    0.198363] pci 0000:00:15.5:   bridge window [mem 0xfc000000-0xfc0fffff]
+[    0.198391] pci 0000:00:15.5:   bridge window [mem 0xe6700000-0xe67fffff 64bit pref]
+[    0.198696] pci 0000:00:15.6: PCI bridge to [bus 09]
+[    0.198724] pci 0000:00:15.6:   bridge window [mem 0xfbc00000-0xfbcfffff]
+[    0.198753] pci 0000:00:15.6:   bridge window [mem 0xe6300000-0xe63fffff 64bit pref]
+[    0.199052] pci 0000:00:15.7: PCI bridge to [bus 0a]
+[    0.199080] pci 0000:00:15.7:   bridge window [mem 0xfb800000-0xfb8fffff]
+[    0.199108] pci 0000:00:15.7:   bridge window [mem 0xe5f00000-0xe5ffffff 64bit pref]
+[    0.199414] pci 0000:00:16.0: PCI bridge to [bus 0b]
+[    0.199428] pci 0000:00:16.0:   bridge window [io  0x5000-0x5fff]
+[    0.199443] pci 0000:00:16.0:   bridge window [mem 0xfd300000-0xfd3fffff]
+[    0.199472] pci 0000:00:16.0:   bridge window [mem 0xe7a00000-0xe7afffff 64bit pref]
+[    0.199780] pci 0000:00:16.1: PCI bridge to [bus 0c]
+[    0.199795] pci 0000:00:16.1:   bridge window [io  0x9000-0x9fff]
+[    0.199810] pci 0000:00:16.1:   bridge window [mem 0xfcf00000-0xfcffffff]
+[    0.199838] pci 0000:00:16.1:   bridge window [mem 0xe7600000-0xe76fffff 64bit pref]
+[    0.200144] pci 0000:00:16.2: PCI bridge to [bus 0d]
+[    0.200166] pci 0000:00:16.2:   bridge window [io  0xd000-0xdfff]
+[    0.200187] pci 0000:00:16.2:   bridge window [mem 0xfcb00000-0xfcbfffff]
+[    0.200216] pci 0000:00:16.2:   bridge window [mem 0xe7200000-0xe72fffff 64bit pref]
+[    0.200534] pci 0000:00:16.3: PCI bridge to [bus 0e]
+[    0.200562] pci 0000:00:16.3:   bridge window [mem 0xfc700000-0xfc7fffff]
+[    0.200591] pci 0000:00:16.3:   bridge window [mem 0xe6e00000-0xe6efffff 64bit pref]
+[    0.200898] pci 0000:00:16.4: PCI bridge to [bus 0f]
+[    0.200926] pci 0000:00:16.4:   bridge window [mem 0xfc300000-0xfc3fffff]
+[    0.200955] pci 0000:00:16.4:   bridge window [mem 0xe6a00000-0xe6afffff 64bit pref]
+[    0.201254] pci 0000:00:16.5: PCI bridge to [bus 10]
+[    0.201283] pci 0000:00:16.5:   bridge window [mem 0xfbf00000-0xfbffffff]
+[    0.201311] pci 0000:00:16.5:   bridge window [mem 0xe6600000-0xe66fffff 64bit pref]
+[    0.201613] pci 0000:00:16.6: PCI bridge to [bus 11]
+[    0.201642] pci 0000:00:16.6:   bridge window [mem 0xfbb00000-0xfbbfffff]
+[    0.201670] pci 0000:00:16.6:   bridge window [mem 0xe6200000-0xe62fffff 64bit pref]
+[    0.201976] pci 0000:00:16.7: PCI bridge to [bus 12]
+[    0.202004] pci 0000:00:16.7:   bridge window [mem 0xfb700000-0xfb7fffff]
+[    0.202033] pci 0000:00:16.7:   bridge window [mem 0xe5e00000-0xe5efffff 64bit pref]
+[    0.202338] pci 0000:00:17.0: PCI bridge to [bus 13]
+[    0.202353] pci 0000:00:17.0:   bridge window [io  0x6000-0x6fff]
+[    0.202368] pci 0000:00:17.0:   bridge window [mem 0xfd200000-0xfd2fffff]
+[    0.202396] pci 0000:00:17.0:   bridge window [mem 0xe7900000-0xe79fffff 64bit pref]
+[    0.202697] pci 0000:00:17.1: PCI bridge to [bus 14]
+[    0.202712] pci 0000:00:17.1:   bridge window [io  0xa000-0xafff]
+[    0.202727] pci 0000:00:17.1:   bridge window [mem 0xfce00000-0xfcefffff]
+[    0.202755] pci 0000:00:17.1:   bridge window [mem 0xe7500000-0xe75fffff 64bit pref]
+[    0.203062] pci 0000:00:17.2: PCI bridge to [bus 15]
+[    0.203077] pci 0000:00:17.2:   bridge window [io  0xe000-0xefff]
+[    0.203091] pci 0000:00:17.2:   bridge window [mem 0xfca00000-0xfcafffff]
+[    0.203120] pci 0000:00:17.2:   bridge window [mem 0xe7100000-0xe71fffff 64bit pref]
+[    0.203423] pci 0000:00:17.3: PCI bridge to [bus 16]
+[    0.203451] pci 0000:00:17.3:   bridge window [mem 0xfc600000-0xfc6fffff]
+[    0.203480] pci 0000:00:17.3:   bridge window [mem 0xe6d00000-0xe6dfffff 64bit pref]
+[    0.203781] pci 0000:00:17.4: PCI bridge to [bus 17]
+[    0.203809] pci 0000:00:17.4:   bridge window [mem 0xfc200000-0xfc2fffff]
+[    0.203838] pci 0000:00:17.4:   bridge window [mem 0xe6900000-0xe69fffff 64bit pref]
+[    0.204138] pci 0000:00:17.5: PCI bridge to [bus 18]
+[    0.204166] pci 0000:00:17.5:   bridge window [mem 0xfbe00000-0xfbefffff]
+[    0.204195] pci 0000:00:17.5:   bridge window [mem 0xe6500000-0xe65fffff 64bit pref]
+[    0.204503] pci 0000:00:17.6: PCI bridge to [bus 19]
+[    0.204531] pci 0000:00:17.6:   bridge window [mem 0xfba00000-0xfbafffff]
+[    0.204560] pci 0000:00:17.6:   bridge window [mem 0xe6100000-0xe61fffff 64bit pref]
+[    0.204862] pci 0000:00:17.7: PCI bridge to [bus 1a]
+[    0.204890] pci 0000:00:17.7:   bridge window [mem 0xfb600000-0xfb6fffff]
+[    0.204919] pci 0000:00:17.7:   bridge window [mem 0xe5d00000-0xe5dfffff 64bit pref]
+[    0.205223] pci 0000:00:18.0: PCI bridge to [bus 1b]
+[    0.205238] pci 0000:00:18.0:   bridge window [io  0x7000-0x7fff]
+[    0.205253] pci 0000:00:18.0:   bridge window [mem 0xfd100000-0xfd1fffff]
+[    0.205281] pci 0000:00:18.0:   bridge window [mem 0xe7800000-0xe78fffff 64bit pref]
+[    0.205586] pci 0000:00:18.1: PCI bridge to [bus 1c]
+[    0.205600] pci 0000:00:18.1:   bridge window [io  0xb000-0xbfff]
+[    0.205615] pci 0000:00:18.1:   bridge window [mem 0xfcd00000-0xfcdfffff]
+[    0.205643] pci 0000:00:18.1:   bridge window [mem 0xe7400000-0xe74fffff 64bit pref]
+[    0.205944] pci 0000:00:18.2: PCI bridge to [bus 1d]
+[    0.205973] pci 0000:00:18.2:   bridge window [mem 0xfc900000-0xfc9fffff]
+[    0.206001] pci 0000:00:18.2:   bridge window [mem 0xe7000000-0xe70fffff 64bit pref]
+[    0.206302] pci 0000:00:18.3: PCI bridge to [bus 1e]
+[    0.206331] pci 0000:00:18.3:   bridge window [mem 0xfc500000-0xfc5fffff]
+[    0.206359] pci 0000:00:18.3:   bridge window [mem 0xe6c00000-0xe6cfffff 64bit pref]
+[    0.206659] pci 0000:00:18.4: PCI bridge to [bus 1f]
+[    0.206687] pci 0000:00:18.4:   bridge window [mem 0xfc100000-0xfc1fffff]
+[    0.206715] pci 0000:00:18.4:   bridge window [mem 0xe6800000-0xe68fffff 64bit pref]
+[    0.207020] pci 0000:00:18.5: PCI bridge to [bus 20]
+[    0.207049] pci 0000:00:18.5:   bridge window [mem 0xfbd00000-0xfbdfffff]
+[    0.207077] pci 0000:00:18.5:   bridge window [mem 0xe6400000-0xe64fffff 64bit pref]
+[    0.207379] pci 0000:00:18.6: PCI bridge to [bus 21]
+[    0.207408] pci 0000:00:18.6:   bridge window [mem 0xfb900000-0xfb9fffff]
+[    0.207436] pci 0000:00:18.6:   bridge window [mem 0xe6000000-0xe60fffff 64bit pref]
+[    0.207738] pci 0000:00:18.7: PCI bridge to [bus 22]
+[    0.207767] pci 0000:00:18.7:   bridge window [mem 0xfb500000-0xfb5fffff]
+[    0.207795] pci 0000:00:18.7:   bridge window [mem 0xe5c00000-0xe5cfffff 64bit pref]
+[    0.209395] ACPI: PCI Interrupt Link [LNKA] (IRQs 3 4 5 6 7 *9 10 11 14 15)
+[    0.209451] ACPI: PCI Interrupt Link [LNKB] (IRQs 3 4 5 6 7 9 10 *11 14 15)
+[    0.209504] ACPI: PCI Interrupt Link [LNKC] (IRQs 3 4 5 6 *7 9 10 11 14 15)
+[    0.209558] ACPI: PCI Interrupt Link [LNKD] (IRQs 3 4 5 6 7 9 *10 11 14 15)
+[    0.213693] ACPI: Enabled 2 GPEs in block 00 to 0F
+[    0.213795] vgaarb: setting as boot device: PCI:0000:00:0f.0
+[    0.213797] vgaarb: device added: PCI:0000:00:0f.0,decodes=io+mem,owns=io+mem,locks=none
+[    0.213800] vgaarb: loaded
+[    0.213801] vgaarb: bridge control possible 0000:00:0f.0
+[    0.213986] SCSI subsystem initialized
+[    0.214015] libata version 3.00 loaded.
+[    0.214037] ACPI: bus type USB registered
+[    0.214051] usbcore: registered new interface driver usbfs
+[    0.214059] usbcore: registered new interface driver hub
+[    0.214067] usbcore: registered new device driver usb
+[    0.214161] PCI: Using ACPI for IRQ routing
+[    0.234185] PCI: pci_cache_line_size set to 64 bytes
+[    0.234800] e820: reserve RAM buffer [mem 0x0009f400-0x0009ffff]
+[    0.234802] e820: reserve RAM buffer [mem 0x5fef0000-0x5fffffff]
+[    0.234902] NetLabel: Initializing
+[    0.234903] NetLabel:  domain hash size = 128
+[    0.234904] NetLabel:  protocols = UNLABELED CIPSOv4
+[    0.234912] NetLabel:  unlabeled traffic allowed by default
+[    0.235039] hpet0: at MMIO 0xfed00000, IRQs 2, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+[    0.235045] hpet0: 16 comparators, 64-bit 14.318180 MHz counter
+[    0.237156] Switched to clocksource hpet
+[    0.241770] AppArmor: AppArmor Filesystem Enabled
+[    0.241814] pnp: PnP ACPI init
+[    0.241940] system 00:00: [io  0x1000-0x103f] could not be reserved
+[    0.241942] system 00:00: [io  0x1040-0x104f] has been reserved
+[    0.241944] system 00:00: [io  0x0cf0-0x0cf1] has been reserved
+[    0.241946] system 00:00: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    0.241975] pnp 00:01: Plug and Play ACPI device, IDs PNP0b00 (active)
+[    0.241994] pnp 00:02: Plug and Play ACPI device, IDs PNP0303 (active)
+[    0.242012] pnp 00:03: Plug and Play ACPI device, IDs PNP0f13 (active)
+[    0.242146] system 00:04: [mem 0xfed00000-0xfed003ff] has been reserved
+[    0.242148] system 00:04: Plug and Play ACPI device, IDs PNP0103 PNP0c01 (active)
+[    0.243237] pnp 00:05: [dma 2]
+[    0.243270] pnp 00:05: Plug and Play ACPI device, IDs PNP0700 (active)
+[    0.243417] system 00:06: [io  0xfce0-0xfcff] has been reserved
+[    0.243420] system 00:06: [mem 0xf0000000-0xf7ffffff] has been reserved
+[    0.243421] system 00:06: [mem 0xfe800000-0xfe9fffff] has been reserved
+[    0.243423] system 00:06: Plug and Play ACPI device, IDs PNP0c02 (active)
+[    0.246320] pnp: PnP ACPI: found 7 devices
+[    0.251864] pci 0000:00:15.0: bridge window [mem 0x00100000-0x000fffff 64bit pref] to [bus 03] add_size 200000
+[    0.251990] pci 0000:00:15.3: bridge window [io  0x1000-0x0fff] to [bus 06] add_size 1000
+[    0.252032] pci 0000:00:15.4: bridge window [io  0x1000-0x0fff] to [bus 07] add_size 1000
+[    0.252075] pci 0000:00:15.5: bridge window [io  0x1000-0x0fff] to [bus 08] add_size 1000
+[    0.252123] pci 0000:00:15.6: bridge window [io  0x1000-0x0fff] to [bus 09] add_size 1000
+[    0.252167] pci 0000:00:15.7: bridge window [io  0x1000-0x0fff] to [bus 0a] add_size 1000
+[    0.252332] pci 0000:00:16.3: bridge window [io  0x1000-0x0fff] to [bus 0e] add_size 1000
+[    0.252374] pci 0000:00:16.4: bridge window [io  0x1000-0x0fff] to [bus 0f] add_size 1000
+[    0.252416] pci 0000:00:16.5: bridge window [io  0x1000-0x0fff] to [bus 10] add_size 1000
+[    0.252459] pci 0000:00:16.6: bridge window [io  0x1000-0x0fff] to [bus 11] add_size 1000
+[    0.252501] pci 0000:00:16.7: bridge window [io  0x1000-0x0fff] to [bus 12] add_size 1000
+[    0.252666] pci 0000:00:17.3: bridge window [io  0x1000-0x0fff] to [bus 16] add_size 1000
+[    0.252708] pci 0000:00:17.4: bridge window [io  0x1000-0x0fff] to [bus 17] add_size 1000
+[    0.252751] pci 0000:00:17.5: bridge window [io  0x1000-0x0fff] to [bus 18] add_size 1000
+[    0.252793] pci 0000:00:17.6: bridge window [io  0x1000-0x0fff] to [bus 19] add_size 1000
+[    0.252836] pci 0000:00:17.7: bridge window [io  0x1000-0x0fff] to [bus 1a] add_size 1000
+[    0.252973] pci 0000:00:18.2: bridge window [io  0x1000-0x0fff] to [bus 1d] add_size 1000
+[    0.253016] pci 0000:00:18.3: bridge window [io  0x1000-0x0fff] to [bus 1e] add_size 1000
+[    0.253059] pci 0000:00:18.4: bridge window [io  0x1000-0x0fff] to [bus 1f] add_size 1000
+[    0.253101] pci 0000:00:18.5: bridge window [io  0x1000-0x0fff] to [bus 20] add_size 1000
+[    0.253143] pci 0000:00:18.6: bridge window [io  0x1000-0x0fff] to [bus 21] add_size 1000
+[    0.253194] pci 0000:00:18.7: bridge window [io  0x1000-0x0fff] to [bus 22] add_size 1000
+[    0.253197] pci 0000:00:07.3: BAR 13: [io  0x1000-0x103f] has bogus alignment
+[    0.253205] pci 0000:00:15.0: res[15]=[mem 0x00100000-0x000fffff 64bit pref] get_res_add_size add_size 200000
+[    0.253207] pci 0000:00:15.3: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253208] pci 0000:00:15.4: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253209] pci 0000:00:15.5: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253210] pci 0000:00:15.6: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253211] pci 0000:00:15.7: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253212] pci 0000:00:16.3: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253213] pci 0000:00:16.4: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253214] pci 0000:00:16.5: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253215] pci 0000:00:16.6: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253216] pci 0000:00:16.7: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253217] pci 0000:00:17.3: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253218] pci 0000:00:17.4: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253219] pci 0000:00:17.5: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253220] pci 0000:00:17.6: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253221] pci 0000:00:17.7: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253222] pci 0000:00:18.2: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253224] pci 0000:00:18.3: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253225] pci 0000:00:18.4: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253226] pci 0000:00:18.5: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253227] pci 0000:00:18.6: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253228] pci 0000:00:18.7: res[13]=[io  0x1000-0x0fff] get_res_add_size add_size 1000
+[    0.253233] pci 0000:00:15.0: BAR 15: assigned [mem 0x60000000-0x601fffff 64bit pref]
+[    0.253235] pci 0000:00:0f.0: BAR 6: assigned [mem 0x60200000-0x60207fff pref]
+[    0.253237] pci 0000:00:10.0: BAR 6: assigned [mem 0x60208000-0x6020bfff pref]
+[    0.253240] pci 0000:00:15.3: BAR 13: no space for [io  size 0x1000]
+[    0.253241] pci 0000:00:15.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253243] pci 0000:00:15.4: BAR 13: no space for [io  size 0x1000]
+[    0.253244] pci 0000:00:15.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253245] pci 0000:00:15.5: BAR 13: no space for [io  size 0x1000]
+[    0.253246] pci 0000:00:15.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253248] pci 0000:00:15.6: BAR 13: no space for [io  size 0x1000]
+[    0.253249] pci 0000:00:15.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253250] pci 0000:00:15.7: BAR 13: no space for [io  size 0x1000]
+[    0.253251] pci 0000:00:15.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253253] pci 0000:00:16.3: BAR 13: no space for [io  size 0x1000]
+[    0.253254] pci 0000:00:16.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253255] pci 0000:00:16.4: BAR 13: no space for [io  size 0x1000]
+[    0.253256] pci 0000:00:16.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253257] pci 0000:00:16.5: BAR 13: no space for [io  size 0x1000]
+[    0.253258] pci 0000:00:16.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253260] pci 0000:00:16.6: BAR 13: no space for [io  size 0x1000]
+[    0.253261] pci 0000:00:16.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253262] pci 0000:00:16.7: BAR 13: no space for [io  size 0x1000]
+[    0.253263] pci 0000:00:16.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253265] pci 0000:00:17.3: BAR 13: no space for [io  size 0x1000]
+[    0.253266] pci 0000:00:17.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253267] pci 0000:00:17.4: BAR 13: no space for [io  size 0x1000]
+[    0.253268] pci 0000:00:17.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253270] pci 0000:00:17.5: BAR 13: no space for [io  size 0x1000]
+[    0.253271] pci 0000:00:17.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253272] pci 0000:00:17.6: BAR 13: no space for [io  size 0x1000]
+[    0.253273] pci 0000:00:17.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253275] pci 0000:00:17.7: BAR 13: no space for [io  size 0x1000]
+[    0.253276] pci 0000:00:17.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253277] pci 0000:00:18.2: BAR 13: no space for [io  size 0x1000]
+[    0.253278] pci 0000:00:18.2: BAR 13: failed to assign [io  size 0x1000]
+[    0.253280] pci 0000:00:18.3: BAR 13: no space for [io  size 0x1000]
+[    0.253280] pci 0000:00:18.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253282] pci 0000:00:18.4: BAR 13: no space for [io  size 0x1000]
+[    0.253283] pci 0000:00:18.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253284] pci 0000:00:18.5: BAR 13: no space for [io  size 0x1000]
+[    0.253285] pci 0000:00:18.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253287] pci 0000:00:18.6: BAR 13: no space for [io  size 0x1000]
+[    0.253288] pci 0000:00:18.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253290] pci 0000:00:18.7: BAR 13: no space for [io  size 0x1000]
+[    0.253291] pci 0000:00:18.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253295] pci 0000:00:18.7: BAR 13: no space for [io  size 0x1000]
+[    0.253296] pci 0000:00:18.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253298] pci 0000:00:18.6: BAR 13: no space for [io  size 0x1000]
+[    0.253299] pci 0000:00:18.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253300] pci 0000:00:18.5: BAR 13: no space for [io  size 0x1000]
+[    0.253301] pci 0000:00:18.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253303] pci 0000:00:18.4: BAR 13: no space for [io  size 0x1000]
+[    0.253304] pci 0000:00:18.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253305] pci 0000:00:18.3: BAR 13: no space for [io  size 0x1000]
+[    0.253306] pci 0000:00:18.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253308] pci 0000:00:18.2: BAR 13: no space for [io  size 0x1000]
+[    0.253309] pci 0000:00:18.2: BAR 13: failed to assign [io  size 0x1000]
+[    0.253310] pci 0000:00:17.7: BAR 13: no space for [io  size 0x1000]
+[    0.253311] pci 0000:00:17.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253313] pci 0000:00:17.6: BAR 13: no space for [io  size 0x1000]
+[    0.253314] pci 0000:00:17.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253315] pci 0000:00:17.5: BAR 13: no space for [io  size 0x1000]
+[    0.253316] pci 0000:00:17.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253318] pci 0000:00:17.4: BAR 13: no space for [io  size 0x1000]
+[    0.253319] pci 0000:00:17.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253320] pci 0000:00:17.3: BAR 13: no space for [io  size 0x1000]
+[    0.253321] pci 0000:00:17.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253323] pci 0000:00:16.7: BAR 13: no space for [io  size 0x1000]
+[    0.253324] pci 0000:00:16.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253325] pci 0000:00:16.6: BAR 13: no space for [io  size 0x1000]
+[    0.253326] pci 0000:00:16.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253327] pci 0000:00:16.5: BAR 13: no space for [io  size 0x1000]
+[    0.253328] pci 0000:00:16.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253330] pci 0000:00:16.4: BAR 13: no space for [io  size 0x1000]
+[    0.253331] pci 0000:00:16.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253332] pci 0000:00:16.3: BAR 13: no space for [io  size 0x1000]
+[    0.253333] pci 0000:00:16.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253335] pci 0000:00:15.7: BAR 13: no space for [io  size 0x1000]
+[    0.253336] pci 0000:00:15.7: BAR 13: failed to assign [io  size 0x1000]
+[    0.253337] pci 0000:00:15.6: BAR 13: no space for [io  size 0x1000]
+[    0.253338] pci 0000:00:15.6: BAR 13: failed to assign [io  size 0x1000]
+[    0.253340] pci 0000:00:15.5: BAR 13: no space for [io  size 0x1000]
+[    0.253341] pci 0000:00:15.5: BAR 13: failed to assign [io  size 0x1000]
+[    0.253342] pci 0000:00:15.4: BAR 13: no space for [io  size 0x1000]
+[    0.253343] pci 0000:00:15.4: BAR 13: failed to assign [io  size 0x1000]
+[    0.253344] pci 0000:00:15.3: BAR 13: no space for [io  size 0x1000]
+[    0.253345] pci 0000:00:15.3: BAR 13: failed to assign [io  size 0x1000]
+[    0.253347] pci 0000:00:01.0: PCI bridge to [bus 01]
+[    0.253414] pci 0000:02:01.0: BAR 6: assigned [mem 0xfd500000-0xfd50ffff pref]
+[    0.253415] pci 0000:00:11.0: PCI bridge to [bus 02]
+[    0.253424] pci 0000:00:11.0:   bridge window [io  0x2000-0x3fff]
+[    0.253446] pci 0000:00:11.0:   bridge window [mem 0xfd500000-0xfdffffff]
+[    0.253461] pci 0000:00:11.0:   bridge window [mem 0xe7b00000-0xe7ffffff 64bit pref]
+[    0.253490] pci 0000:03:00.0: BAR 6: assigned [mem 0xfd400000-0xfd40ffff pref]
+[    0.253491] pci 0000:00:15.0: PCI bridge to [bus 03]
+[    0.253499] pci 0000:00:15.0:   bridge window [io  0x4000-0x4fff]
+[    0.253521] pci 0000:00:15.0:   bridge window [mem 0xfd400000-0xfd4fffff]
+[    0.253536] pci 0000:00:15.0:   bridge window [mem 0x60000000-0x601fffff 64bit pref]
+[    0.253578] pci 0000:00:15.1: PCI bridge to [bus 04]
+[    0.253587] pci 0000:00:15.1:   bridge window [io  0x8000-0x8fff]
+[    0.253609] pci 0000:00:15.1:   bridge window [mem 0xfd000000-0xfd0fffff]
+[    0.253624] pci 0000:00:15.1:   bridge window [mem 0xe7700000-0xe77fffff 64bit pref]
+[    0.253658] pci 0000:00:15.2: PCI bridge to [bus 05]
+[    0.253667] pci 0000:00:15.2:   bridge window [io  0xc000-0xcfff]
+[    0.253688] pci 0000:00:15.2:   bridge window [mem 0xfcc00000-0xfccfffff]
+[    0.253703] pci 0000:00:15.2:   bridge window [mem 0xe7300000-0xe73fffff 64bit pref]
+[    0.253737] pci 0000:00:15.3: PCI bridge to [bus 06]
+[    0.253759] pci 0000:00:15.3:   bridge window [mem 0xfc800000-0xfc8fffff]
+[    0.253774] pci 0000:00:15.3:   bridge window [mem 0xe6f00000-0xe6ffffff 64bit pref]
+[    0.253807] pci 0000:00:15.4: PCI bridge to [bus 07]
+[    0.253829] pci 0000:00:15.4:   bridge window [mem 0xfc400000-0xfc4fffff]
+[    0.253844] pci 0000:00:15.4:   bridge window [mem 0xe6b00000-0xe6bfffff 64bit pref]
+[    0.253877] pci 0000:00:15.5: PCI bridge to [bus 08]
+[    0.253899] pci 0000:00:15.5:   bridge window [mem 0xfc000000-0xfc0fffff]
+[    0.253914] pci 0000:00:15.5:   bridge window [mem 0xe6700000-0xe67fffff 64bit pref]
+[    0.253947] pci 0000:00:15.6: PCI bridge to [bus 09]
+[    0.253969] pci 0000:00:15.6:   bridge window [mem 0xfbc00000-0xfbcfffff]
+[    0.253984] pci 0000:00:15.6:   bridge window [mem 0xe6300000-0xe63fffff 64bit pref]
+[    0.254017] pci 0000:00:15.7: PCI bridge to [bus 0a]
+[    0.254039] pci 0000:00:15.7:   bridge window [mem 0xfb800000-0xfb8fffff]
+[    0.254058] pci 0000:00:15.7:   bridge window [mem 0xe5f00000-0xe5ffffff 64bit pref]
+[    0.254091] pci 0000:00:16.0: PCI bridge to [bus 0b]
+[    0.254099] pci 0000:00:16.0:   bridge window [io  0x5000-0x5fff]
+[    0.254121] pci 0000:00:16.0:   bridge window [mem 0xfd300000-0xfd3fffff]
+[    0.254136] pci 0000:00:16.0:   bridge window [mem 0xe7a00000-0xe7afffff 64bit pref]
+[    0.254169] pci 0000:00:16.1: PCI bridge to [bus 0c]
+[    0.254177] pci 0000:00:16.1:   bridge window [io  0x9000-0x9fff]
+[    0.254199] pci 0000:00:16.1:   bridge window [mem 0xfcf00000-0xfcffffff]
+[    0.254214] pci 0000:00:16.1:   bridge window [mem 0xe7600000-0xe76fffff 64bit pref]
+[    0.254247] pci 0000:00:16.2: PCI bridge to [bus 0d]
+[    0.254255] pci 0000:00:16.2:   bridge window [io  0xd000-0xdfff]
+[    0.254277] pci 0000:00:16.2:   bridge window [mem 0xfcb00000-0xfcbfffff]
+[    0.254292] pci 0000:00:16.2:   bridge window [mem 0xe7200000-0xe72fffff 64bit pref]
+[    0.254325] pci 0000:00:16.3: PCI bridge to [bus 0e]
+[    0.254347] pci 0000:00:16.3:   bridge window [mem 0xfc700000-0xfc7fffff]
+[    0.254362] pci 0000:00:16.3:   bridge window [mem 0xe6e00000-0xe6efffff 64bit pref]
+[    0.254395] pci 0000:00:16.4: PCI bridge to [bus 0f]
+[    0.254417] pci 0000:00:16.4:   bridge window [mem 0xfc300000-0xfc3fffff]
+[    0.254432] pci 0000:00:16.4:   bridge window [mem 0xe6a00000-0xe6afffff 64bit pref]
+[    0.254465] pci 0000:00:16.5: PCI bridge to [bus 10]
+[    0.254487] pci 0000:00:16.5:   bridge window [mem 0xfbf00000-0xfbffffff]
+[    0.254502] pci 0000:00:16.5:   bridge window [mem 0xe6600000-0xe66fffff 64bit pref]
+[    0.254535] pci 0000:00:16.6: PCI bridge to [bus 11]
+[    0.254557] pci 0000:00:16.6:   bridge window [mem 0xfbb00000-0xfbbfffff]
+[    0.254572] pci 0000:00:16.6:   bridge window [mem 0xe6200000-0xe62fffff 64bit pref]
+[    0.254605] pci 0000:00:16.7: PCI bridge to [bus 12]
+[    0.254627] pci 0000:00:16.7:   bridge window [mem 0xfb700000-0xfb7fffff]
+[    0.254642] pci 0000:00:16.7:   bridge window [mem 0xe5e00000-0xe5efffff 64bit pref]
+[    0.254675] pci 0000:00:17.0: PCI bridge to [bus 13]
+[    0.254683] pci 0000:00:17.0:   bridge window [io  0x6000-0x6fff]
+[    0.254705] pci 0000:00:17.0:   bridge window [mem 0xfd200000-0xfd2fffff]
+[    0.254720] pci 0000:00:17.0:   bridge window [mem 0xe7900000-0xe79fffff 64bit pref]
+[    0.254753] pci 0000:00:17.1: PCI bridge to [bus 14]
+[    0.254761] pci 0000:00:17.1:   bridge window [io  0xa000-0xafff]
+[    0.254783] pci 0000:00:17.1:   bridge window [mem 0xfce00000-0xfcefffff]
+[    0.254798] pci 0000:00:17.1:   bridge window [mem 0xe7500000-0xe75fffff 64bit pref]
+[    0.254831] pci 0000:00:17.2: PCI bridge to [bus 15]
+[    0.254839] pci 0000:00:17.2:   bridge window [io  0xe000-0xefff]
+[    0.254861] pci 0000:00:17.2:   bridge window [mem 0xfca00000-0xfcafffff]
+[    0.254876] pci 0000:00:17.2:   bridge window [mem 0xe7100000-0xe71fffff 64bit pref]
+[    0.254909] pci 0000:00:17.3: PCI bridge to [bus 16]
+[    0.254931] pci 0000:00:17.3:   bridge window [mem 0xfc600000-0xfc6fffff]
+[    0.254946] pci 0000:00:17.3:   bridge window [mem 0xe6d00000-0xe6dfffff 64bit pref]
+[    0.254983] pci 0000:00:17.4: PCI bridge to [bus 17]
+[    0.255005] pci 0000:00:17.4:   bridge window [mem 0xfc200000-0xfc2fffff]
+[    0.255020] pci 0000:00:17.4:   bridge window [mem 0xe6900000-0xe69fffff 64bit pref]
+[    0.255053] pci 0000:00:17.5: PCI bridge to [bus 18]
+[    0.255075] pci 0000:00:17.5:   bridge window [mem 0xfbe00000-0xfbefffff]
+[    0.255090] pci 0000:00:17.5:   bridge window [mem 0xe6500000-0xe65fffff 64bit pref]
+[    0.255123] pci 0000:00:17.6: PCI bridge to [bus 19]
+[    0.255145] pci 0000:00:17.6:   bridge window [mem 0xfba00000-0xfbafffff]
+[    0.255160] pci 0000:00:17.6:   bridge window [mem 0xe6100000-0xe61fffff 64bit pref]
+[    0.255193] pci 0000:00:17.7: PCI bridge to [bus 1a]
+[    0.255215] pci 0000:00:17.7:   bridge window [mem 0xfb600000-0xfb6fffff]
+[    0.255230] pci 0000:00:17.7:   bridge window [mem 0xe5d00000-0xe5dfffff 64bit pref]
+[    0.255263] pci 0000:00:18.0: PCI bridge to [bus 1b]
+[    0.255272] pci 0000:00:18.0:   bridge window [io  0x7000-0x7fff]
+[    0.255293] pci 0000:00:18.0:   bridge window [mem 0xfd100000-0xfd1fffff]
+[    0.255308] pci 0000:00:18.0:   bridge window [mem 0xe7800000-0xe78fffff 64bit pref]
+[    0.255341] pci 0000:00:18.1: PCI bridge to [bus 1c]
+[    0.255350] pci 0000:00:18.1:   bridge window [io  0xb000-0xbfff]
+[    0.255371] pci 0000:00:18.1:   bridge window [mem 0xfcd00000-0xfcdfffff]
+[    0.255386] pci 0000:00:18.1:   bridge window [mem 0xe7400000-0xe74fffff 64bit pref]
+[    0.255420] pci 0000:00:18.2: PCI bridge to [bus 1d]
+[    0.255442] pci 0000:00:18.2:   bridge window [mem 0xfc900000-0xfc9fffff]
+[    0.255457] pci 0000:00:18.2:   bridge window [mem 0xe7000000-0xe70fffff 64bit pref]
+[    0.255490] pci 0000:00:18.3: PCI bridge to [bus 1e]
+[    0.255512] pci 0000:00:18.3:   bridge window [mem 0xfc500000-0xfc5fffff]
+[    0.255527] pci 0000:00:18.3:   bridge window [mem 0xe6c00000-0xe6cfffff 64bit pref]
+[    0.255560] pci 0000:00:18.4: PCI bridge to [bus 1f]
+[    0.255582] pci 0000:00:18.4:   bridge window [mem 0xfc100000-0xfc1fffff]
+[    0.255597] pci 0000:00:18.4:   bridge window [mem 0xe6800000-0xe68fffff 64bit pref]
+[    0.255631] pci 0000:00:18.5: PCI bridge to [bus 20]
+[    0.255653] pci 0000:00:18.5:   bridge window [mem 0xfbd00000-0xfbdfffff]
+[    0.255668] pci 0000:00:18.5:   bridge window [mem 0xe6400000-0xe64fffff 64bit pref]
+[    0.255701] pci 0000:00:18.6: PCI bridge to [bus 21]
+[    0.255723] pci 0000:00:18.6:   bridge window [mem 0xfb900000-0xfb9fffff]
+[    0.255738] pci 0000:00:18.6:   bridge window [mem 0xe6000000-0xe60fffff 64bit pref]
+[    0.255771] pci 0000:00:18.7: PCI bridge to [bus 22]
+[    0.255793] pci 0000:00:18.7:   bridge window [mem 0xfb500000-0xfb5fffff]
+[    0.255808] pci 0000:00:18.7:   bridge window [mem 0xe5c00000-0xe5cfffff 64bit pref]
+[    0.255842] pci_bus 0000:00: resource 4 [mem 0x000a0000-0x000bffff]
+[    0.255844] pci_bus 0000:00: resource 5 [mem 0x000d0000-0x000d3fff]
+[    0.255845] pci_bus 0000:00: resource 6 [mem 0x000d4000-0x000d7fff]
+[    0.255846] pci_bus 0000:00: resource 7 [mem 0x000d8000-0x000dbfff]
+[    0.255847] pci_bus 0000:00: resource 8 [mem 0x60000000-0xfebfffff]
+[    0.255848] pci_bus 0000:00: resource 9 [io  0x0000-0x0cf7]
+[    0.255849] pci_bus 0000:00: resource 10 [io  0x0d00-0xfeff]
+[    0.255851] pci_bus 0000:02: resource 0 [io  0x2000-0x3fff]
+[    0.255852] pci_bus 0000:02: resource 1 [mem 0xfd500000-0xfdffffff]
+[    0.255853] pci_bus 0000:02: resource 2 [mem 0xe7b00000-0xe7ffffff 64bit pref]
+[    0.255854] pci_bus 0000:02: resource 4 [mem 0x000a0000-0x000bffff]
+[    0.255855] pci_bus 0000:02: resource 5 [mem 0x000d0000-0x000d3fff]
+[    0.255856] pci_bus 0000:02: resource 6 [mem 0x000d4000-0x000d7fff]
+[    0.255857] pci_bus 0000:02: resource 7 [mem 0x000d8000-0x000dbfff]
+[    0.255858] pci_bus 0000:02: resource 8 [mem 0x60000000-0xfebfffff]
+[    0.255859] pci_bus 0000:02: resource 9 [io  0x0000-0x0cf7]
+[    0.255860] pci_bus 0000:02: resource 10 [io  0x0d00-0xfeff]
+[    0.255861] pci_bus 0000:03: resource 0 [io  0x4000-0x4fff]
+[    0.255862] pci_bus 0000:03: resource 1 [mem 0xfd400000-0xfd4fffff]
+[    0.255863] pci_bus 0000:03: resource 2 [mem 0x60000000-0x601fffff 64bit pref]
+[    0.255864] pci_bus 0000:04: resource 0 [io  0x8000-0x8fff]
+[    0.255865] pci_bus 0000:04: resource 1 [mem 0xfd000000-0xfd0fffff]
+[    0.255866] pci_bus 0000:04: resource 2 [mem 0xe7700000-0xe77fffff 64bit pref]
+[    0.255867] pci_bus 0000:05: resource 0 [io  0xc000-0xcfff]
+[    0.255868] pci_bus 0000:05: resource 1 [mem 0xfcc00000-0xfccfffff]
+[    0.255869] pci_bus 0000:05: resource 2 [mem 0xe7300000-0xe73fffff 64bit pref]
+[    0.255870] pci_bus 0000:06: resource 1 [mem 0xfc800000-0xfc8fffff]
+[    0.255871] pci_bus 0000:06: resource 2 [mem 0xe6f00000-0xe6ffffff 64bit pref]
+[    0.255872] pci_bus 0000:07: resource 1 [mem 0xfc400000-0xfc4fffff]
+[    0.255874] pci_bus 0000:07: resource 2 [mem 0xe6b00000-0xe6bfffff 64bit pref]
+[    0.255875] pci_bus 0000:08: resource 1 [mem 0xfc000000-0xfc0fffff]
+[    0.255876] pci_bus 0000:08: resource 2 [mem 0xe6700000-0xe67fffff 64bit pref]
+[    0.255877] pci_bus 0000:09: resource 1 [mem 0xfbc00000-0xfbcfffff]
+[    0.255878] pci_bus 0000:09: resource 2 [mem 0xe6300000-0xe63fffff 64bit pref]
+[    0.255879] pci_bus 0000:0a: resource 1 [mem 0xfb800000-0xfb8fffff]
+[    0.255880] pci_bus 0000:0a: resource 2 [mem 0xe5f00000-0xe5ffffff 64bit pref]
+[    0.255881] pci_bus 0000:0b: resource 0 [io  0x5000-0x5fff]
+[    0.255882] pci_bus 0000:0b: resource 1 [mem 0xfd300000-0xfd3fffff]
+[    0.255883] pci_bus 0000:0b: resource 2 [mem 0xe7a00000-0xe7afffff 64bit pref]
+[    0.255884] pci_bus 0000:0c: resource 0 [io  0x9000-0x9fff]
+[    0.255885] pci_bus 0000:0c: resource 1 [mem 0xfcf00000-0xfcffffff]
+[    0.255886] pci_bus 0000:0c: resource 2 [mem 0xe7600000-0xe76fffff 64bit pref]
+[    0.255887] pci_bus 0000:0d: resource 0 [io  0xd000-0xdfff]
+[    0.255888] pci_bus 0000:0d: resource 1 [mem 0xfcb00000-0xfcbfffff]
+[    0.255889] pci_bus 0000:0d: resource 2 [mem 0xe7200000-0xe72fffff 64bit pref]
+[    0.255890] pci_bus 0000:0e: resource 1 [mem 0xfc700000-0xfc7fffff]
+[    0.255891] pci_bus 0000:0e: resource 2 [mem 0xe6e00000-0xe6efffff 64bit pref]
+[    0.255892] pci_bus 0000:0f: resource 1 [mem 0xfc300000-0xfc3fffff]
+[    0.255893] pci_bus 0000:0f: resource 2 [mem 0xe6a00000-0xe6afffff 64bit pref]
+[    0.255894] pci_bus 0000:10: resource 1 [mem 0xfbf00000-0xfbffffff]
+[    0.255895] pci_bus 0000:10: resource 2 [mem 0xe6600000-0xe66fffff 64bit pref]
+[    0.255896] pci_bus 0000:11: resource 1 [mem 0xfbb00000-0xfbbfffff]
+[    0.255897] pci_bus 0000:11: resource 2 [mem 0xe6200000-0xe62fffff 64bit pref]
+[    0.255898] pci_bus 0000:12: resource 1 [mem 0xfb700000-0xfb7fffff]
+[    0.255899] pci_bus 0000:12: resource 2 [mem 0xe5e00000-0xe5efffff 64bit pref]
+[    0.255900] pci_bus 0000:13: resource 0 [io  0x6000-0x6fff]
+[    0.255901] pci_bus 0000:13: resource 1 [mem 0xfd200000-0xfd2fffff]
+[    0.255902] pci_bus 0000:13: resource 2 [mem 0xe7900000-0xe79fffff 64bit pref]
+[    0.255903] pci_bus 0000:14: resource 0 [io  0xa000-0xafff]
+[    0.255904] pci_bus 0000:14: resource 1 [mem 0xfce00000-0xfcefffff]
+[    0.255905] pci_bus 0000:14: resource 2 [mem 0xe7500000-0xe75fffff 64bit pref]
+[    0.255906] pci_bus 0000:15: resource 0 [io  0xe000-0xefff]
+[    0.255907] pci_bus 0000:15: resource 1 [mem 0xfca00000-0xfcafffff]
+[    0.255908] pci_bus 0000:15: resource 2 [mem 0xe7100000-0xe71fffff 64bit pref]
+[    0.255909] pci_bus 0000:16: resource 1 [mem 0xfc600000-0xfc6fffff]
+[    0.255910] pci_bus 0000:16: resource 2 [mem 0xe6d00000-0xe6dfffff 64bit pref]
+[    0.255911] pci_bus 0000:17: resource 1 [mem 0xfc200000-0xfc2fffff]
+[    0.255912] pci_bus 0000:17: resource 2 [mem 0xe6900000-0xe69fffff 64bit pref]
+[    0.255913] pci_bus 0000:18: resource 1 [mem 0xfbe00000-0xfbefffff]
+[    0.255914] pci_bus 0000:18: resource 2 [mem 0xe6500000-0xe65fffff 64bit pref]
+[    0.255915] pci_bus 0000:19: resource 1 [mem 0xfba00000-0xfbafffff]
+[    0.255916] pci_bus 0000:19: resource 2 [mem 0xe6100000-0xe61fffff 64bit pref]
+[    0.255917] pci_bus 0000:1a: resource 1 [mem 0xfb600000-0xfb6fffff]
+[    0.255918] pci_bus 0000:1a: resource 2 [mem 0xe5d00000-0xe5dfffff 64bit pref]
+[    0.255919] pci_bus 0000:1b: resource 0 [io  0x7000-0x7fff]
+[    0.255920] pci_bus 0000:1b: resource 1 [mem 0xfd100000-0xfd1fffff]
+[    0.255921] pci_bus 0000:1b: resource 2 [mem 0xe7800000-0xe78fffff 64bit pref]
+[    0.255922] pci_bus 0000:1c: resource 0 [io  0xb000-0xbfff]
+[    0.255923] pci_bus 0000:1c: resource 1 [mem 0xfcd00000-0xfcdfffff]
+[    0.255924] pci_bus 0000:1c: resource 2 [mem 0xe7400000-0xe74fffff 64bit pref]
+[    0.255925] pci_bus 0000:1d: resource 1 [mem 0xfc900000-0xfc9fffff]
+[    0.255926] pci_bus 0000:1d: resource 2 [mem 0xe7000000-0xe70fffff 64bit pref]
+[    0.255927] pci_bus 0000:1e: resource 1 [mem 0xfc500000-0xfc5fffff]
+[    0.255928] pci_bus 0000:1e: resource 2 [mem 0xe6c00000-0xe6cfffff 64bit pref]
+[    0.255929] pci_bus 0000:1f: resource 1 [mem 0xfc100000-0xfc1fffff]
+[    0.255930] pci_bus 0000:1f: resource 2 [mem 0xe6800000-0xe68fffff 64bit pref]
+[    0.255931] pci_bus 0000:20: resource 1 [mem 0xfbd00000-0xfbdfffff]
+[    0.255932] pci_bus 0000:20: resource 2 [mem 0xe6400000-0xe64fffff 64bit pref]
+[    0.255933] pci_bus 0000:21: resource 1 [mem 0xfb900000-0xfb9fffff]
+[    0.255934] pci_bus 0000:21: resource 2 [mem 0xe6000000-0xe60fffff 64bit pref]
+[    0.255935] pci_bus 0000:22: resource 1 [mem 0xfb500000-0xfb5fffff]
+[    0.255936] pci_bus 0000:22: resource 2 [mem 0xe5c00000-0xe5cfffff 64bit pref]
+[    0.255960] NET: Registered protocol family 2
+[    0.256088] TCP established hash table entries: 16384 (order: 5, 131072 bytes)
+[    0.256118] TCP bind hash table entries: 16384 (order: 6, 262144 bytes)
+[    0.256148] TCP: Hash tables configured (established 16384 bind 16384)
+[    0.256170] TCP: reno registered
+[    0.256173] UDP hash table entries: 1024 (order: 3, 32768 bytes)
+[    0.256180] UDP-Lite hash table entries: 1024 (order: 3, 32768 bytes)
+[    0.256211] NET: Registered protocol family 1
+[    0.256219] pci 0000:00:00.0: Limiting direct PCI/PCI transfers
+[    0.256277] pci 0000:00:0f.0: Video device with shadowed ROM
+[    0.256542] PCI: CLS 32 bytes, default 64
+[    0.256580] Trying to unpack rootfs image as initramfs...
+[    0.523535] Freeing initrd memory: 19328K (ffff880035a30000 - ffff880036d10000)
+[    0.523594] Simple Boot Flag at 0x36 set to 0x80
+[    0.523639] Switched to clocksource tsc
+[    0.523720] microcode: CPU0 sig=0x306f2, pf=0x1, revision=0x31
+[    0.523753] microcode: Microcode Update Driver: v2.00 <tigran@aivazian.fsnet.co.uk>, Peter Oruba
+[    0.523774] Scanning for low memory corruption every 60 seconds
+[    0.524002] futex hash table entries: 256 (order: 2, 16384 bytes)
+[    0.524010] Initialise system trusted keyring
+[    0.524028] audit: initializing netlink subsys (disabled)
+[    0.524042] audit: type=2000 audit(1459991991.506:1): initialized
+[    0.524285] HugeTLB registered 2 MB page size, pre-allocated 0 pages
+[    0.525449] zpool: loaded
+[    0.525452] zbud: loaded
+[    0.525587] VFS: Disk quotas dquot_6.5.2
+[    0.525615] VFS: Dquot-cache hash table entries: 512 (order 0, 4096 bytes)
+[    0.525957] fuse init (API version 7.23)
+[    0.526058] Key type big_key registered
+[    0.526208] Key type asymmetric registered
+[    0.526211] Asymmetric key parser 'x509' registered
+[    0.526241] Block layer SCSI generic (bsg) driver version 0.4 loaded (major 252)
+[    0.526259] io scheduler noop registered
+[    0.526263] io scheduler deadline registered (default)
+[    0.526287] io scheduler cfq registered
+[    0.540582] pcieport 0000:00:15.0: Signaling PME through PCIe PME interrupt
+[    0.540584] pci 0000:03:00.0: Signaling PME through PCIe PME interrupt
+[    0.540600] pcie_pme 0000:00:15.0:pcie01: service driver pcie_pme loaded
+[    0.540677] pcieport 0000:00:15.1: Signaling PME through PCIe PME interrupt
+[    0.540695] pcie_pme 0000:00:15.1:pcie01: service driver pcie_pme loaded
+[    0.540776] pcieport 0000:00:15.2: Signaling PME through PCIe PME interrupt
+[    0.540791] pcie_pme 0000:00:15.2:pcie01: service driver pcie_pme loaded
+[    0.540867] pcieport 0000:00:15.3: Signaling PME through PCIe PME interrupt
+[    0.540882] pcie_pme 0000:00:15.3:pcie01: service driver pcie_pme loaded
+[    0.540958] pcieport 0000:00:15.4: Signaling PME through PCIe PME interrupt
+[    0.540973] pcie_pme 0000:00:15.4:pcie01: service driver pcie_pme loaded
+[    0.541058] pcieport 0000:00:15.5: Signaling PME through PCIe PME interrupt
+[    0.541074] pcie_pme 0000:00:15.5:pcie01: service driver pcie_pme loaded
+[    0.541151] pcieport 0000:00:15.6: Signaling PME through PCIe PME interrupt
+[    0.541166] pcie_pme 0000:00:15.6:pcie01: service driver pcie_pme loaded
+[    0.541241] pcieport 0000:00:15.7: Signaling PME through PCIe PME interrupt
+[    0.541256] pcie_pme 0000:00:15.7:pcie01: service driver pcie_pme loaded
+[    0.541332] pcieport 0000:00:16.0: Signaling PME through PCIe PME interrupt
+[    0.541348] pcie_pme 0000:00:16.0:pcie01: service driver pcie_pme loaded
+[    0.541423] pcieport 0000:00:16.1: Signaling PME through PCIe PME interrupt
+[    0.541442] pcie_pme 0000:00:16.1:pcie01: service driver pcie_pme loaded
+[    0.541518] pcieport 0000:00:16.2: Signaling PME through PCIe PME interrupt
+[    0.541533] pcie_pme 0000:00:16.2:pcie01: service driver pcie_pme loaded
+[    0.541608] pcieport 0000:00:16.3: Signaling PME through PCIe PME interrupt
+[    0.541624] pcie_pme 0000:00:16.3:pcie01: service driver pcie_pme loaded
+[    0.541699] pcieport 0000:00:16.4: Signaling PME through PCIe PME interrupt
+[    0.541714] pcie_pme 0000:00:16.4:pcie01: service driver pcie_pme loaded
+[    0.541789] pcieport 0000:00:16.5: Signaling PME through PCIe PME interrupt
+[    0.541804] pcie_pme 0000:00:16.5:pcie01: service driver pcie_pme loaded
+[    0.541880] pcieport 0000:00:16.6: Signaling PME through PCIe PME interrupt
+[    0.541895] pcie_pme 0000:00:16.6:pcie01: service driver pcie_pme loaded
+[    0.541971] pcieport 0000:00:16.7: Signaling PME through PCIe PME interrupt
+[    0.541986] pcie_pme 0000:00:16.7:pcie01: service driver pcie_pme loaded
+[    0.542061] pcieport 0000:00:17.0: Signaling PME through PCIe PME interrupt
+[    0.542076] pcie_pme 0000:00:17.0:pcie01: service driver pcie_pme loaded
+[    0.542152] pcieport 0000:00:17.1: Signaling PME through PCIe PME interrupt
+[    0.542167] pcie_pme 0000:00:17.1:pcie01: service driver pcie_pme loaded
+[    0.542242] pcieport 0000:00:17.2: Signaling PME through PCIe PME interrupt
+[    0.542257] pcie_pme 0000:00:17.2:pcie01: service driver pcie_pme loaded
+[    0.542332] pcieport 0000:00:17.3: Signaling PME through PCIe PME interrupt
+[    0.542347] pcie_pme 0000:00:17.3:pcie01: service driver pcie_pme loaded
+[    0.542423] pcieport 0000:00:17.4: Signaling PME through PCIe PME interrupt
+[    0.542438] pcie_pme 0000:00:17.4:pcie01: service driver pcie_pme loaded
+[    0.542514] pcieport 0000:00:17.5: Signaling PME through PCIe PME interrupt
+[    0.542534] pcie_pme 0000:00:17.5:pcie01: service driver pcie_pme loaded
+[    0.542609] pcieport 0000:00:17.6: Signaling PME through PCIe PME interrupt
+[    0.542624] pcie_pme 0000:00:17.6:pcie01: service driver pcie_pme loaded
+[    0.542706] pcieport 0000:00:17.7: Signaling PME through PCIe PME interrupt
+[    0.542723] pcie_pme 0000:00:17.7:pcie01: service driver pcie_pme loaded
+[    0.542799] pcieport 0000:00:18.0: Signaling PME through PCIe PME interrupt
+[    0.542814] pcie_pme 0000:00:18.0:pcie01: service driver pcie_pme loaded
+[    0.542889] pcieport 0000:00:18.1: Signaling PME through PCIe PME interrupt
+[    0.542905] pcie_pme 0000:00:18.1:pcie01: service driver pcie_pme loaded
+[    0.542980] pcieport 0000:00:18.2: Signaling PME through PCIe PME interrupt
+[    0.542996] pcie_pme 0000:00:18.2:pcie01: service driver pcie_pme loaded
+[    0.543071] pcieport 0000:00:18.3: Signaling PME through PCIe PME interrupt
+[    0.543086] pcie_pme 0000:00:18.3:pcie01: service driver pcie_pme loaded
+[    0.543162] pcieport 0000:00:18.4: Signaling PME through PCIe PME interrupt
+[    0.543177] pcie_pme 0000:00:18.4:pcie01: service driver pcie_pme loaded
+[    0.543253] pcieport 0000:00:18.5: Signaling PME through PCIe PME interrupt
+[    0.543268] pcie_pme 0000:00:18.5:pcie01: service driver pcie_pme loaded
+[    0.543344] pcieport 0000:00:18.6: Signaling PME through PCIe PME interrupt
+[    0.543359] pcie_pme 0000:00:18.6:pcie01: service driver pcie_pme loaded
+[    0.543434] pcieport 0000:00:18.7: Signaling PME through PCIe PME interrupt
+[    0.543452] pcie_pme 0000:00:18.7:pcie01: service driver pcie_pme loaded
+[    0.543459] pci_hotplug: PCI Hot Plug PCI Core version: 0.5
+[    0.543791] pciehp 0000:00:15.0:pcie04: Slot #160 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.543833] pciehp 0000:00:15.0:pcie04: service driver pciehp loaded
+[    0.543858] pciehp 0000:00:15.1:pcie04: Slot #161 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.543895] pciehp 0000:00:15.1:pcie04: service driver pciehp loaded
+[    0.543919] pciehp 0000:00:15.2:pcie04: Slot #162 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.543955] pciehp 0000:00:15.2:pcie04: service driver pciehp loaded
+[    0.543979] pciehp 0000:00:15.3:pcie04: Slot #163 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544014] pciehp 0000:00:15.3:pcie04: service driver pciehp loaded
+[    0.544039] pciehp 0000:00:15.4:pcie04: Slot #164 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544073] pciehp 0000:00:15.4:pcie04: service driver pciehp loaded
+[    0.544098] pciehp 0000:00:15.5:pcie04: Slot #165 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544133] pciehp 0000:00:15.5:pcie04: service driver pciehp loaded
+[    0.544157] pciehp 0000:00:15.6:pcie04: Slot #166 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544191] pciehp 0000:00:15.6:pcie04: service driver pciehp loaded
+[    0.544216] pciehp 0000:00:15.7:pcie04: Slot #167 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544251] pciehp 0000:00:15.7:pcie04: service driver pciehp loaded
+[    0.544275] pciehp 0000:00:16.0:pcie04: Slot #192 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544311] pciehp 0000:00:16.0:pcie04: service driver pciehp loaded
+[    0.544336] pciehp 0000:00:16.1:pcie04: Slot #193 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544371] pciehp 0000:00:16.1:pcie04: service driver pciehp loaded
+[    0.544395] pciehp 0000:00:16.2:pcie04: Slot #194 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544431] pciehp 0000:00:16.2:pcie04: service driver pciehp loaded
+[    0.544456] pciehp 0000:00:16.3:pcie04: Slot #195 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544491] pciehp 0000:00:16.3:pcie04: service driver pciehp loaded
+[    0.544515] pciehp 0000:00:16.4:pcie04: Slot #196 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544550] pciehp 0000:00:16.4:pcie04: service driver pciehp loaded
+[    0.544574] pciehp 0000:00:16.5:pcie04: Slot #197 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544609] pciehp 0000:00:16.5:pcie04: service driver pciehp loaded
+[    0.544633] pciehp 0000:00:16.6:pcie04: Slot #198 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544668] pciehp 0000:00:16.6:pcie04: service driver pciehp loaded
+[    0.544693] pciehp 0000:00:16.7:pcie04: Slot #199 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544728] pciehp 0000:00:16.7:pcie04: service driver pciehp loaded
+[    0.544757] pciehp 0000:00:17.0:pcie04: Slot #224 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544792] pciehp 0000:00:17.0:pcie04: service driver pciehp loaded
+[    0.544816] pciehp 0000:00:17.1:pcie04: Slot #225 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544851] pciehp 0000:00:17.1:pcie04: service driver pciehp loaded
+[    0.544875] pciehp 0000:00:17.2:pcie04: Slot #226 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544911] pciehp 0000:00:17.2:pcie04: service driver pciehp loaded
+[    0.544935] pciehp 0000:00:17.3:pcie04: Slot #227 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.544970] pciehp 0000:00:17.3:pcie04: service driver pciehp loaded
+[    0.544994] pciehp 0000:00:17.4:pcie04: Slot #228 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545035] pciehp 0000:00:17.4:pcie04: service driver pciehp loaded
+[    0.545062] pciehp 0000:00:17.5:pcie04: Slot #229 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545098] pciehp 0000:00:17.5:pcie04: service driver pciehp loaded
+[    0.545123] pciehp 0000:00:17.6:pcie04: Slot #230 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545158] pciehp 0000:00:17.6:pcie04: service driver pciehp loaded
+[    0.545183] pciehp 0000:00:17.7:pcie04: Slot #231 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545219] pciehp 0000:00:17.7:pcie04: service driver pciehp loaded
+[    0.545243] pciehp 0000:00:18.0:pcie04: Slot #256 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545278] pciehp 0000:00:18.0:pcie04: service driver pciehp loaded
+[    0.545302] pciehp 0000:00:18.1:pcie04: Slot #257 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545337] pciehp 0000:00:18.1:pcie04: service driver pciehp loaded
+[    0.545361] pciehp 0000:00:18.2:pcie04: Slot #258 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545397] pciehp 0000:00:18.2:pcie04: service driver pciehp loaded
+[    0.545421] pciehp 0000:00:18.3:pcie04: Slot #259 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545457] pciehp 0000:00:18.3:pcie04: service driver pciehp loaded
+[    0.545481] pciehp 0000:00:18.4:pcie04: Slot #260 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545516] pciehp 0000:00:18.4:pcie04: service driver pciehp loaded
+[    0.545545] pciehp 0000:00:18.5:pcie04: Slot #261 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545589] pciehp 0000:00:18.5:pcie04: service driver pciehp loaded
+[    0.545614] pciehp 0000:00:18.6:pcie04: Slot #262 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545649] pciehp 0000:00:18.6:pcie04: service driver pciehp loaded
+[    0.545674] pciehp 0000:00:18.7:pcie04: Slot #263 AttnBtn+ AttnInd- PwrInd- PwrCtrl+ MRL- Interlock- NoCompl+ LLActRep+
+[    0.545709] pciehp 0000:00:18.7:pcie04: service driver pciehp loaded
+[    0.545713] pciehp: PCI Express Hot Plug Controller Driver version: 0.4
+[    0.545744] intel_idle: does not run on family 6 model 63
+[    0.545928] ACPI: AC Adapter [ACAD] (on-line)
+[    0.546079] input: Power Button as /devices/LNXSYSTM:00/LNXPWRBN:00/input/input0
+[    0.546082] ACPI: Power Button [PWRF]
+[    0.546255] GHES: HEST is not enabled!
+[    0.546338] Serial: 8250/16550 driver, 32 ports, IRQ sharing enabled
+[    0.547311] Linux agpgart interface v0.103
+[    0.547369] agpgart-intel 0000:00:00.0: Intel 440BX Chipset
+[    0.547944] agpgart-intel 0000:00:00.0: AGP aperture is 256M @ 0x0
+[    0.548773] brd: module loaded
+[    0.549196] loop: module loaded
+[    0.549301] ata_piix 0000:00:07.1: version 2.13
+[    0.549594] scsi host0: ata_piix
+[    0.549662] scsi host1: ata_piix
+[    0.549689] ata1: PATA max UDMA/33 cmd 0x1f0 ctl 0x3f6 bmdma 0x1060 irq 14
+[    0.549690] ata2: PATA max UDMA/33 cmd 0x170 ctl 0x376 bmdma 0x1068 irq 15
+[    0.549756] libphy: Fixed MDIO Bus: probed
+[    0.549759] tun: Universal TUN/TAP device driver, 1.6
+[    0.549760] tun: (C) 1999-2004 Max Krasnyansky <maxk@qualcomm.com>
+[    0.549956] PPP generic driver version 2.4.2
+[    0.550012] ehci_hcd: USB 2.0 'Enhanced' Host Controller (EHCI) Driver
+[    0.550016] ehci-pci: EHCI PCI platform driver
+[    0.550025] ehci-platform: EHCI generic platform driver
+[    0.550032] ohci_hcd: USB 1.1 'Open' Host Controller (OHCI) Driver
+[    0.550035] ohci-pci: OHCI PCI platform driver
+[    0.550045] ohci-platform: OHCI generic platform driver
+[    0.550051] uhci_hcd: USB Universal Host Controller Interface driver
+[    0.550093] i8042: PNP: PS/2 Controller [PNP0303:KBC,PNP0f13:MOUS] at 0x60,0x64 irq 1,12
+[    0.550786] serio: i8042 KBD port at 0x60,0x64 irq 1
+[    0.550791] serio: i8042 AUX port at 0x60,0x64 irq 12
+[    0.550869] mousedev: PS/2 mouse device common for all mice
+[    0.551199] rtc_cmos 00:01: rtc core: registered rtc_cmos as rtc0
+[    0.551302] rtc_cmos 00:01: alarms up to one month, y3k, 114 bytes nvram, hpet irqs
+[    0.551317] i2c /dev entries driver
+[    0.551366] device-mapper: uevent: version 1.0.3
+[    0.551422] device-mapper: ioctl: 4.29.0-ioctl (2014-10-28) initialised: dm-devel@redhat.com
+[    0.551486] ledtrig-cpu: registered to indicate activity on CPUs
+[    0.551688] PCCT header not found.
+[    0.551689] ACPI PCC probe failed.
+[    0.551987] TCP: cubic registered
+[    0.552081] NET: Registered protocol family 10
+[    0.552290] NET: Registered protocol family 17
+[    0.552299] Key type dns_resolver registered
+[    0.552471] Loading compiled-in X.509 certificates
+[    0.553192] Loaded X.509 cert 'Magrathea: Glacier signing key: 6aaa11d18c2d3a40b1b4dbe5bf8ad656ddf51838'
+[    0.553218] registered taskstats version 1
+[    0.554244] input: AT Translated Set 2 keyboard as /devices/platform/i8042/serio0/input/input1
+[    0.554860] Key type trusted registered
+[    0.557033] Key type encrypted registered
+[    0.557040] AppArmor: AppArmor sha1 policy hashing enabled
+[    0.557043] ima: No TPM chip found, activating TPM-bypass!
+[    0.557068] evm: HMAC attrs: 0x1
+[    0.560480]   Magic number: 12:884:305
+[    0.560494] tty tty34: hash matches
+[    0.560525] acpi device:9f: hash matches
+[    0.560621] rtc_cmos 00:01: setting system clock to 2016-04-07 01:19:52 UTC (1459991992)
+[    0.560666] BIOS EDD facility v0.16 2004-Jun-25, 0 devices found
+[    0.560667] EDD information not available.
+[    0.560721] PM: Hibernation image not present or could not be loaded.
+[    0.726355] Freeing unused kernel memory: 1408K (ffffffff81d27000 - ffffffff81e87000)
+[    0.726357] Write protecting the kernel read-only data: 12288k
+[    0.726509] Freeing unused kernel memory: 260K (ffff8800017bf000 - ffff880001800000)
+[    0.726610] Freeing unused kernel memory: 344K (ffff880001baa000 - ffff880001c00000)
+[    0.737016] systemd-udevd[101]: starting version 204
+[    0.759937] Floppy drive(s): fd0 is 1.44M
+[    0.773700] FDC 0 is a post-1991 82077
+[    0.783318] Fusion MPT base driver 3.04.20
+[    0.783319] Copyright (c) 1999-2008 LSI Corporation
+[    0.787990] ahci 0000:02:01.0: version 3.0
+[    0.788809] ahci 0000:02:01.0: AHCI 0001.0300 32 slots 30 ports 6 Gbps 0x3fffffff impl SATA mode
+[    0.788811] ahci 0000:02:01.0: flags: 64bit ncq clo only 
+[    0.790455] VMware vmxnet3 virtual NIC driver - version 1.2.1.0-k-NAPI
+[    0.790472] vmxnet3 0000:03:00.0: # of Tx queues : 1, # of Rx queues : 1
+[    0.797867] Fusion MPT SPI Host driver 3.04.20
+[    0.807831] mptbase: ioc0: Initiating bringup
+[    1.811376] vmxnet3 0000:03:00.0 eth0: NIC Link is Up 10000 Mbps
+[    1.820266] scsi host2: ahci
+[    1.824772] scsi host3: ahci
+[    1.828968] scsi host4: ahci
+[    1.834554] scsi host5: ahci
+[    1.840297] scsi host6: ahci
+[    1.840430] scsi host7: ahci
+[    1.840507] scsi host8: ahci
+[    1.840579] scsi host9: ahci
+[    1.840653] scsi host10: ahci
+[    1.840727] scsi host11: ahci
+[    1.840798] scsi host12: ahci
+[    1.840866] scsi host13: ahci
+[    1.840936] scsi host14: ahci
+[    1.841006] scsi host15: ahci
+[    1.841076] scsi host16: ahci
+[    1.841149] scsi host17: ahci
+[    1.841219] scsi host18: ahci
+[    1.841289] scsi host19: ahci
+[    1.841360] scsi host20: ahci
+[    1.841430] scsi host21: ahci
+[    1.841500] scsi host22: ahci
+[    1.841570] scsi host23: ahci
+[    1.841640] scsi host24: ahci
+[    1.841712] scsi host25: ahci
+[    1.841781] scsi host26: ahci
+[    1.841850] scsi host27: ahci
+[    1.841923] scsi host28: ahci
+[    1.841998] scsi host29: ahci
+[    1.842251] scsi host30: ahci
+[    1.842333] scsi host31: ahci
+[    1.842370] ata3: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff100 irq 56
+[    1.842372] ata4: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff180 irq 56
+[    1.842373] ata5: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff200 irq 56
+[    1.842375] ata6: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff280 irq 56
+[    1.842376] ata7: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff300 irq 56
+[    1.842377] ata8: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff380 irq 56
+[    1.842378] ata9: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff400 irq 56
+[    1.842379] ata10: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff480 irq 56
+[    1.842380] ata11: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff500 irq 56
+[    1.842381] ata12: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff580 irq 56
+[    1.842382] ata13: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff600 irq 56
+[    1.842383] ata14: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff680 irq 56
+[    1.842384] ata15: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff700 irq 56
+[    1.842385] ata16: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff780 irq 56
+[    1.842386] ata17: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff800 irq 56
+[    1.842387] ata18: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff880 irq 56
+[    1.842388] ata19: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff900 irq 56
+[    1.842389] ata20: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ff980 irq 56
+[    1.842390] ata21: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffa00 irq 56
+[    1.842391] ata22: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffa80 irq 56
+[    1.842392] ata23: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffb00 irq 56
+[    1.842393] ata24: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffb80 irq 56
+[    1.842394] ata25: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffc00 irq 56
+[    1.842395] ata26: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffc80 irq 56
+[    1.842396] ata27: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffd00 irq 56
+[    1.842397] ata28: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffd80 irq 56
+[    1.842398] ata29: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffe00 irq 56
+[    1.842399] ata30: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5ffe80 irq 56
+[    1.842400] ata31: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5fff00 irq 56
+[    1.842401] ata32: SATA max UDMA/133 abar m4096@0xfd5ff000 port 0xfd5fff80 irq 56
+[    1.900520] ioc0: LSI53C1030 B0: Capabilities={Initiator}
+[    2.060761] scsi host32: ioc0: LSI53C1030 B0, FwRev=01032920h, Ports=1, MaxQ=128, IRQ=17
+[    2.160270] ata27: SATA link down (SStatus 0 SControl 300)
+[    2.160300] ata29: SATA link down (SStatus 0 SControl 300)
+[    2.160333] ata20: SATA link down (SStatus 0 SControl 300)
+[    2.160342] ata19: SATA link down (SStatus 0 SControl 300)
+[    2.160349] ata32: SATA link down (SStatus 0 SControl 300)
+[    2.160357] ata25: SATA link down (SStatus 0 SControl 300)
+[    2.160365] ata23: SATA link down (SStatus 0 SControl 300)
+[    2.160373] ata5: SATA link down (SStatus 0 SControl 300)
+[    2.160380] ata31: SATA link down (SStatus 0 SControl 300)
+[    2.160388] ata9: SATA link down (SStatus 0 SControl 300)
+[    2.160396] ata13: SATA link down (SStatus 0 SControl 300)
+[    2.160403] ata10: SATA link down (SStatus 0 SControl 300)
+[    2.160411] ata21: SATA link down (SStatus 0 SControl 300)
+[    2.160418] ata8: SATA link down (SStatus 0 SControl 300)
+[    2.160426] ata12: SATA link down (SStatus 0 SControl 300)
+[    2.160433] ata14: SATA link down (SStatus 0 SControl 300)
+[    2.160442] ata3: SATA link up 6.0 Gbps (SStatus 133 SControl 300)
+[    2.160498] ata3.00: ATAPI: VMware Virtual SATA CDRW Drive, 00000001, max UDMA/33
+[    2.160599] ata3.00: configured for UDMA/33
+[    2.160744] scsi 2:0:0:0: CD-ROM            NECVMWar VMware SATA CD00 1.00 PQ: 0 ANSI: 5
+[    2.160871] ata11: SATA link down (SStatus 0 SControl 300)
+[    2.160881] ata7: SATA link down (SStatus 0 SControl 300)
+[    2.160889] ata6: SATA link down (SStatus 0 SControl 300)
+[    2.160897] ata16: SATA link down (SStatus 0 SControl 300)
+[    2.160905] ata4: SATA link down (SStatus 0 SControl 300)
+[    2.160912] ata15: SATA link down (SStatus 0 SControl 300)
+[    2.160920] ata30: SATA link down (SStatus 0 SControl 300)
+[    2.160927] ata17: SATA link down (SStatus 0 SControl 300)
+[    2.160935] ata28: SATA link down (SStatus 0 SControl 300)
+[    2.160942] ata26: SATA link down (SStatus 0 SControl 300)
+[    2.160949] ata22: SATA link down (SStatus 0 SControl 300)
+[    2.160957] ata24: SATA link down (SStatus 0 SControl 300)
+[    2.160964] ata18: SATA link down (SStatus 0 SControl 300)
+[    3.167028] input: ImPS/2 Generic Wheel Mouse as /devices/platform/i8042/serio1/input/input3
+[    3.167177] sr 2:0:0:0: [sr0] scsi3-mmc drive: 1x/1x writer dvd-ram cd/rw xa/form2 cdda tray
+[    3.167180] cdrom: Uniform CD-ROM driver Revision: 3.20
+[    3.167266] sr 2:0:0:0: Attached scsi CD-ROM sr0
+[    3.167347] sr 2:0:0:0: Attached scsi generic sg0 type 5
+[    3.173429] scsi 32:0:0:0: Direct-Access     VMware   Virtual disk     1.0  PQ: 0 ANSI: 2
+[    3.173436] scsi target32:0:0: Beginning Domain Validation
+[    3.173645] scsi target32:0:0: Domain Validation skipping write tests
+[    3.173646] scsi target32:0:0: Ending Domain Validation
+[    3.173662] scsi target32:0:0: FAST-40 WIDE SCSI 80.0 MB/s ST (25 ns, offset 127)
+[    3.174290] sd 32:0:0:0: [sda] 125829120 512-byte logical blocks: (64.4 GB/60.0 GiB)
+[    3.174305] sd 32:0:0:0: [sda] Write Protect is off
+[    3.174307] sd 32:0:0:0: [sda] Mode Sense: 61 00 00 00
+[    3.174322] sd 32:0:0:0: [sda] Cache data unavailable
+[    3.174324] sd 32:0:0:0: [sda] Assuming drive cache: write through
+[    3.174534] sd 32:0:0:0: Attached scsi generic sg1 type 0
+[    3.182871]  sda: sda1 sda2 < sda5 >
+[    3.183040] sd 32:0:0:0: [sda] Attached SCSI disk
+[    3.271953] EXT4-fs (sda1): mounted filesystem with ordered data mode. Opts: (null)
+[    3.504451] random: init urandom read with 46 bits of entropy available
+[    3.606721] init: plymouth-upstart-bridge main process (243) terminated with status 1
+[    3.606728] init: plymouth-upstart-bridge main process ended, respawning
+[    3.608946] init: plymouth-upstart-bridge main process (254) terminated with status 1
+[    3.608953] init: plymouth-upstart-bridge main process ended, respawning
+[    3.612059] init: plymouth-upstart-bridge main process (256) terminated with status 1
+[    3.612066] init: plymouth-upstart-bridge main process ended, respawning
+[    3.614479] init: plymouth-upstart-bridge main process (259) terminated with status 1
+[    3.614486] init: plymouth-upstart-bridge main process ended, respawning
+[    3.616637] init: plymouth-upstart-bridge main process (261) terminated with status 1
+[    3.616644] init: plymouth-upstart-bridge main process ended, respawning
+[    3.618690] init: plymouth-upstart-bridge main process (263) terminated with status 1
+[    3.618697] init: plymouth-upstart-bridge main process ended, respawning
+[    3.620872] init: plymouth-upstart-bridge main process (265) terminated with status 1
+[    3.620879] init: plymouth-upstart-bridge main process ended, respawning
+[    3.623227] init: plymouth-upstart-bridge main process (267) terminated with status 1
+[    3.623233] init: plymouth-upstart-bridge main process ended, respawning
+[    3.625622] init: plymouth-upstart-bridge main process (269) terminated with status 1
+[    3.625629] init: plymouth-upstart-bridge main process ended, respawning
+[    3.627716] init: plymouth-upstart-bridge main process (271) terminated with status 1
+[    3.627723] init: plymouth-upstart-bridge main process ended, respawning
+[    3.630887] init: plymouth-upstart-bridge main process (273) terminated with status 1
+[    3.630894] init: plymouth-upstart-bridge respawning too fast, stopped
+[    4.522175] Adding 1570812k swap on /dev/sda5.  Priority:-1 extents:1 across:1570812k FS
+[    4.585654] EXT4-fs (sda1): re-mounted. Opts: errors=remount-ro
+[    4.586269] systemd-udevd[374]: starting version 204
+[    4.646784] lp: driver loaded but no devices found
+[    4.676831] ppdev: user-space parallel port driver
+[    4.977438] audit: type=1400 audit(1459991996.913:2): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/cups/backend/cups-pdf" pid=510 comm="apparmor_parser"
+[    4.977444] audit: type=1400 audit(1459991996.913:3): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/sbin/cupsd" pid=510 comm="apparmor_parser"
+[    4.977734] audit: type=1400 audit(1459991996.913:4): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/sbin/cupsd" pid=510 comm="apparmor_parser"
+[    4.981961] Bluetooth: Core ver 2.20
+[    4.982284] NET: Registered protocol family 31
+[    4.982286] Bluetooth: HCI device and connection manager initialized
+[    4.982290] Bluetooth: HCI socket layer initialized
+[    4.982292] Bluetooth: L2CAP socket layer initialized
+[    4.982297] Bluetooth: SCO socket layer initialized
+[    5.001968] Bluetooth: BNEP (Ethernet Emulation) ver 1.3
+[    5.001971] Bluetooth: BNEP filters: protocol multicast
+[    5.001974] Bluetooth: BNEP socket layer initialized
+[    5.010925] Bluetooth: RFCOMM TTY layer initialized
+[    5.010930] Bluetooth: RFCOMM socket layer initialized
+[    5.010934] Bluetooth: RFCOMM ver 1.11
+[    5.054556] shpchp: Standard Hot Plug PCI Controller Driver version: 0.4
+[    5.073386] piix4_smbus 0000:00:07.3: SMBus Host Controller not enabled!
+[    5.093184] [drm] Initialized drm 1.1.0 20060810
+[    5.113674] vmw_vmci 0000:00:07.7: Found VMCI PCI device at 0x11080, irq 16
+[    5.113747] vmw_vmci 0000:00:07.7: Using capabilities 0xc
+[    5.132163] Guest personality initialized and is active
+[    5.133586] VMCI host device registered (name=vmci, major=10, minor=56)
+[    5.133588] Initialized host personality
+[    5.241523] [drm] DMA map mode: Using physical TTM page addresses.
+[    5.241596] [drm] Capabilities:
+[    5.241597] [drm]   Rect copy.
+[    5.241598] [drm]   Cursor.
+[    5.241598] [drm]   Cursor bypass.
+[    5.241599] [drm]   Cursor bypass 2.
+[    5.241599] [drm]   8bit emulation.
+[    5.241600] [drm]   Alpha cursor.
+[    5.241600] [drm]   Extended Fifo.
+[    5.241601] [drm]   Multimon.
+[    5.241601] [drm]   Pitchlock.
+[    5.241602] [drm]   Irq mask.
+[    5.241602] [drm]   Display Topology.
+[    5.241603] [drm]   GMR.
+[    5.241603] [drm]   Traces.
+[    5.241604] [drm]   GMR2.
+[    5.241604] [drm]   Screen Object 2.
+[    5.241605] [drm]   Command Buffers.
+[    5.241605] [drm]   Command Buffers 2.
+[    5.241606] [drm]   Guest Backed Resources.
+[    5.241606] [drm] Max GMR ids is 64
+[    5.241607] [drm] Max number of GMR pages is 65536
+[    5.241608] [drm] Max dedicated hypervisor surface memory is 0 kiB
+[    5.241608] [drm] Maximum display memory size is 4096 kiB
+[    5.241609] [drm] VRAM at 0xe8000000 size is 4096 kiB
+[    5.241610] [drm] MMIO at 0xfe000000 size is 256 kiB
+[    5.241611] [drm] global init.
+[    5.257694] [TTM] Zone  kernel: Available graphics memory: 766582 kiB
+[    5.257696] [TTM] Initializing pool allocator
+[    5.257700] [TTM] Initializing DMA pool allocator
+[    5.257868] [drm] Supports vblank timestamp caching Rev 2 (21.10.2013).
+[    5.257870] [drm] No driver support for vblank timestamp query.
+[    5.258622] [drm] Screen objects system initialized
+[    5.258671] [drm] width 640
+[    5.258678] [drm] height 480
+[    5.258685] [drm] bpp 32
+[    5.259840] [drm] Fifo max 0x00040000 min 0x00001000 cap 0x0000077f
+[    5.285386] fbcon: svgadrmfb (fb0) is primary device
+[    5.300384] random: nonblocking pool is initialized
+[    5.302167] Console: switching to colour frame buffer device 100x37
+[    5.308438] audit: type=1400 audit(1459991997.245:5): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/sbin/dhclient" pid=570 comm="apparmor_parser"
+[    5.308443] audit: type=1400 audit(1459991997.245:6): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=570 comm="apparmor_parser"
+[    5.308446] audit: type=1400 audit(1459991997.245:7): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=570 comm="apparmor_parser"
+[    5.308738] audit: type=1400 audit(1459991997.245:8): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=570 comm="apparmor_parser"
+[    5.308742] audit: type=1400 audit(1459991997.245:9): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=570 comm="apparmor_parser"
+[    5.308897] audit: type=1400 audit(1459991997.245:10): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=570 comm="apparmor_parser"
+[    5.356570] [drm] Initialized vmwgfx 2.6.1 20140704 for 0000:00:0f.0 on minor 0
+[    5.384437] vmxnet3 0000:03:00.0 eth0: intr type 3, mode 0, 2 vectors allocated
+[    5.386951] vmxnet3 0000:03:00.0 eth0: NIC Link is Up 10000 Mbps
+[    5.650671] AVX2 version of gcm_enc/dec engaged.
+[    5.650673] AES CTR mode by8 optimization enabled
+[    5.798262] intel_rapl: no valid rapl domains found in package 0
+[    5.940198] init: failsafe main process (632) killed by TERM signal
+[    6.123302] audit_printk_skb: 3 callbacks suppressed
+[    6.123305] audit: type=1400 audit(1459991998.061:12): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/lib/lightdm/lightdm-guest-session" pid=1037 comm="apparmor_parser"
+[    6.123309] audit: type=1400 audit(1459991998.061:13): apparmor="STATUS" operation="profile_load" profile="unconfined" name="chromium" pid=1037 comm="apparmor_parser"
+[    6.123539] audit: type=1400 audit(1459991998.061:14): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="chromium" pid=1037 comm="apparmor_parser"
+[    6.125375] audit: type=1400 audit(1459991998.061:15): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/sbin/dhclient" pid=1038 comm="apparmor_parser"
+[    6.125381] audit: type=1400 audit(1459991998.061:16): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=1038 comm="apparmor_parser"
+[    6.125384] audit: type=1400 audit(1459991998.061:17): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=1038 comm="apparmor_parser"
+[    6.125677] audit: type=1400 audit(1459991998.061:18): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/NetworkManager/nm-dhcp-client.action" pid=1038 comm="apparmor_parser"
+[    6.125679] audit: type=1400 audit(1459991998.061:19): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=1038 comm="apparmor_parser"
+[    6.125834] audit: type=1400 audit(1459991998.061:20): apparmor="STATUS" operation="profile_replace" profile="unconfined" name="/usr/lib/connman/scripts/dhclient-script" pid=1038 comm="apparmor_parser"
+[    6.132491] audit: type=1400 audit(1459991998.069:21): apparmor="STATUS" operation="profile_load" profile="unconfined" name="/usr/bin/evince" pid=1039 comm="apparmor_parser"
+[   28.245354] mp3: module verification failed: signature and/or  required key missing - tainting kernel
+[   28.246626] MP3 MODULE LOADING
+[   28.246642] Initializing character device.
+[   28.246645] Character device initialized.
+[   28.246672] MP3 MODULE LOADED
+[   34.886395] mp3 Command: R 1571
+[   34.886395] 
+[   34.886399] mp3 OP: R
+[   34.886400] mp3 Registration
+[   34.886401] Adding pid 1571
+[   34.886407] MP3 workqueue handler!
+[   34.886686] mp3 Command: R 1570
+[   34.886686] 
+[   34.886688] mp3 OP: R
+[   34.886688] mp3 Registration
+[   34.886689] Adding pid 1570
+[   34.887539] MP3 Timer Callback
+[   34.887672] MP3 workqueue handler!
+[   34.935510] MP3 Timer Callback
+[   34.935522] MP3 workqueue handler!
+[   34.983501] MP3 Timer Callback
+[   34.983584] MP3 workqueue handler!
+[   35.031476] MP3 Timer Callback
+[   35.031485] MP3 workqueue handler!
+[   35.079452] MP3 Timer Callback
+[   35.079460] MP3 workqueue handler!
+[   35.127420] MP3 Timer Callback
+[   35.127430] MP3 workqueue handler!
+[   35.175395] MP3 Timer Callback
+[   35.175404] MP3 workqueue handler!
+[   35.223372] MP3 Timer Callback
+[   35.223380] MP3 workqueue handler!
+[   35.271351] MP3 Timer Callback
+[   35.271359] MP3 workqueue handler!
+[   35.319325] MP3 Timer Callback
+[   35.319334] MP3 workqueue handler!
+[   35.367322] MP3 Timer Callback
+[   35.367331] MP3 workqueue handler!
+[   35.415283] MP3 Timer Callback
+[   35.415292] MP3 workqueue handler!
+[   35.463257] MP3 Timer Callback
+[   35.463265] MP3 workqueue handler!
+[   35.511234] MP3 Timer Callback
+[   35.511245] MP3 workqueue handler!
+[   35.559212] MP3 Timer Callback
+[   35.559221] MP3 workqueue handler!
+[   35.607206] MP3 Timer Callback
+[   35.607222] MP3 workqueue handler!
+[   35.655184] MP3 Timer Callback
+[   35.655200] MP3 workqueue handler!
+[   35.703149] MP3 Timer Callback
+[   35.703158] MP3 workqueue handler!
+[   35.751132] MP3 Timer Callback
+[   35.751144] MP3 workqueue handler!
+[   35.799095] MP3 Timer Callback
+[   35.799103] MP3 workqueue handler!
+[   35.847066] MP3 Timer Callback
+[   35.847073] MP3 workqueue handler!
+[   35.895051] MP3 Timer Callback
+[   35.895059] MP3 workqueue handler!
+[   35.943033] MP3 Timer Callback
+[   35.943110] MP3 workqueue handler!
+[   35.990991] MP3 Timer Callback
+[   35.991000] MP3 workqueue handler!
+[   36.038968] MP3 Timer Callback
+[   36.038982] MP3 workqueue handler!
+[   36.086957] MP3 Timer Callback
+[   36.086996] MP3 workqueue handler!
+[   36.134928] MP3 Timer Callback
+[   36.134936] MP3 workqueue handler!
+[   36.182906] MP3 Timer Callback
+[   36.182912] MP3 workqueue handler!
+[   36.230885] MP3 Timer Callback
+[   36.230893] MP3 workqueue handler!
+[   36.278866] MP3 Timer Callback
+[   36.278874] MP3 workqueue handler!
+[   36.326833] MP3 Timer Callback
+[   36.326838] MP3 workqueue handler!
+[   36.374811] MP3 Timer Callback
+[   36.374819] MP3 workqueue handler!
+[   36.422797] MP3 Timer Callback
+[   36.422805] MP3 workqueue handler!
+[   36.470762] MP3 Timer Callback
+[   36.470768] MP3 workqueue handler!
+[   36.518747] MP3 Timer Callback
+[   36.518755] MP3 workqueue handler!
+[   36.566715] MP3 Timer Callback
+[   36.566727] MP3 workqueue handler!
+[   36.614690] MP3 Timer Callback
+[   36.614699] MP3 workqueue handler!
+[   36.662674] MP3 Timer Callback
+[   36.662682] MP3 workqueue handler!
+[   36.710677] MP3 Timer Callback
+[   36.710686] MP3 workqueue handler!
+[   36.758626] MP3 Timer Callback
+[   36.758635] MP3 workqueue handler!
+[   36.806599] MP3 Timer Callback
+[   36.806606] MP3 workqueue handler!
+[   36.854569] MP3 Timer Callback
+[   36.854576] MP3 workqueue handler!
+[   36.902553] MP3 Timer Callback
+[   36.902561] MP3 workqueue handler!
+[   36.950521] MP3 Timer Callback
+[   36.950532] MP3 workqueue handler!
+[   36.998514] MP3 Timer Callback
+[   36.998522] MP3 workqueue handler!
+[   37.046476] MP3 Timer Callback
+[   37.046482] MP3 workqueue handler!
+[   37.094450] MP3 Timer Callback
+[   37.094461] MP3 workqueue handler!
+[   37.142433] MP3 Timer Callback
+[   37.142476] MP3 workqueue handler!
+[   37.190428] MP3 Timer Callback
+[   37.190437] MP3 workqueue handler!
+[   37.238394] MP3 Timer Callback
+[   37.238403] MP3 workqueue handler!
+[   37.286367] MP3 Timer Callback
+[   37.286376] MP3 workqueue handler!
+[   37.334342] MP3 Timer Callback
+[   37.334351] MP3 workqueue handler!
+[   37.382320] MP3 Timer Callback
+[   37.382329] MP3 workqueue handler!
+[   37.430298] MP3 Timer Callback
+[   37.430309] MP3 workqueue handler!
+[   37.478273] MP3 Timer Callback
+[   37.478283] MP3 workqueue handler!
+[   37.526243] MP3 Timer Callback
+[   37.526253] MP3 workqueue handler!
+[   37.574229] MP3 Timer Callback
+[   37.574241] MP3 workqueue handler!
+[   37.622197] MP3 Timer Callback
+[   37.622206] MP3 workqueue handler!
+[   37.670184] MP3 Timer Callback
+[   37.670193] MP3 workqueue handler!
+[   37.718163] MP3 Timer Callback
+[   37.718181] MP3 workqueue handler!
+[   37.766124] MP3 Timer Callback
+[   37.766132] MP3 workqueue handler!
+[   37.814100] MP3 Timer Callback
+[   37.814109] MP3 workqueue handler!
+[   37.862085] MP3 Timer Callback
+[   37.862094] MP3 workqueue handler!
+[   37.910101] MP3 Timer Callback
+[   37.910113] MP3 workqueue handler!
+[   37.958029] MP3 Timer Callback
+[   37.958037] MP3 workqueue handler!
+[   38.006018] MP3 Timer Callback
+[   38.006079] MP3 workqueue handler!
+[   38.053997] MP3 Timer Callback
+[   38.054005] MP3 workqueue handler!
+[   38.101957] MP3 Timer Callback
+[   38.101963] MP3 workqueue handler!
+[   38.149943] MP3 Timer Callback
+[   38.150029] MP3 workqueue handler!
+[   38.197924] MP3 Timer Callback
+[   38.197933] MP3 workqueue handler!
+[   38.245896] MP3 Timer Callback
+[   38.245904] MP3 workqueue handler!
+[   38.293870] MP3 Timer Callback
+[   38.293879] MP3 workqueue handler!
+[   38.341854] MP3 Timer Callback
+[   38.341863] MP3 workqueue handler!
+[   38.389823] MP3 Timer Callback
+[   38.389831] MP3 workqueue handler!
+[   38.437802] MP3 Timer Callback
+[   38.437811] MP3 workqueue handler!
+[   38.485771] MP3 Timer Callback
+[   38.485782] MP3 workqueue handler!
+[   38.533752] MP3 Timer Callback
+[   38.533760] MP3 workqueue handler!
+[   38.581732] MP3 Timer Callback
+[   38.581740] MP3 workqueue handler!
+[   38.629700] MP3 Timer Callback
+[   38.629709] MP3 workqueue handler!
+[   38.677682] MP3 Timer Callback
+[   38.677690] MP3 workqueue handler!
+[   38.725673] MP3 Timer Callback
+[   38.725685] MP3 workqueue handler!
+[   38.773636] MP3 Timer Callback
+[   38.773645] MP3 workqueue handler!
+[   38.821605] MP3 Timer Callback
+[   38.821609] MP3 workqueue handler!
+[   38.869597] MP3 Timer Callback
+[   38.869606] MP3 workqueue handler!
+[   38.917566] MP3 Timer Callback
+[   38.917575] MP3 workqueue handler!
+[   38.965533] MP3 Timer Callback
+[   38.965538] MP3 workqueue handler!
+[   39.013520] MP3 Timer Callback
+[   39.013584] MP3 workqueue handler!
+[   39.061502] MP3 Timer Callback
+[   39.061510] MP3 workqueue handler!
+[   39.109466] MP3 Timer Callback
+[   39.109476] MP3 workqueue handler!
+[   39.157439] MP3 Timer Callback
+[   39.157446] MP3 workqueue handler!
+[   39.205420] MP3 Timer Callback
+[   39.205500] MP3 workqueue handler!
+[   39.253394] MP3 Timer Callback
+[   39.253402] MP3 workqueue handler!
+[   39.301380] MP3 Timer Callback
+[   39.301388] MP3 workqueue handler!
+[   39.349352] MP3 Timer Callback
+[   39.349361] MP3 workqueue handler!
+[   39.397327] MP3 Timer Callback
+[   39.397339] MP3 workqueue handler!
+[   39.445304] MP3 Timer Callback
+[   39.445313] MP3 workqueue handler!
+[   39.493282] MP3 Timer Callback
+[   39.493292] MP3 workqueue handler!
+[   39.541257] MP3 Timer Callback
+[   39.541264] MP3 workqueue handler!
+[   39.589232] MP3 Timer Callback
+[   39.589241] MP3 workqueue handler!
+[   39.637207] MP3 Timer Callback
+[   39.637216] MP3 workqueue handler!
+[   39.685189] MP3 Timer Callback
+[   39.685197] MP3 workqueue handler!
+[   39.733164] MP3 Timer Callback
+[   39.733175] MP3 workqueue handler!
+[   39.781152] MP3 Timer Callback
+[   39.781161] MP3 workqueue handler!
+[   39.829109] MP3 Timer Callback
+[   39.829117] MP3 workqueue handler!
+[   39.877104] MP3 Timer Callback
+[   39.877113] MP3 workqueue handler!
+[   39.925072] MP3 Timer Callback
+[   39.925080] MP3 workqueue handler!
+[   39.973042] MP3 Timer Callback
+[   39.973051] MP3 workqueue handler!
+[   40.021020] MP3 Timer Callback
+[   40.021091] MP3 workqueue handler!
+[   40.068998] MP3 Timer Callback
+[   40.069006] MP3 workqueue handler!
+[   40.116972] MP3 Timer Callback
+[   40.116983] MP3 workqueue handler!
+[   40.164948] MP3 Timer Callback
+[   40.164957] MP3 workqueue handler!
+[   40.212921] MP3 Timer Callback
+[   40.212933] MP3 workqueue handler!
+[   40.260906] MP3 Timer Callback
+[   40.260912] MP3 workqueue handler!
+[   40.308886] MP3 Timer Callback
+[   40.308891] MP3 workqueue handler!
+[   40.356854] MP3 Timer Callback
+[   40.356862] MP3 workqueue handler!
+[   40.404842] MP3 Timer Callback
+[   40.404851] MP3 workqueue handler!
+[   40.452808] MP3 Timer Callback
+[   40.452816] MP3 workqueue handler!
+[   40.500785] MP3 Timer Callback
+[   40.500797] MP3 workqueue handler!
+[   40.548761] MP3 Timer Callback
+[   40.548771] MP3 workqueue handler!
+[   40.596751] MP3 Timer Callback
+[   40.596759] MP3 workqueue handler!
+[   40.644718] MP3 Timer Callback
+[   40.644727] MP3 workqueue handler!
+[   40.692693] MP3 Timer Callback
+[   40.692704] MP3 workqueue handler!
+[   40.740692] MP3 Timer Callback
+[   40.740703] MP3 workqueue handler!
+[   40.788649] MP3 Timer Callback
+[   40.788658] MP3 workqueue handler!
+[   40.836621] MP3 Timer Callback
+[   40.836625] MP3 workqueue handler!
+[   40.884610] MP3 Timer Callback
+[   40.884618] MP3 workqueue handler!
+[   40.932584] MP3 Timer Callback
+[   40.932589] MP3 workqueue handler!
+[   40.980549] MP3 Timer Callback
+[   40.980558] MP3 workqueue handler!
+[   41.028540] MP3 Timer Callback
+[   41.028673] MP3 workqueue handler!
+[   41.076503] MP3 Timer Callback
+[   41.076511] MP3 workqueue handler!
+[   41.124490] MP3 Timer Callback
+[   41.124499] MP3 workqueue handler!
+[   41.172467] MP3 Timer Callback
+[   41.172475] MP3 workqueue handler!
+[   41.220427] MP3 Timer Callback
+[   41.220433] MP3 workqueue handler!
+[   41.268414] MP3 Timer Callback
+[   41.268491] MP3 workqueue handler!
+[   41.316387] MP3 Timer Callback
+[   41.316395] MP3 workqueue handler!
+[   41.364368] MP3 Timer Callback
+[   41.364377] MP3 workqueue handler!
+[   41.412341] MP3 Timer Callback
+[   41.412351] MP3 workqueue handler!
+[   41.460320] MP3 Timer Callback
+[   41.460328] MP3 workqueue handler!
+[   41.508302] MP3 Timer Callback
+[   41.508311] MP3 workqueue handler!
+[   41.556264] MP3 Timer Callback
+[   41.556272] MP3 workqueue handler!
+[   41.604245] MP3 Timer Callback
+[   41.604254] MP3 workqueue handler!
+[   41.652234] MP3 Timer Callback
+[   41.652243] MP3 workqueue handler!
+[   41.700214] MP3 Timer Callback
+[   41.700222] MP3 workqueue handler!
+[   41.748181] MP3 Timer Callback
+[   41.748195] MP3 workqueue handler!
+[   41.796148] MP3 Timer Callback
+[   41.796155] MP3 workqueue handler!
+[   41.844123] MP3 Timer Callback
+[   41.844132] MP3 workqueue handler!
+[   41.892108] MP3 Timer Callback
+[   41.892117] MP3 workqueue handler!
+[   41.940084] MP3 Timer Callback
+[   41.940093] MP3 workqueue handler!
+[   41.988068] MP3 Timer Callback
+[   41.988076] MP3 workqueue handler!
+[   42.036043] MP3 Timer Callback
+[   42.036114] MP3 workqueue handler!
+[   42.084009] MP3 Timer Callback
+[   42.084017] MP3 workqueue handler!
+[   42.131984] MP3 Timer Callback
+[   42.131993] MP3 workqueue handler!
+[   42.179960] MP3 Timer Callback
+[   42.179969] MP3 workqueue handler!
+[   42.227945] MP3 Timer Callback
+[   42.227953] MP3 workqueue handler!
+[   42.275916] MP3 Timer Callback
+[   42.276001] MP3 workqueue handler!
+[   42.323901] MP3 Timer Callback
+[   42.323909] MP3 workqueue handler!
+[   42.371865] MP3 Timer Callback
+[   42.371872] MP3 workqueue handler!
+[   42.419846] MP3 Timer Callback
+[   42.419855] MP3 workqueue handler!
+[   42.467819] MP3 Timer Callback
+[   42.467825] MP3 workqueue handler!
+[   42.515794] MP3 Timer Callback
+[   42.515802] MP3 workqueue handler!
+[   42.563771] MP3 Timer Callback
+[   42.563780] MP3 workqueue handler!
+[   42.611753] MP3 Timer Callback
+[   42.611762] MP3 workqueue handler!
+[   42.659724] MP3 Timer Callback
+[   42.659733] MP3 workqueue handler!
+[   42.707714] MP3 Timer Callback
+[   42.707723] MP3 workqueue handler!
+[   42.755679] MP3 Timer Callback
+[   42.755687] MP3 workqueue handler!
+[   42.803658] MP3 Timer Callback
+[   42.803666] MP3 workqueue handler!
+[   42.851629] MP3 Timer Callback
+[   42.851636] MP3 workqueue handler!
+[   42.899621] MP3 Timer Callback
+[   42.899629] MP3 workqueue handler!
+[   42.947592] MP3 Timer Callback
+[   42.947601] MP3 workqueue handler!
+[   42.995567] MP3 Timer Callback
+[   42.995577] MP3 workqueue handler!
+[   43.043555] MP3 Timer Callback
+[   43.043626] MP3 workqueue handler!
+[   43.091515] MP3 Timer Callback
+[   43.091522] MP3 workqueue handler!
+[   43.139503] MP3 Timer Callback
+[   43.139511] MP3 workqueue handler!
+[   43.187466] MP3 Timer Callback
+[   43.187474] MP3 workqueue handler!
+[   43.235451] MP3 Timer Callback
+[   43.235458] MP3 workqueue handler!
+[   43.283420] MP3 Timer Callback
+[   43.283433] MP3 workqueue handler!
+[   43.331399] MP3 Timer Callback
+[   43.331408] MP3 workqueue handler!
+[   43.379377] MP3 Timer Callback
+[   43.379386] MP3 workqueue handler!
+[   43.427358] MP3 Timer Callback
+[   43.427367] MP3 workqueue handler!
+[   43.475330] MP3 Timer Callback
+[   43.475338] MP3 workqueue handler!
+[   43.523305] MP3 Timer Callback
+[   43.523313] MP3 workqueue handler!
+[   43.571287] MP3 Timer Callback
+[   43.571294] MP3 workqueue handler!
+[   43.619261] MP3 Timer Callback
+[   43.619270] MP3 workqueue handler!
+[   43.667229] MP3 Timer Callback
+[   43.667236] MP3 workqueue handler!
+[   43.715214] MP3 Timer Callback
+[   43.715229] MP3 workqueue handler!
+[   43.763197] MP3 Timer Callback
+[   43.763205] MP3 workqueue handler!
+[   43.811160] MP3 Timer Callback
+[   43.811169] MP3 workqueue handler!
+[   43.859140] MP3 Timer Callback
+[   43.859148] MP3 workqueue handler!
+[   43.907118] MP3 Timer Callback
+[   43.907129] MP3 workqueue handler!
+[   43.955093] MP3 Timer Callback
+[   43.955101] MP3 workqueue handler!
+[   44.003071] MP3 Timer Callback
+[   44.003079] MP3 workqueue handler!
+[   44.051054] MP3 Timer Callback
+[   44.051146] MP3 workqueue handler!
+[   44.099019] MP3 Timer Callback
+[   44.099028] MP3 workqueue handler!
+[   44.147000] MP3 Timer Callback
+[   44.147043] MP3 workqueue handler!
+[   44.194974] MP3 Timer Callback
+[   44.194982] MP3 workqueue handler!
+[   44.242948] MP3 Timer Callback
+[   44.242957] MP3 workqueue handler!
+[   44.290925] MP3 Timer Callback
+[   44.290932] MP3 workqueue handler!
+[   44.338903] MP3 Timer Callback
+[   44.338979] MP3 workqueue handler!
+[   44.386917] MP3 Timer Callback
+[   44.386937] MP3 workqueue handler!
+[   44.434858] MP3 Timer Callback
+[   44.434866] MP3 workqueue handler!
+[   44.482840] MP3 Timer Callback
+[   44.482948] MP3 workqueue handler!
+[   44.530808] MP3 Timer Callback
+[   44.530816] MP3 workqueue handler!
+[   44.578784] MP3 Timer Callback
+[   44.578792] MP3 workqueue handler!
+[   44.626766] MP3 Timer Callback
+[   44.626774] MP3 workqueue handler!
+[   44.674749] MP3 Timer Callback
+[   44.674758] MP3 workqueue handler!
+[   44.722736] MP3 Timer Callback
+[   44.722745] MP3 workqueue handler!
+[   44.770694] MP3 Timer Callback
+[   44.770702] MP3 workqueue handler!
+[   44.818668] MP3 Timer Callback
+[   44.818672] MP3 workqueue handler!
+[   44.866659] MP3 Timer Callback
+[   44.866667] MP3 workqueue handler!
+[   44.914626] MP3 Timer Callback
+[   44.914635] MP3 workqueue handler!
+[   44.962597] MP3 Timer Callback
+[   44.962605] MP3 workqueue handler!
+[   45.010576] MP3 Timer Callback
+[   45.010584] MP3 workqueue handler!
+[   45.058546] MP3 Timer Callback
+[   45.058552] MP3 workqueue handler!
+[   45.106529] MP3 Timer Callback
+[   45.106539] MP3 workqueue handler!
+[   45.154503] MP3 Timer Callback
+[   45.154509] MP3 workqueue handler!
+[   45.202483] MP3 Timer Callback
+[   45.202492] MP3 workqueue handler!
+[   45.250453] MP3 Timer Callback
+[   45.250463] MP3 workqueue handler!
+[   45.298444] MP3 Timer Callback
+[   45.298452] MP3 workqueue handler!
+[   45.346415] MP3 Timer Callback
+[   45.346512] MP3 workqueue handler!
+[   45.394392] MP3 Timer Callback
+[   45.394401] MP3 workqueue handler!
+[   45.442359] MP3 Timer Callback
+[   45.442367] MP3 workqueue handler!
+[   45.490338] MP3 Timer Callback
+[   45.490346] MP3 workqueue handler!
+[   45.538317] MP3 Timer Callback
+[   45.538325] MP3 workqueue handler!
+[   45.586287] MP3 Timer Callback
+[   45.586295] MP3 workqueue handler!
+[   45.634271] MP3 Timer Callback
+[   45.634279] MP3 workqueue handler!
+[   45.682253] MP3 Timer Callback
+[   45.682261] MP3 workqueue handler!
+[   45.730235] MP3 Timer Callback
+[   45.730247] MP3 workqueue handler!
+[   45.778213] MP3 Timer Callback
+[   45.778221] MP3 workqueue handler!
+[   45.826172] MP3 Timer Callback
+[   45.826180] MP3 workqueue handler!
+[   45.874152] MP3 Timer Callback
+[   45.874159] MP3 workqueue handler!
+[   45.922134] MP3 Timer Callback
+[   45.922142] MP3 workqueue handler!
+[   45.970104] MP3 Timer Callback
+[   45.970111] MP3 workqueue handler!
+[   46.018077] MP3 Timer Callback
+[   46.018084] MP3 workqueue handler!
+[   46.066052] MP3 Timer Callback
+[   46.066062] MP3 workqueue handler!
+[   46.114040] MP3 Timer Callback
+[   46.114080] MP3 workqueue handler!
+[   46.162013] MP3 Timer Callback
+[   46.162021] MP3 workqueue handler!
+[   46.209983] MP3 Timer Callback
+[   46.209992] MP3 workqueue handler!
+[   46.257959] MP3 Timer Callback
+[   46.257967] MP3 workqueue handler!
+[   46.305937] MP3 Timer Callback
+[   46.305946] MP3 workqueue handler!
+[   46.353917] MP3 Timer Callback
+[   46.353975] MP3 workqueue handler!
+[   46.401894] MP3 Timer Callback
+[   46.401902] MP3 workqueue handler!
+[   46.449874] MP3 Timer Callback
+[   46.449880] MP3 workqueue handler!
+[   46.497843] MP3 Timer Callback
+[   46.497851] MP3 workqueue handler!
+[   46.545835] MP3 Timer Callback
+[   46.545844] MP3 workqueue handler!
+[   46.593796] MP3 Timer Callback
+[   46.593808] MP3 workqueue handler!
+[   46.641769] MP3 Timer Callback
+[   46.641777] MP3 workqueue handler!
+[   46.689755] MP3 Timer Callback
+[   46.689767] MP3 workqueue handler!
+[   46.737735] MP3 Timer Callback
+[   46.737744] MP3 workqueue handler!
+[   46.785715] MP3 Timer Callback
+[   46.785723] MP3 workqueue handler!
+[   46.833680] MP3 Timer Callback
+[   46.833691] MP3 workqueue handler!
+[   46.881663] MP3 Timer Callback
+[   46.881671] MP3 workqueue handler!
+[   46.929635] MP3 Timer Callback
+[   46.929645] MP3 workqueue handler!
+[   46.977617] MP3 Timer Callback
+[   46.977626] MP3 workqueue handler!
+[   47.025587] MP3 Timer Callback
+[   47.025595] MP3 workqueue handler!
+[   47.073559] MP3 Timer Callback
+[   47.077596] MP3 workqueue handler!
+[   47.121538] MP3 Timer Callback
+[   47.121597] MP3 workqueue handler!
+[   47.169511] MP3 Timer Callback
+[   47.169522] MP3 workqueue handler!
+[   47.217490] MP3 Timer Callback
+[   47.217499] MP3 workqueue handler!
+[   47.265467] MP3 Timer Callback
+[   47.265474] MP3 workqueue handler!
+[   47.313443] MP3 Timer Callback
+[   47.313452] MP3 workqueue handler!
+[   47.361417] MP3 Timer Callback
+[   47.361424] MP3 workqueue handler!
+[   47.409397] MP3 Timer Callback
+[   47.409438] MP3 workqueue handler!
+[   47.457375] MP3 Timer Callback
+[   47.457382] MP3 workqueue handler!
+[   47.505354] MP3 Timer Callback
+[   47.505363] MP3 workqueue handler!
+[   47.553327] MP3 Timer Callback
+[   47.553337] MP3 workqueue handler!
+[   47.601303] MP3 Timer Callback
+[   47.601312] MP3 workqueue handler!
+[   47.649282] MP3 Timer Callback
+[   47.649291] MP3 workqueue handler!
+[   47.697260] MP3 Timer Callback
+[   47.697269] MP3 workqueue handler!
+[   47.745239] MP3 Timer Callback
+[   47.745251] MP3 workqueue handler!
+[   47.793216] MP3 Timer Callback
+[   47.793224] MP3 workqueue handler!
+[   47.841183] MP3 Timer Callback
+[   47.841192] MP3 workqueue handler!
+[   47.889159] MP3 Timer Callback
+[   47.889167] MP3 workqueue handler!
+[   47.937150] MP3 Timer Callback
+[   47.937159] MP3 workqueue handler!
+[   47.985126] MP3 Timer Callback
+[   47.985134] MP3 workqueue handler!
+[   48.033103] MP3 Timer Callback
+[   48.033110] MP3 workqueue handler!
+[   48.081067] MP3 Timer Callback
+[   48.081074] MP3 workqueue handler!
+[   48.129045] MP3 Timer Callback
+[   48.129134] MP3 workqueue handler!
+[   48.177026] MP3 Timer Callback
+[   48.177034] MP3 workqueue handler!
+[   48.225010] MP3 Timer Callback
+[   48.225018] MP3 workqueue handler!
+[   48.272972] MP3 Timer Callback
+[   48.272980] MP3 workqueue handler!
+[   48.320949] MP3 Timer Callback
+[   48.320963] MP3 workqueue handler!
+[   48.368922] MP3 Timer Callback
+[   48.368928] MP3 workqueue handler!
+[   48.416907] MP3 Timer Callback
+[   48.416914] MP3 workqueue handler!
+[   48.464881] MP3 Timer Callback
+[   48.464890] MP3 workqueue handler!
+[   48.512858] MP3 Timer Callback
+[   48.512866] MP3 workqueue handler!
+[   48.560839] MP3 Timer Callback
+[   48.560847] MP3 workqueue handler!
+[   48.608809] MP3 Timer Callback
+[   48.608814] MP3 workqueue handler!
+[   48.656799] MP3 Timer Callback
+[   48.656808] MP3 workqueue handler!
+[   48.704775] MP3 Timer Callback
+[   48.704785] MP3 workqueue handler!
+[   48.752740] MP3 Timer Callback
+[   48.752749] MP3 workqueue handler!
+[   48.800714] MP3 Timer Callback
+[   48.800723] MP3 workqueue handler!
+[   48.848698] MP3 Timer Callback
+[   48.848705] MP3 workqueue handler!
+[   48.896666] MP3 Timer Callback
+[   48.896678] MP3 workqueue handler!
+[   48.944657] MP3 Timer Callback
+[   48.944666] MP3 workqueue handler!
+[   48.992621] MP3 Timer Callback
+[   48.992629] MP3 workqueue handler!
+[   49.040609] MP3 Timer Callback
+[   49.040617] MP3 workqueue handler!
+[   49.088571] MP3 Timer Callback
+[   49.088582] MP3 workqueue handler!
+[   49.136546] MP3 Timer Callback
+[   49.136575] MP3 workqueue handler!
+[   49.184525] MP3 Timer Callback
+[   49.184533] MP3 workqueue handler!
+[   49.232506] MP3 Timer Callback
+[   49.232514] MP3 workqueue handler!
+[   49.280490] MP3 Timer Callback
+[   49.280532] MP3 workqueue handler!
+[   49.328462] MP3 Timer Callback
+[   49.328470] MP3 workqueue handler!
+[   49.376431] MP3 Timer Callback
+[   49.376439] MP3 workqueue handler!
+[   49.424412] MP3 Timer Callback
+[   49.424418] MP3 workqueue handler!
+[   49.472382] MP3 Timer Callback
+[   49.472387] MP3 workqueue handler!
+[   49.520363] MP3 Timer Callback
+[   49.520404] MP3 workqueue handler!
+[   49.568349] MP3 Timer Callback
+[   49.568353] MP3 workqueue handler!
+[   49.616317] MP3 Timer Callback
+[   49.616325] MP3 workqueue handler!
+[   49.664290] MP3 Timer Callback
+[   49.664298] MP3 workqueue handler!
+[   49.712283] MP3 Timer Callback
+[   49.712294] MP3 workqueue handler!
+[   49.760247] MP3 Timer Callback
+[   49.760256] MP3 workqueue handler!
+[   49.808223] MP3 Timer Callback
+[   49.808230] MP3 workqueue handler!
+[   49.856200] MP3 Timer Callback
+[   49.856208] MP3 workqueue handler!
+[   49.904173] MP3 Timer Callback
+[   49.904181] MP3 workqueue handler!
+[   49.952156] MP3 Timer Callback
+[   49.952165] MP3 workqueue handler!
+[   50.000135] MP3 Timer Callback
+[   50.000190] MP3 workqueue handler!
+[   50.048108] MP3 Timer Callback
+[   50.048118] MP3 workqueue handler!
+[   50.096095] MP3 Timer Callback
+[   50.096105] MP3 workqueue handler!
+[   50.144057] MP3 Timer Callback
+[   50.144067] MP3 workqueue handler!
+[   50.192031] MP3 Timer Callback
+[   50.192118] MP3 workqueue handler!
+[   50.240012] MP3 Timer Callback
+[   50.240020] MP3 workqueue handler!
+[   50.287986] MP3 Timer Callback
+[   50.288022] MP3 workqueue handler!
+[   50.335960] MP3 Timer Callback
+[   50.335968] MP3 workqueue handler!
+[   50.383938] MP3 Timer Callback
+[   50.383948] MP3 workqueue handler!
+[   50.431919] MP3 Timer Callback
+[   50.431928] MP3 workqueue handler!
+[   50.479904] MP3 Timer Callback
+[   50.479914] MP3 workqueue handler!
+[   50.527866] MP3 Timer Callback
+[   50.527873] MP3 workqueue handler!
+[   50.575839] MP3 Timer Callback
+[   50.575846] MP3 workqueue handler!
+[   50.623818] MP3 Timer Callback
+[   50.623823] MP3 workqueue handler!
+[   50.671793] MP3 Timer Callback
+[   50.671799] MP3 workqueue handler!
+[   50.719772] MP3 Timer Callback
+[   50.719779] MP3 workqueue handler!
+[   50.767758] MP3 Timer Callback
+[   50.767769] MP3 workqueue handler!
+[   50.815724] MP3 Timer Callback
+[   50.815728] MP3 workqueue handler!
+[   50.863701] MP3 Timer Callback
+[   50.863708] MP3 workqueue handler!
+[   50.911683] MP3 Timer Callback
+[   50.911692] MP3 workqueue handler!
+[   50.959665] MP3 Timer Callback
+[   50.959673] MP3 workqueue handler!
+[   51.007635] MP3 Timer Callback
+[   51.007643] MP3 workqueue handler!
+[   51.055618] MP3 Timer Callback
+[   51.055626] MP3 workqueue handler!
+[   51.103584] MP3 Timer Callback
+[   51.103593] MP3 workqueue handler!
+[   51.151563] MP3 Timer Callback
+[   51.151574] MP3 workqueue handler!
+[   51.199535] MP3 Timer Callback
+[   51.199541] MP3 workqueue handler!
+[   51.247513] MP3 Timer Callback
+[   51.247566] MP3 workqueue handler!
+[   51.295498] MP3 Timer Callback
+[   51.295506] MP3 workqueue handler!
+[   51.343472] MP3 Timer Callback
+[   51.343480] MP3 workqueue handler!
+[   51.391444] MP3 Timer Callback
+[   51.391451] MP3 workqueue handler!
+[   51.439427] MP3 Timer Callback
+[   51.439435] MP3 workqueue handler!
+[   51.487403] MP3 Timer Callback
+[   51.487460] MP3 workqueue handler!
+[   51.535392] MP3 Timer Callback
+[   51.535401] MP3 workqueue handler!
+[   51.583356] MP3 Timer Callback
+[   51.583364] MP3 workqueue handler!
+[   51.631339] MP3 Timer Callback
+[   51.631348] MP3 workqueue handler!
+[   51.679311] MP3 Timer Callback
+[   51.679319] MP3 workqueue handler!
+[   51.727277] MP3 Timer Callback
+[   51.727284] MP3 workqueue handler!
+[   51.775255] MP3 Timer Callback
+[   51.775261] MP3 workqueue handler!
+[   51.823230] MP3 Timer Callback
+[   51.823236] MP3 workqueue handler!
+[   51.871213] MP3 Timer Callback
+[   51.871219] MP3 workqueue handler!
+[   51.919188] MP3 Timer Callback
+[   51.919194] MP3 workqueue handler!
+[   51.967163] MP3 Timer Callback
+[   51.967201] MP3 workqueue handler!
+[   52.015144] MP3 Timer Callback
+[   52.015153] MP3 workqueue handler!
+[   52.063126] MP3 Timer Callback
+[   52.063134] MP3 workqueue handler!
+[   52.111098] MP3 Timer Callback
+[   52.111148] MP3 workqueue handler!
+[   52.159064] MP3 Timer Callback
+[   52.159072] MP3 workqueue handler!
+[   52.207054] MP3 Timer Callback
+[   52.207063] MP3 workqueue handler!
+[   52.255020] MP3 Timer Callback
+[   52.255033] MP3 workqueue handler!
+[   52.302997] MP3 Timer Callback
+[   52.303038] MP3 workqueue handler!
+[   52.350988] MP3 Timer Callback
+[   52.350996] MP3 workqueue handler!
+[   52.398950] MP3 Timer Callback
+[   52.398964] MP3 workqueue handler!
+[   52.446941] MP3 Timer Callback
+[   52.446950] MP3 workqueue handler!
+[   52.494903] MP3 Timer Callback
+[   52.494911] MP3 workqueue handler!
+[   52.542892] MP3 Timer Callback
+[   52.542901] MP3 workqueue handler!
+[   52.590866] MP3 Timer Callback
+[   52.590875] MP3 workqueue handler!
+[   52.638837] MP3 Timer Callback
+[   52.638850] MP3 workqueue handler!
+[   52.686815] MP3 Timer Callback
+[   52.686823] MP3 workqueue handler!
+[   52.734791] MP3 Timer Callback
+[   52.734801] MP3 workqueue handler!
+[   52.782770] MP3 Timer Callback
+[   52.782779] MP3 workqueue handler!
+[   52.830742] MP3 Timer Callback
+[   52.830752] MP3 workqueue handler!
+[   52.878716] MP3 Timer Callback
+[   52.878725] MP3 workqueue handler!
+[   52.926693] MP3 Timer Callback
+[   52.926702] MP3 workqueue handler!
+[   52.974666] MP3 Timer Callback
+[   52.974671] MP3 workqueue handler!
+[   53.022641] MP3 Timer Callback
+[   53.022646] MP3 workqueue handler!
+[   53.070624] MP3 Timer Callback
+[   53.070630] MP3 workqueue handler!
+[   53.118610] MP3 Timer Callback
+[   53.118634] MP3 workqueue handler!
+[   53.166571] MP3 Timer Callback
+[   53.166576] MP3 workqueue handler!
+[   53.214549] MP3 Timer Callback
+[   53.214554] MP3 workqueue handler!
+[   53.262528] MP3 Timer Callback
+[   53.262564] MP3 workqueue handler!
+[   53.310503] MP3 Timer Callback
+[   53.310510] MP3 workqueue handler!
+[   53.358480] MP3 Timer Callback
+[   53.358518] MP3 workqueue handler!
+[   53.406464] MP3 Timer Callback
+[   53.406472] MP3 workqueue handler!
+[   53.454441] MP3 Timer Callback
+[   53.454450] MP3 workqueue handler!
+[   53.502418] MP3 Timer Callback
+[   53.502427] MP3 workqueue handler!
+[   53.550386] MP3 Timer Callback
+[   53.550395] MP3 workqueue handler!
+[   53.598361] MP3 Timer Callback
+[   53.598374] MP3 workqueue handler!
+[   53.646342] MP3 Timer Callback
+[   53.646350] MP3 workqueue handler!
+[   53.694315] MP3 Timer Callback
+[   53.694323] MP3 workqueue handler!
+[   53.742305] MP3 Timer Callback
+[   53.742319] MP3 workqueue handler!
+[   53.790274] MP3 Timer Callback
+[   53.790282] MP3 workqueue handler!
+[   53.838248] MP3 Timer Callback
+[   53.838257] MP3 workqueue handler!
+[   53.886226] MP3 Timer Callback
+[   53.886235] MP3 workqueue handler!
+[   53.934215] MP3 Timer Callback
+[   53.934224] MP3 workqueue handler!
+[   53.982190] MP3 Timer Callback
+[   53.982199] MP3 workqueue handler!
+[   54.030155] MP3 Timer Callback
+[   54.030163] MP3 workqueue handler!
+[   54.078135] MP3 Timer Callback
+[   54.078145] MP3 workqueue handler!
+[   54.126108] MP3 Timer Callback
+[   54.126117] MP3 workqueue handler!
+[   54.174077] MP3 Timer Callback
+[   54.174085] MP3 workqueue handler!
+[   54.222060] MP3 Timer Callback
+[   54.222071] MP3 workqueue handler!
+[   54.270031] MP3 Timer Callback
+[   54.270043] MP3 workqueue handler!
+[   54.318011] MP3 Timer Callback
+[   54.318016] MP3 workqueue handler!
+[   54.365982] MP3 Timer Callback
+[   54.365989] MP3 workqueue handler!
+[   54.413959] MP3 Timer Callback
+[   54.413964] MP3 workqueue handler!
+[   54.461936] MP3 Timer Callback
+[   54.461942] MP3 workqueue handler!
+[   54.509918] MP3 Timer Callback
+[   54.509925] MP3 workqueue handler!
+[   54.557890] MP3 Timer Callback
+[   54.557896] MP3 workqueue handler!
+[   54.605866] MP3 Timer Callback
+[   54.605872] MP3 workqueue handler!
+[   54.653846] MP3 Timer Callback
+[   54.653885] MP3 workqueue handler!
+[   54.701828] MP3 Timer Callback
+[   54.701838] MP3 workqueue handler!
+[   54.749816] MP3 Timer Callback
+[   54.749821] MP3 workqueue handler!
+[   54.797772] MP3 Timer Callback
+[   54.797780] MP3 workqueue handler!
+[   54.845754] MP3 Timer Callback
+[   54.845766] MP3 workqueue handler!
+[   54.893731] MP3 Timer Callback
+[   54.893743] MP3 workqueue handler!
+[   54.941712] MP3 Timer Callback
+[   54.941722] MP3 workqueue handler!
+[   54.989687] MP3 Timer Callback
+[   54.989695] MP3 workqueue handler!
+[   55.037668] MP3 Timer Callback
+[   55.037677] MP3 workqueue handler!
+[   55.085635] MP3 Timer Callback
+[   55.085642] MP3 workqueue handler!
+[   55.133613] MP3 Timer Callback
+[   55.133621] MP3 workqueue handler!
+[   55.181590] MP3 Timer Callback
+[   55.181597] MP3 workqueue handler!
+[   55.229582] MP3 Timer Callback
+[   55.229592] MP3 workqueue handler!
+[   55.277554] MP3 Timer Callback
+[   55.277563] MP3 workqueue handler!
+[   55.325518] MP3 Timer Callback
+[   55.325527] MP3 workqueue handler!
+[   55.373500] MP3 Timer Callback
+[   55.373508] MP3 workqueue handler!
+[   55.421464] MP3 Timer Callback
+[   55.421474] MP3 workqueue handler!
+[   55.469456] MP3 Timer Callback
+[   55.469498] MP3 workqueue handler!
+[   55.487280] mp3 Command: U 1571
+[   55.487280] 
+[   55.487283] mp3 OP: U
+[   55.487284] mp3 Unregistration
+[   55.487286] MP3 workqueue handler!
+[   55.487287] MP3 deleting process - not running
+[   55.487288] MP3 deleting process - not running
+[   55.517433] MP3 Timer Callback
+[   56.999091] mp3 Command: U 1570
+[   56.999091] 
+[   56.999096] mp3 OP: U
+[   56.999097] mp3 Unregistration
+[   56.999098] MP3 workqueue handler!
+[  120.634244] MP3 MODULE UNLOADING
+[  120.634282] MP3 MODULE UNLOADED
+[  267.468520] MP3 MODULE LOADING
+[  267.468537] Initializing character device.
+[  267.468541] Character device initialized.
+[  267.468575] MP3 MODULE LOADED
+[  272.858632] mp3 Command: R 1888
+[  272.858632] 
+[  272.858637] mp3 OP: R
+[  272.858637] mp3 Registration
+[  272.858639] Adding pid 1888
+[  272.858645] MP3 workqueue handler!
+[  272.858646] mp3 data: 4294960538,180,4,0
+[  272.858852] MP3 Timer Callback
+[  272.858937] MP3 workqueue handler!
+[  272.858939] mp3 data: 4294960539,0,0,0
+[  272.859096] mp3 Command: R 1887
+[  272.859096] 
+[  272.859098] mp3 OP: R
+[  272.859098] mp3 Registration
+[  272.859100] Adding pid 1887
+[  272.906820] MP3 Timer Callback
+[  272.906832] MP3 workqueue handler!
+[  272.906835] mp3 data: 4294960551,27281,0,0
+[  272.954796] MP3 Timer Callback
+[  272.954809] MP3 workqueue handler!
+[  272.954811] mp3 data: 4294960563,26366,0,0
+[  273.002781] MP3 Timer Callback
+[  273.002827] MP3 workqueue handler!
+[  273.002829] mp3 data: 4294960575,3828,0,0
+[  273.050751] MP3 Timer Callback
+[  273.050759] MP3 workqueue handler!
+[  273.050760] mp3 data: 4294960587,0,0,0
+[  273.098730] MP3 Timer Callback
+[  273.098739] MP3 workqueue handler!
+[  273.098740] mp3 data: 4294960599,0,0,0
+[  273.146710] MP3 Timer Callback
+[  273.146718] MP3 workqueue handler!
+[  273.146720] mp3 data: 4294960611,0,0,0
+[  273.194690] MP3 Timer Callback
+[  273.194701] MP3 workqueue handler!
+[  273.194703] mp3 data: 4294960623,0,0,0
+[  273.242665] MP3 Timer Callback
+[  273.242674] MP3 workqueue handler!
+[  273.242675] mp3 data: 4294960635,0,0,0
+[  273.290642] MP3 Timer Callback
+[  273.290651] MP3 workqueue handler!
+[  273.290653] mp3 data: 4294960647,0,0,0
+[  273.338620] MP3 Timer Callback
+[  273.338629] MP3 workqueue handler!
+[  273.338631] mp3 data: 4294960659,0,0,0
+[  273.386602] MP3 Timer Callback
+[  273.386611] MP3 workqueue handler!
+[  273.386613] mp3 data: 4294960671,0,0,0
+[  273.434571] MP3 Timer Callback
+[  273.434580] MP3 workqueue handler!
+[  273.434582] mp3 data: 4294960683,0,0,0
+[  273.482551] MP3 Timer Callback
+[  273.482562] MP3 workqueue handler!
+[  273.482563] mp3 data: 4294960695,0,0,0
+[  273.530526] MP3 Timer Callback
+[  273.530537] MP3 workqueue handler!
+[  273.530538] mp3 data: 4294960707,0,0,0
+[  273.578504] MP3 Timer Callback
+[  273.578515] MP3 workqueue handler!
+[  273.578516] mp3 data: 4294960719,0,0,0
+[  273.626476] MP3 Timer Callback
+[  273.626492] MP3 workqueue handler!
+[  273.626494] mp3 data: 4294960731,0,0,0
+[  273.674452] MP3 Timer Callback
+[  273.674461] MP3 workqueue handler!
+[  273.674463] mp3 data: 4294960743,0,0,0
+[  273.722422] MP3 Timer Callback
+[  273.722431] MP3 workqueue handler!
+[  273.722432] mp3 data: 4294960755,0,0,0
+[  273.770413] MP3 Timer Callback
+[  273.770422] MP3 workqueue handler!
+[  273.770423] mp3 data: 4294960767,0,0,0
+[  273.818379] MP3 Timer Callback
+[  273.818389] MP3 workqueue handler!
+[  273.818391] mp3 data: 4294960779,0,0,0
+[  273.866358] MP3 Timer Callback
+[  273.866366] MP3 workqueue handler!
+[  273.866367] mp3 data: 4294960791,0,0,0
+[  273.914349] MP3 Timer Callback
+[  273.914360] MP3 workqueue handler!
+[  273.914363] mp3 data: 4294960803,9417,0,0
+[  273.962304] MP3 Timer Callback
+[  273.962310] MP3 workqueue handler!
+[  273.962312] mp3 data: 4294960815,343,0,0
+[  274.010283] MP3 Timer Callback
+[  274.010296] MP3 workqueue handler!
+[  274.010299] mp3 data: 4294960827,27136,0,0
+[  274.058263] MP3 Timer Callback
+[  274.058339] MP3 workqueue handler!
+[  274.058342] mp3 data: 4294960839,10052,0,0
+[  274.106239] MP3 Timer Callback
+[  274.106251] MP3 workqueue handler!
+[  274.106252] mp3 data: 4294960851,0,0,0
+[  274.154214] MP3 Timer Callback
+[  274.154222] MP3 workqueue handler!
+[  274.154223] mp3 data: 4294960863,0,0,0
+[  274.202188] MP3 Timer Callback
+[  274.202197] MP3 workqueue handler!
+[  274.202198] mp3 data: 4294960875,0,0,0
+[  274.250164] MP3 Timer Callback
+[  274.250171] MP3 workqueue handler!
+[  274.250173] mp3 data: 4294960887,0,0,0
+[  274.298152] MP3 Timer Callback
+[  274.298161] MP3 workqueue handler!
+[  274.298162] mp3 data: 4294960899,0,0,0
+[  274.346134] MP3 Timer Callback
+[  274.346144] MP3 workqueue handler!
+[  274.346145] mp3 data: 4294960911,0,0,0
+[  274.394095] MP3 Timer Callback
+[  274.394104] MP3 workqueue handler!
+[  274.394105] mp3 data: 4294960923,0,0,0
+[  274.442074] MP3 Timer Callback
+[  274.442083] MP3 workqueue handler!
+[  274.442084] mp3 data: 4294960935,0,0,0
+[  274.490059] MP3 Timer Callback
+[  274.490067] MP3 workqueue handler!
+[  274.490068] mp3 data: 4294960947,0,0,0
+[  274.538031] MP3 Timer Callback
+[  274.538040] MP3 workqueue handler!
+[  274.538041] mp3 data: 4294960959,0,0,0
+[  274.586047] MP3 Timer Callback
+[  274.586056] MP3 workqueue handler!
+[  274.586057] mp3 data: 4294960971,0,0,0
+[  274.633979] MP3 Timer Callback
+[  274.633989] MP3 workqueue handler!
+[  274.633990] mp3 data: 4294960983,0,0,0
+[  274.681954] MP3 Timer Callback
+[  274.681962] MP3 workqueue handler!
+[  274.681963] mp3 data: 4294960995,0,0,0
+[  274.729933] MP3 Timer Callback
+[  274.729941] MP3 workqueue handler!
+[  274.729942] mp3 data: 4294961007,0,0,0
+[  274.777923] MP3 Timer Callback
+[  274.777932] MP3 workqueue handler!
+[  274.777933] mp3 data: 4294961019,0,0,0
+[  274.825884] MP3 Timer Callback
+[  274.825893] MP3 workqueue handler!
+[  274.825894] mp3 data: 4294961031,0,0,0
+[  274.873864] MP3 Timer Callback
+[  274.873872] MP3 workqueue handler!
+[  274.873873] mp3 data: 4294961043,0,0,0
+[  274.921833] MP3 Timer Callback
+[  274.921842] MP3 workqueue handler!
+[  274.921844] mp3 data: 4294961055,5086,0,0
+[  274.969820] MP3 Timer Callback
+[  274.969863] MP3 workqueue handler!
+[  274.969865] mp3 data: 4294961067,3987,0,0
+[  275.017793] MP3 Timer Callback
+[  275.017802] MP3 workqueue handler!
+[  275.017804] mp3 data: 4294961079,0,0,0
+[  275.065761] MP3 Timer Callback
+[  275.065774] MP3 workqueue handler!
+[  275.065776] mp3 data: 4294961091,22777,0,0
+[  275.113745] MP3 Timer Callback
+[  275.113805] MP3 workqueue handler!
+[  275.113807] mp3 data: 4294961103,8102,0,0
+[  275.161722] MP3 Timer Callback
+[  275.161731] MP3 workqueue handler!
+[  275.161732] mp3 data: 4294961115,0,0,0
+[  275.209697] MP3 Timer Callback
+[  275.209706] MP3 workqueue handler!
+[  275.209708] mp3 data: 4294961127,0,0,0
+[  275.257674] MP3 Timer Callback
+[  275.257682] MP3 workqueue handler!
+[  275.257684] mp3 data: 4294961139,0,0,0
+[  275.305647] MP3 Timer Callback
+[  275.305657] MP3 workqueue handler!
+[  275.305658] mp3 data: 4294961151,0,0,0
+[  275.353623] MP3 Timer Callback
+[  275.353631] MP3 workqueue handler!
+[  275.353632] mp3 data: 4294961163,0,0,0
+[  275.401599] MP3 Timer Callback
+[  275.401608] MP3 workqueue handler!
+[  275.401609] mp3 data: 4294961175,0,0,0
+[  275.449577] MP3 Timer Callback
+[  275.449585] MP3 workqueue handler!
+[  275.449587] mp3 data: 4294961187,0,0,0
+[  275.497563] MP3 Timer Callback
+[  275.497572] MP3 workqueue handler!
+[  275.497574] mp3 data: 4294961199,0,0,0
+[  275.545528] MP3 Timer Callback
+[  275.545535] MP3 workqueue handler!
+[  275.545537] mp3 data: 4294961211,0,0,0
+[  275.593526] MP3 Timer Callback
+[  275.593541] MP3 workqueue handler!
+[  275.593544] mp3 data: 4294961223,0,0,0
+[  275.641498] MP3 Timer Callback
+[  275.641507] MP3 workqueue handler!
+[  275.641509] mp3 data: 4294961235,0,0,0
+[  275.689459] MP3 Timer Callback
+[  275.689472] MP3 workqueue handler!
+[  275.689473] mp3 data: 4294961247,0,0,0
+[  275.737448] MP3 Timer Callback
+[  275.737457] MP3 workqueue handler!
+[  275.737459] mp3 data: 4294961259,0,0,0
+[  275.785416] MP3 Timer Callback
+[  275.785425] MP3 workqueue handler!
+[  275.785427] mp3 data: 4294961271,0,0,0
+[  275.833394] MP3 Timer Callback
+[  275.833403] MP3 workqueue handler!
+[  275.833405] mp3 data: 4294961283,0,0,0
+[  275.881370] MP3 Timer Callback
+[  275.881380] MP3 workqueue handler!
+[  275.881382] mp3 data: 4294961295,0,0,0
+[  275.929339] MP3 Timer Callback
+[  275.929344] MP3 workqueue handler!
+[  275.929346] mp3 data: 4294961307,376,0,0
+[  275.977325] MP3 Timer Callback
+[  275.977390] MP3 workqueue handler!
+[  275.977392] mp3 data: 4294961319,8359,0,0
+[  276.025291] MP3 Timer Callback
+[  276.025299] MP3 workqueue handler!
+[  276.025300] mp3 data: 4294961331,0,0,0
+[  276.073268] MP3 Timer Callback
+[  276.073278] MP3 workqueue handler!
+[  276.073280] mp3 data: 4294961343,0,0,0
+[  276.121257] MP3 Timer Callback
+[  276.121267] MP3 workqueue handler!
+[  276.121270] mp3 data: 4294961355,25489,0,0
+[  276.169225] MP3 Timer Callback
+[  276.169234] MP3 workqueue handler!
+[  276.169236] mp3 data: 4294961367,0,0,0
+[  276.217209] MP3 Timer Callback
+[  276.217218] MP3 workqueue handler!
+[  276.217219] mp3 data: 4294961379,0,0,0
+[  276.265179] MP3 Timer Callback
+[  276.265188] MP3 workqueue handler!
+[  276.265189] mp3 data: 4294961391,0,0,0
+[  276.313165] MP3 Timer Callback
+[  276.313176] MP3 workqueue handler!
+[  276.313178] mp3 data: 4294961403,0,0,0
+[  276.361148] MP3 Timer Callback
+[  276.361156] MP3 workqueue handler!
+[  276.361158] mp3 data: 4294961415,0,0,0
+[  276.409106] MP3 Timer Callback
+[  276.409115] MP3 workqueue handler!
+[  276.409116] mp3 data: 4294961427,0,0,0
+[  276.457086] MP3 Timer Callback
+[  276.457093] MP3 workqueue handler!
+[  276.457094] mp3 data: 4294961439,0,0,0
+[  276.505066] MP3 Timer Callback
+[  276.505076] MP3 workqueue handler!
+[  276.505077] mp3 data: 4294961451,0,0,0
+[  276.553048] MP3 Timer Callback
+[  276.553057] MP3 workqueue handler!
+[  276.553059] mp3 data: 4294961463,0,0,0
+[  276.601025] MP3 Timer Callback
+[  276.601035] MP3 workqueue handler!
+[  276.601037] mp3 data: 4294961475,0,0,0
+[  276.649005] MP3 Timer Callback
+[  276.649014] MP3 workqueue handler!
+[  276.649016] mp3 data: 4294961487,0,0,0
+[  276.696967] MP3 Timer Callback
+[  276.696976] MP3 workqueue handler!
+[  276.696977] mp3 data: 4294961499,0,0,0
+[  276.744951] MP3 Timer Callback
+[  276.744960] MP3 workqueue handler!
+[  276.744962] mp3 data: 4294961511,0,0,0
+[  276.792918] MP3 Timer Callback
+[  276.792927] MP3 workqueue handler!
+[  276.792928] mp3 data: 4294961523,0,0,0
+[  276.840905] MP3 Timer Callback
+[  276.840914] MP3 workqueue handler!
+[  276.840916] mp3 data: 4294961535,0,0,0
+[  276.888870] MP3 Timer Callback
+[  276.888879] MP3 workqueue handler!
+[  276.888881] mp3 data: 4294961547,0,0,0
+[  276.936856] MP3 Timer Callback
+[  276.936869] MP3 workqueue handler!
+[  276.936871] mp3 data: 4294961559,0,0,0
+[  276.984838] MP3 Timer Callback
+[  276.984927] MP3 workqueue handler!
+[  276.984930] mp3 data: 4294961571,8442,0,0
+[  277.032819] MP3 Timer Callback
+[  277.032833] MP3 workqueue handler!
+[  277.032835] mp3 data: 4294961583,0,0,0
+[  277.080778] MP3 Timer Callback
+[  277.080787] MP3 workqueue handler!
+[  277.080789] mp3 data: 4294961595,0,0,0
+[  277.128751] MP3 Timer Callback
+[  277.128761] MP3 workqueue handler!
+[  277.128763] mp3 data: 4294961607,5583,0,0
+[  277.176739] MP3 Timer Callback
+[  277.176825] MP3 workqueue handler!
+[  277.176828] mp3 data: 4294961619,15711,0,0
+[  277.224723] MP3 Timer Callback
+[  277.224732] MP3 workqueue handler!
+[  277.224734] mp3 data: 4294961631,0,0,0
+[  277.272684] MP3 Timer Callback
+[  277.272696] MP3 workqueue handler!
+[  277.272698] mp3 data: 4294961643,0,0,0
+[  277.320664] MP3 Timer Callback
+[  277.320675] MP3 workqueue handler!
+[  277.320677] mp3 data: 4294961655,0,0,0
+[  277.368648] MP3 Timer Callback
+[  277.368658] MP3 workqueue handler!
+[  277.368660] mp3 data: 4294961667,0,0,0
+[  277.416622] MP3 Timer Callback
+[  277.416633] MP3 workqueue handler!
+[  277.416635] mp3 data: 4294961679,0,0,0
+[  277.464598] MP3 Timer Callback
+[  277.464609] MP3 workqueue handler!
+[  277.464612] mp3 data: 4294961691,0,0,0
+[  277.512567] MP3 Timer Callback
+[  277.512577] MP3 workqueue handler!
+[  277.512578] mp3 data: 4294961703,0,0,0
+[  277.560548] MP3 Timer Callback
+[  277.560557] MP3 workqueue handler!
+[  277.560559] mp3 data: 4294961715,0,0,0
+[  277.608538] MP3 Timer Callback
+[  277.608556] MP3 workqueue handler!
+[  277.608559] mp3 data: 4294961727,0,0,0
+[  277.656501] MP3 Timer Callback
+[  277.656511] MP3 workqueue handler!
+[  277.656513] mp3 data: 4294961739,0,0,0
+[  277.704470] MP3 Timer Callback
+[  277.704475] MP3 workqueue handler!
+[  277.704477] mp3 data: 4294961751,0,0,0
+[  277.752454] MP3 Timer Callback
+[  277.752465] MP3 workqueue handler!
+[  277.752466] mp3 data: 4294961763,0,0,0
+[  277.800426] MP3 Timer Callback
+[  277.800436] MP3 workqueue handler!
+[  277.800438] mp3 data: 4294961775,0,0,0
+[  277.848423] MP3 Timer Callback
+[  277.848436] MP3 workqueue handler!
+[  277.848438] mp3 data: 4294961787,0,0,0
+[  277.896377] MP3 Timer Callback
+[  277.896385] MP3 workqueue handler!
+[  277.896387] mp3 data: 4294961799,0,0,0
+[  277.944369] MP3 Timer Callback
+[  277.944378] MP3 workqueue handler!
+[  277.944379] mp3 data: 4294961811,0,0,0
+[  277.992340] MP3 Timer Callback
+[  277.992430] MP3 workqueue handler!
+[  277.992433] mp3 data: 4294961823,8092,0,0
+[  278.040310] MP3 Timer Callback
+[  278.040319] MP3 workqueue handler!
+[  278.040320] mp3 data: 4294961835,0,0,0
+[  278.088290] MP3 Timer Callback
+[  278.088300] MP3 workqueue handler!
+[  278.088301] mp3 data: 4294961847,0,0,0
+[  278.136274] MP3 Timer Callback
+[  278.136284] MP3 workqueue handler!
+[  278.136285] mp3 data: 4294961859,0,0,0
+[  278.184231] MP3 Timer Callback
+[  278.184243] MP3 workqueue handler!
+[  278.184245] mp3 data: 4294961871,10411,0,0
+[  278.232231] MP3 Timer Callback
+[  278.232291] MP3 workqueue handler!
+[  278.232294] mp3 data: 4294961883,7163,0,0
+[  278.280194] MP3 Timer Callback
+[  278.280203] MP3 workqueue handler!
+[  278.280204] mp3 data: 4294961895,0,0,0
+[  278.328180] MP3 Timer Callback
+[  278.328190] MP3 workqueue handler!
+[  278.328192] mp3 data: 4294961907,0,0,0
+[  278.376149] MP3 Timer Callback
+[  278.376157] MP3 workqueue handler!
+[  278.376159] mp3 data: 4294961919,0,0,0
+[  278.424117] MP3 Timer Callback
+[  278.424129] MP3 workqueue handler!
+[  278.424130] mp3 data: 4294961931,0,0,0
+[  278.472108] MP3 Timer Callback
+[  278.472117] MP3 workqueue handler!
+[  278.472119] mp3 data: 4294961943,0,0,0
+[  278.520079] MP3 Timer Callback
+[  278.520087] MP3 workqueue handler!
+[  278.520088] mp3 data: 4294961955,0,0,0
+[  278.568063] MP3 Timer Callback
+[  278.568072] MP3 workqueue handler!
+[  278.568073] mp3 data: 4294961967,0,0,0
+[  278.616050] MP3 Timer Callback
+[  278.616060] MP3 workqueue handler!
+[  278.616062] mp3 data: 4294961979,0,0,0
+[  278.664015] MP3 Timer Callback
+[  278.664024] MP3 workqueue handler!
+[  278.664026] mp3 data: 4294961991,0,0,0
+[  278.711981] MP3 Timer Callback
+[  278.711989] MP3 workqueue handler!
+[  278.711991] mp3 data: 4294962003,0,0,0
+[  278.759962] MP3 Timer Callback
+[  278.759971] MP3 workqueue handler!
+[  278.759973] mp3 data: 4294962015,0,0,0
+[  278.807931] MP3 Timer Callback
+[  278.807940] MP3 workqueue handler!
+[  278.807941] mp3 data: 4294962027,0,0,0
+[  278.855923] MP3 Timer Callback
+[  278.855932] MP3 workqueue handler!
+[  278.855934] mp3 data: 4294962039,0,0,0
+[  278.903887] MP3 Timer Callback
+[  278.903896] MP3 workqueue handler!
+[  278.903898] mp3 data: 4294962051,0,0,0
+[  278.951866] MP3 Timer Callback
+[  278.951874] MP3 workqueue handler!
+[  278.951875] mp3 data: 4294962063,0,0,0
+[  278.999852] MP3 Timer Callback
+[  278.999930] MP3 workqueue handler!
+[  278.999933] mp3 data: 4294962075,7767,0,0
+[  279.047819] MP3 Timer Callback
+[  279.047829] MP3 workqueue handler!
+[  279.047830] mp3 data: 4294962087,0,0,0
+[  279.095788] MP3 Timer Callback
+[  279.095797] MP3 workqueue handler!
+[  279.095799] mp3 data: 4294962099,0,0,0
+[  279.143786] MP3 Timer Callback
+[  279.143794] MP3 workqueue handler!
+[  279.143796] mp3 data: 4294962111,0,0,0
+[  279.191746] MP3 Timer Callback
+[  279.191756] MP3 workqueue handler!
+[  279.191757] mp3 data: 4294962123,0,0,0
+[  279.239726] MP3 Timer Callback
+[  279.239816] MP3 workqueue handler!
+[  279.239819] mp3 data: 4294962135,14392,0,0
+[  279.287701] MP3 Timer Callback
+[  279.287711] MP3 workqueue handler!
+[  279.287712] mp3 data: 4294962147,0,0,0
+[  279.335681] MP3 Timer Callback
+[  279.335691] MP3 workqueue handler!
+[  279.335692] mp3 data: 4294962159,0,0,0
+[  279.383658] MP3 Timer Callback
+[  279.383666] MP3 workqueue handler!
+[  279.383667] mp3 data: 4294962171,0,0,0
+[  279.431628] MP3 Timer Callback
+[  279.431635] MP3 workqueue handler!
+[  279.431637] mp3 data: 4294962183,0,0,0
+[  279.479621] MP3 Timer Callback
+[  279.479767] MP3 workqueue handler!
+[  279.479768] mp3 data: 4294962195,0,0,0
+[  279.527594] MP3 Timer Callback
+[  279.527602] MP3 workqueue handler!
+[  279.527604] mp3 data: 4294962207,0,0,0
+[  279.575560] MP3 Timer Callback
+[  279.575568] MP3 workqueue handler!
+[  279.575570] mp3 data: 4294962219,0,0,0
+[  279.623551] MP3 Timer Callback
+[  279.623620] MP3 workqueue handler!
+[  279.623622] mp3 data: 4294962231,0,0,0
+[  279.671523] MP3 Timer Callback
+[  279.671532] MP3 workqueue handler!
+[  279.671533] mp3 data: 4294962243,0,0,0
+[  279.719487] MP3 Timer Callback
+[  279.719496] MP3 workqueue handler!
+[  279.719497] mp3 data: 4294962255,0,0,0
+[  279.767469] MP3 Timer Callback
+[  279.767478] MP3 workqueue handler!
+[  279.767480] mp3 data: 4294962267,0,0,0
+[  279.815439] MP3 Timer Callback
+[  279.815451] MP3 workqueue handler!
+[  279.815453] mp3 data: 4294962279,0,0,0
+[  279.863415] MP3 Timer Callback
+[  279.863424] MP3 workqueue handler!
+[  279.863425] mp3 data: 4294962291,0,0,0
+[  279.911400] MP3 Timer Callback
+[  279.911409] MP3 workqueue handler!
+[  279.911410] mp3 data: 4294962303,0,0,0
+[  279.959369] MP3 Timer Callback
+[  279.959375] MP3 workqueue handler!
+[  279.959376] mp3 data: 4294962315,0,0,0
+[  280.007351] MP3 Timer Callback
+[  280.007422] MP3 workqueue handler!
+[  280.007425] mp3 data: 4294962327,7473,0,0
+[  280.055330] MP3 Timer Callback
+[  280.055340] MP3 workqueue handler!
+[  280.055341] mp3 data: 4294962339,0,0,0
+[  280.103310] MP3 Timer Callback
+[  280.103319] MP3 workqueue handler!
+[  280.103321] mp3 data: 4294962351,0,0,0
+[  280.151289] MP3 Timer Callback
+[  280.151299] MP3 workqueue handler!
+[  280.151300] mp3 data: 4294962363,0,0,0
+[  280.199247] MP3 Timer Callback
+[  280.199256] MP3 workqueue handler!
+[  280.199257] mp3 data: 4294962375,0,0,0
+[  280.247221] MP3 Timer Callback
+[  280.247233] MP3 workqueue handler!
+[  280.247235] mp3 data: 4294962387,10335,0,0
+[  280.295215] MP3 Timer Callback
+[  280.295226] MP3 workqueue handler!
+[  280.295228] mp3 data: 4294962399,1598,0,0
+[  280.343197] MP3 Timer Callback
+[  280.343207] MP3 workqueue handler!
+[  280.343208] mp3 data: 4294962411,0,0,0
+[  280.391156] MP3 Timer Callback
+[  280.391165] MP3 workqueue handler!
+[  280.391167] mp3 data: 4294962423,0,0,0
+[  280.439148] MP3 Timer Callback
+[  280.439157] MP3 workqueue handler!
+[  280.439159] mp3 data: 4294962435,0,0,0
+[  280.487115] MP3 Timer Callback
+[  280.487124] MP3 workqueue handler!
+[  280.487125] mp3 data: 4294962447,0,0,0
+[  280.535091] MP3 Timer Callback
+[  280.535100] MP3 workqueue handler!
+[  280.535101] mp3 data: 4294962459,0,0,0
+[  280.583073] MP3 Timer Callback
+[  280.583083] MP3 workqueue handler!
+[  280.583085] mp3 data: 4294962471,0,0,0
+[  280.631056] MP3 Timer Callback
+[  280.631067] MP3 workqueue handler!
+[  280.631069] mp3 data: 4294962483,0,0,0
+[  280.679024] MP3 Timer Callback
+[  280.679034] MP3 workqueue handler!
+[  280.679035] mp3 data: 4294962495,0,0,0
+[  280.726989] MP3 Timer Callback
+[  280.726998] MP3 workqueue handler!
+[  280.726999] mp3 data: 4294962507,0,0,0
+[  280.774979] MP3 Timer Callback
+[  280.774988] MP3 workqueue handler!
+[  280.774989] mp3 data: 4294962519,0,0,0
+[  280.822950] MP3 Timer Callback
+[  280.822960] MP3 workqueue handler!
+[  280.822962] mp3 data: 4294962531,0,0,0
+[  280.870930] MP3 Timer Callback
+[  280.870938] MP3 workqueue handler!
+[  280.870939] mp3 data: 4294962543,0,0,0
+[  280.918904] MP3 Timer Callback
+[  280.918915] MP3 workqueue handler!
+[  280.918916] mp3 data: 4294962555,0,0,0
+[  280.966886] MP3 Timer Callback
+[  280.966896] MP3 workqueue handler!
+[  280.966898] mp3 data: 4294962567,0,0,0
+[  281.014849] MP3 Timer Callback
+[  281.014923] MP3 workqueue handler!
+[  281.014925] mp3 data: 4294962579,7169,0,0
+[  281.062821] MP3 Timer Callback
+[  281.062829] MP3 workqueue handler!
+[  281.062831] mp3 data: 4294962591,0,0,0
+[  281.110812] MP3 Timer Callback
+[  281.110821] MP3 workqueue handler!
+[  281.110822] mp3 data: 4294962603,0,0,0
+[  281.158782] MP3 Timer Callback
+[  281.158791] MP3 workqueue handler!
+[  281.158792] mp3 data: 4294962615,0,0,0
+[  281.206766] MP3 Timer Callback
+[  281.206774] MP3 workqueue handler!
+[  281.206776] mp3 data: 4294962627,0,0,0
+[  281.254725] MP3 Timer Callback
+[  281.254730] MP3 workqueue handler!
+[  281.254732] mp3 data: 4294962639,2022,0,0
+[  281.302706] MP3 Timer Callback
+[  281.302769] MP3 workqueue handler!
+[  281.302772] mp3 data: 4294962651,7922,0,0
+[  281.350701] MP3 Timer Callback
+[  281.350710] MP3 workqueue handler!
+[  281.350712] mp3 data: 4294962663,0,0,0
+[  281.398663] MP3 Timer Callback
+[  281.398672] MP3 workqueue handler!
+[  281.398673] mp3 data: 4294962675,0,0,0
+[  281.446647] MP3 Timer Callback
+[  281.446656] MP3 workqueue handler!
+[  281.446657] mp3 data: 4294962687,0,0,0
+[  281.494612] MP3 Timer Callback
+[  281.494621] MP3 workqueue handler!
+[  281.494622] mp3 data: 4294962699,0,0,0
+[  281.542604] MP3 Timer Callback
+[  281.542614] MP3 workqueue handler!
+[  281.542615] mp3 data: 4294962711,0,0,0
+[  281.590577] MP3 Timer Callback
+[  281.590590] MP3 workqueue handler!
+[  281.590592] mp3 data: 4294962723,0,0,0
+[  281.638548] MP3 Timer Callback
+[  281.638557] MP3 workqueue handler!
+[  281.638558] mp3 data: 4294962735,0,0,0
+[  281.686518] MP3 Timer Callback
+[  281.686527] MP3 workqueue handler!
+[  281.686528] mp3 data: 4294962747,0,0,0
+[  281.734500] MP3 Timer Callback
+[  281.734509] MP3 workqueue handler!
+[  281.734511] mp3 data: 4294962759,0,0,0
+[  281.782485] MP3 Timer Callback
+[  281.782495] MP3 workqueue handler!
+[  281.782497] mp3 data: 4294962771,0,0,0
+[  281.830450] MP3 Timer Callback
+[  281.830459] MP3 workqueue handler!
+[  281.830460] mp3 data: 4294962783,0,0,0
+[  281.878438] MP3 Timer Callback
+[  281.878446] MP3 workqueue handler!
+[  281.878448] mp3 data: 4294962795,0,0,0
+[  281.926407] MP3 Timer Callback
+[  281.926416] MP3 workqueue handler!
+[  281.926417] mp3 data: 4294962807,0,0,0
+[  281.974380] MP3 Timer Callback
+[  281.974387] MP3 workqueue handler!
+[  281.974388] mp3 data: 4294962819,0,0,0
+[  282.022355] MP3 Timer Callback
+[  282.022363] MP3 workqueue handler!
+[  282.022365] mp3 data: 4294962831,7030,0,0
+[  282.070328] MP3 Timer Callback
+[  282.070336] MP3 workqueue handler!
+[  282.070338] mp3 data: 4294962843,0,0,0
+[  282.118308] MP3 Timer Callback
+[  282.118317] MP3 workqueue handler!
+[  282.118319] mp3 data: 4294962855,0,0,0
+[  282.166295] MP3 Timer Callback
+[  282.166304] MP3 workqueue handler!
+[  282.166305] mp3 data: 4294962867,0,0,0
+[  282.214262] MP3 Timer Callback
+[  282.214271] MP3 workqueue handler!
+[  282.214272] mp3 data: 4294962879,0,0,0
+[  282.262247] MP3 Timer Callback
+[  282.262256] MP3 workqueue handler!
+[  282.262258] mp3 data: 4294962891,0,0,0
+[  282.310229] MP3 Timer Callback
+[  282.310314] MP3 workqueue handler!
+[  282.310317] mp3 data: 4294962903,8112,0,0
+[  282.358215] MP3 Timer Callback
+[  282.358225] MP3 workqueue handler!
+[  282.358226] mp3 data: 4294962915,0,0,0
+[  282.406172] MP3 Timer Callback
+[  282.406181] MP3 workqueue handler!
+[  282.406183] mp3 data: 4294962927,0,0,0
+[  282.454157] MP3 Timer Callback
+[  282.454166] MP3 workqueue handler!
+[  282.454168] mp3 data: 4294962939,0,0,0
+[  282.502117] MP3 Timer Callback
+[  282.502127] MP3 workqueue handler!
+[  282.502128] mp3 data: 4294962951,0,0,0
+[  282.550093] MP3 Timer Callback
+[  282.550100] MP3 workqueue handler!
+[  282.550102] mp3 data: 4294962963,0,0,0
+[  282.598090] MP3 Timer Callback
+[  282.598100] MP3 workqueue handler!
+[  282.598101] mp3 data: 4294962975,0,0,0
+[  282.646054] MP3 Timer Callback
+[  282.646061] MP3 workqueue handler!
+[  282.646063] mp3 data: 4294962987,0,0,0
+[  282.694029] MP3 Timer Callback
+[  282.694037] MP3 workqueue handler!
+[  282.694039] mp3 data: 4294962999,0,0,0
+[  282.741997] MP3 Timer Callback
+[  282.742005] MP3 workqueue handler!
+[  282.742006] mp3 data: 4294963011,0,0,0
+[  282.789976] MP3 Timer Callback
+[  282.789985] MP3 workqueue handler!
+[  282.789987] mp3 data: 4294963023,0,0,0
+[  282.837971] MP3 Timer Callback
+[  282.837979] MP3 workqueue handler!
+[  282.837980] mp3 data: 4294963035,0,0,0
+[  282.885933] MP3 Timer Callback
+[  282.885942] MP3 workqueue handler!
+[  282.885943] mp3 data: 4294963047,0,0,0
+[  282.933909] MP3 Timer Callback
+[  282.933917] MP3 workqueue handler!
+[  282.933918] mp3 data: 4294963059,0,0,0
+[  282.981880] MP3 Timer Callback
+[  282.981887] MP3 workqueue handler!
+[  282.981889] mp3 data: 4294963071,0,0,0
+[  283.029862] MP3 Timer Callback
+[  283.029874] MP3 workqueue handler!
+[  283.029876] mp3 data: 4294963083,6593,0,0
+[  283.077848] MP3 Timer Callback
+[  283.077855] MP3 workqueue handler!
+[  283.077856] mp3 data: 4294963095,0,0,0
+[  283.125817] MP3 Timer Callback
+[  283.125825] MP3 workqueue handler!
+[  283.125827] mp3 data: 4294963107,0,0,0
+[  283.173792] MP3 Timer Callback
+[  283.173800] MP3 workqueue handler!
+[  283.173801] mp3 data: 4294963119,0,0,0
+[  283.221765] MP3 Timer Callback
+[  283.221774] MP3 workqueue handler!
+[  283.221775] mp3 data: 4294963131,0,0,0
+[  283.269754] MP3 Timer Callback
+[  283.269762] MP3 workqueue handler!
+[  283.269763] mp3 data: 4294963143,0,0,0
+[  283.317735] MP3 Timer Callback
+[  283.317806] MP3 workqueue handler!
+[  283.317809] mp3 data: 4294963155,6686,0,0
+[  283.365702] MP3 Timer Callback
+[  283.365711] MP3 workqueue handler!
+[  283.365713] mp3 data: 4294963167,0,0,0
+[  283.413677] MP3 Timer Callback
+[  283.413685] MP3 workqueue handler!
+[  283.413687] mp3 data: 4294963179,0,0,0
+[  283.461659] MP3 Timer Callback
+[  283.461668] MP3 workqueue handler!
+[  283.461669] mp3 data: 4294963191,0,0,0
+[  283.509624] MP3 Timer Callback
+[  283.509632] MP3 workqueue handler!
+[  283.509633] mp3 data: 4294963203,0,0,0
+[  283.557606] MP3 Timer Callback
+[  283.557615] MP3 workqueue handler!
+[  283.557616] mp3 data: 4294963215,0,0,0
+[  283.605594] MP3 Timer Callback
+[  283.605606] MP3 workqueue handler!
+[  283.605609] mp3 data: 4294963227,0,0,0
+[  283.653570] MP3 Timer Callback
+[  283.653579] MP3 workqueue handler!
+[  283.653581] mp3 data: 4294963239,0,0,0
+[  283.701527] MP3 Timer Callback
+[  283.701533] MP3 workqueue handler!
+[  283.701535] mp3 data: 4294963251,0,0,0
+[  283.749514] MP3 Timer Callback
+[  283.749522] MP3 workqueue handler!
+[  283.749524] mp3 data: 4294963263,0,0,0
+[  283.797486] MP3 Timer Callback
+[  283.797495] MP3 workqueue handler!
+[  283.797497] mp3 data: 4294963275,0,0,0
+[  283.845459] MP3 Timer Callback
+[  283.845468] MP3 workqueue handler!
+[  283.845469] mp3 data: 4294963287,0,0,0
+[  283.893439] MP3 Timer Callback
+[  283.893449] MP3 workqueue handler!
+[  283.893450] mp3 data: 4294963299,0,0,0
+[  283.941411] MP3 Timer Callback
+[  283.941420] MP3 workqueue handler!
+[  283.941422] mp3 data: 4294963311,0,0,0
+[  283.989399] MP3 Timer Callback
+[  283.989407] MP3 workqueue handler!
+[  283.989409] mp3 data: 4294963323,0,0,0
+[  284.037362] MP3 Timer Callback
+[  284.037369] MP3 workqueue handler!
+[  284.037371] mp3 data: 4294963335,4784,0,0
+[  284.085349] MP3 Timer Callback
+[  284.085359] MP3 workqueue handler!
+[  284.085361] mp3 data: 4294963347,1663,0,0
+[  284.133316] MP3 Timer Callback
+[  284.133323] MP3 workqueue handler!
+[  284.133324] mp3 data: 4294963359,0,0,0
+[  284.181303] MP3 Timer Callback
+[  284.181311] MP3 workqueue handler!
+[  284.181312] mp3 data: 4294963371,0,0,0
+[  284.229273] MP3 Timer Callback
+[  284.229281] MP3 workqueue handler!
+[  284.229282] mp3 data: 4294963383,0,0,0
+[  284.277252] MP3 Timer Callback
+[  284.277259] MP3 workqueue handler!
+[  284.277260] mp3 data: 4294963395,0,0,0
+[  284.325225] MP3 Timer Callback
+[  284.325233] MP3 workqueue handler!
+[  284.325235] mp3 data: 4294963407,5524,0,0
+[  284.373212] MP3 Timer Callback
+[  284.373220] MP3 workqueue handler!
+[  284.373222] mp3 data: 4294963419,0,0,0
+[  284.421179] MP3 Timer Callback
+[  284.421188] MP3 workqueue handler!
+[  284.421189] mp3 data: 4294963431,0,0,0
+[  284.469167] MP3 Timer Callback
+[  284.469177] MP3 workqueue handler!
+[  284.469178] mp3 data: 4294963443,0,0,0
+[  284.517141] MP3 Timer Callback
+[  284.517150] MP3 workqueue handler!
+[  284.517152] mp3 data: 4294963455,0,0,0
+[  284.565122] MP3 Timer Callback
+[  284.565131] MP3 workqueue handler!
+[  284.565132] mp3 data: 4294963467,0,0,0
+[  284.613091] MP3 Timer Callback
+[  284.613103] MP3 workqueue handler!
+[  284.613105] mp3 data: 4294963479,0,0,0
+[  284.661059] MP3 Timer Callback
+[  284.661068] MP3 workqueue handler!
+[  284.661070] mp3 data: 4294963491,0,0,0
+[  284.709033] MP3 Timer Callback
+[  284.709044] MP3 workqueue handler!
+[  284.709045] mp3 data: 4294963503,0,0,0
+[  284.757027] MP3 Timer Callback
+[  284.757036] MP3 workqueue handler!
+[  284.757038] mp3 data: 4294963515,0,0,0
+[  284.804989] MP3 Timer Callback
+[  284.804998] MP3 workqueue handler!
+[  284.804999] mp3 data: 4294963527,0,0,0
+[  284.852969] MP3 Timer Callback
+[  284.852979] MP3 workqueue handler!
+[  284.852981] mp3 data: 4294963539,0,0,0
+[  284.900948] MP3 Timer Callback
+[  284.900957] MP3 workqueue handler!
+[  284.900959] mp3 data: 4294963551,0,0,0
+[  284.948917] MP3 Timer Callback
+[  284.948926] MP3 workqueue handler!
+[  284.948927] mp3 data: 4294963563,0,0,0
+[  284.996898] MP3 Timer Callback
+[  284.996908] MP3 workqueue handler!
+[  284.996910] mp3 data: 4294963575,0,0,0
+[  285.044867] MP3 Timer Callback
+[  285.048947] MP3 workqueue handler!
+[  285.048950] mp3 data: 4294963588,2495,0,0
+[  285.092848] MP3 Timer Callback
+[  285.092893] MP3 workqueue handler!
+[  285.092895] mp3 data: 4294963599,3671,0,0
+[  285.140826] MP3 Timer Callback
+[  285.140835] MP3 workqueue handler!
+[  285.140836] mp3 data: 4294963611,0,0,0
+[  285.188806] MP3 Timer Callback
+[  285.188815] MP3 workqueue handler!
+[  285.188817] mp3 data: 4294963623,0,0,0
+[  285.236775] MP3 Timer Callback
+[  285.236785] MP3 workqueue handler!
+[  285.236787] mp3 data: 4294963635,0,0,0
+[  285.284754] MP3 Timer Callback
+[  285.284764] MP3 workqueue handler!
+[  285.284766] mp3 data: 4294963647,0,0,0
+[  285.332727] MP3 Timer Callback
+[  285.332734] MP3 workqueue handler!
+[  285.332736] mp3 data: 4294963659,3042,0,0
+[  285.380708] MP3 Timer Callback
+[  285.380752] MP3 workqueue handler!
+[  285.380754] mp3 data: 4294963671,1591,0,0
+[  285.428683] MP3 Timer Callback
+[  285.428692] MP3 workqueue handler!
+[  285.428694] mp3 data: 4294963683,0,0,0
+[  285.476661] MP3 Timer Callback
+[  285.476669] MP3 workqueue handler!
+[  285.476670] mp3 data: 4294963695,0,0,0
+[  285.524643] MP3 Timer Callback
+[  285.524651] MP3 workqueue handler!
+[  285.524652] mp3 data: 4294963707,0,0,0
+[  285.572618] MP3 Timer Callback
+[  285.572626] MP3 workqueue handler!
+[  285.572627] mp3 data: 4294963719,0,0,0
+[  285.620618] MP3 Timer Callback
+[  285.620636] MP3 workqueue handler!
+[  285.620638] mp3 data: 4294963731,0,0,0
+[  285.668564] MP3 Timer Callback
+[  285.668572] MP3 workqueue handler!
+[  285.668574] mp3 data: 4294963743,0,0,0
+[  285.716540] MP3 Timer Callback
+[  285.716550] MP3 workqueue handler!
+[  285.716551] mp3 data: 4294963755,0,0,0
+[  285.764533] MP3 Timer Callback
+[  285.764543] MP3 workqueue handler!
+[  285.764545] mp3 data: 4294963767,0,0,0
+[  285.812511] MP3 Timer Callback
+[  285.812521] MP3 workqueue handler!
+[  285.812523] mp3 data: 4294963779,0,0,0
+[  285.860475] MP3 Timer Callback
+[  285.860484] MP3 workqueue handler!
+[  285.860485] mp3 data: 4294963791,0,0,0
+[  285.908455] MP3 Timer Callback
+[  285.908464] MP3 workqueue handler!
+[  285.908466] mp3 data: 4294963803,0,0,0
+[  285.956424] MP3 Timer Callback
+[  285.956433] MP3 workqueue handler!
+[  285.956435] mp3 data: 4294963815,0,0,0
+[  286.004401] MP3 Timer Callback
+[  286.004409] MP3 workqueue handler!
+[  286.004410] mp3 data: 4294963827,0,0,0
+[  286.052381] MP3 Timer Callback
+[  286.052390] MP3 workqueue handler!
+[  286.052392] mp3 data: 4294963839,0,0,0
+[  286.100365] MP3 Timer Callback
+[  286.100507] MP3 workqueue handler!
+[  286.100510] mp3 data: 4294963851,6021,0,0
+[  286.148329] MP3 Timer Callback
+[  286.148337] MP3 workqueue handler!
+[  286.148338] mp3 data: 4294963863,0,0,0
+[  286.196307] MP3 Timer Callback
+[  286.196315] MP3 workqueue handler!
+[  286.196317] mp3 data: 4294963875,0,0,0
+[  286.244285] MP3 Timer Callback
+[  286.244295] MP3 workqueue handler!
+[  286.244296] mp3 data: 4294963887,0,0,0
+[  286.292266] MP3 Timer Callback
+[  286.292276] MP3 workqueue handler!
+[  286.292278] mp3 data: 4294963899,0,0,0
+[  286.340233] MP3 Timer Callback
+[  286.340251] MP3 workqueue handler!
+[  286.340253] mp3 data: 4294963911,52,3,0
+[  286.388217] MP3 Timer Callback
+[  286.388223] MP3 workqueue handler!
+[  286.388225] mp3 data: 4294963923,3886,362,0
+[  286.436192] MP3 Timer Callback
+[  286.436202] MP3 workqueue handler!
+[  286.436203] mp3 data: 4294963935,0,0,0
+[  286.484166] MP3 Timer Callback
+[  286.484171] MP3 workqueue handler!
+[  286.484173] mp3 data: 4294963947,0,0,0
+[  286.532140] MP3 Timer Callback
+[  286.532151] MP3 workqueue handler!
+[  286.532152] mp3 data: 4294963959,0,0,0
+[  286.580115] MP3 Timer Callback
+[  286.580122] MP3 workqueue handler!
+[  286.580123] mp3 data: 4294963971,0,0,0
+[  286.628099] MP3 Timer Callback
+[  286.628107] MP3 workqueue handler!
+[  286.628108] mp3 data: 4294963983,0,0,0
+[  286.676073] MP3 Timer Callback
+[  286.676081] MP3 workqueue handler!
+[  286.676083] mp3 data: 4294963995,0,0,0
+[  286.724047] MP3 Timer Callback
+[  286.724055] MP3 workqueue handler!
+[  286.724056] mp3 data: 4294964007,0,0,0
+[  286.772021] MP3 Timer Callback
+[  286.772028] MP3 workqueue handler!
+[  286.772029] mp3 data: 4294964019,0,0,0
+[  286.820003] MP3 Timer Callback
+[  286.820012] MP3 workqueue handler!
+[  286.820013] mp3 data: 4294964031,0,0,0
+[  286.867980] MP3 Timer Callback
+[  286.867988] MP3 workqueue handler!
+[  286.867989] mp3 data: 4294964043,0,0,0
+[  286.915969] MP3 Timer Callback
+[  286.915979] MP3 workqueue handler!
+[  286.915980] mp3 data: 4294964055,0,0,0
+[  286.963929] MP3 Timer Callback
+[  286.963943] MP3 workqueue handler!
+[  286.963945] mp3 data: 4294964067,0,0,0
+[  287.011907] MP3 Timer Callback
+[  287.011915] MP3 workqueue handler!
+[  287.011916] mp3 data: 4294964079,0,0,0
+[  287.059884] MP3 Timer Callback
+[  287.059891] MP3 workqueue handler!
+[  287.059893] mp3 data: 4294964091,0,0,0
+[  287.107858] MP3 Timer Callback
+[  287.107870] MP3 workqueue handler!
+[  287.107872] mp3 data: 4294964103,5333,228,0
+[  287.155838] MP3 Timer Callback
+[  287.155846] MP3 workqueue handler!
+[  287.155848] mp3 data: 4294964115,340,18,0
+[  287.203810] MP3 Timer Callback
+[  287.203818] MP3 workqueue handler!
+[  287.203819] mp3 data: 4294964127,0,0,0
+[  287.251791] MP3 Timer Callback
+[  287.251800] MP3 workqueue handler!
+[  287.251802] mp3 data: 4294964139,0,0,0
+[  287.299768] MP3 Timer Callback
+[  287.299776] MP3 workqueue handler!
+[  287.299778] mp3 data: 4294964151,0,0,0
+[  287.347750] MP3 Timer Callback
+[  287.347759] MP3 workqueue handler!
+[  287.347760] mp3 data: 4294964163,0,0,0
+[  287.395718] MP3 Timer Callback
+[  287.395730] MP3 workqueue handler!
+[  287.395732] mp3 data: 4294964175,403,155,0
+[  287.443691] MP3 Timer Callback
+[  287.443697] MP3 workqueue handler!
+[  287.443698] mp3 data: 4294964187,1823,664,0
+[  287.491674] MP3 Timer Callback
+[  287.491680] MP3 workqueue handler!
+[  287.491682] mp3 data: 4294964199,946,385,0
+[  287.539648] MP3 Timer Callback
+[  287.539653] MP3 workqueue handler!
+[  287.539654] mp3 data: 4294964211,0,0,0
+[  287.587632] MP3 Timer Callback
+[  287.587640] MP3 workqueue handler!
+[  287.587643] mp3 data: 4294964223,0,0,0
+[  287.635607] MP3 Timer Callback
+[  287.635617] MP3 workqueue handler!
+[  287.635618] mp3 data: 4294964235,0,0,0
+[  287.683586] MP3 Timer Callback
+[  287.683596] MP3 workqueue handler!
+[  287.683597] mp3 data: 4294964247,0,0,0
+[  287.731550] MP3 Timer Callback
+[  287.731561] MP3 workqueue handler!
+[  287.731563] mp3 data: 4294964259,0,0,0
+[  287.779527] MP3 Timer Callback
+[  287.779535] MP3 workqueue handler!
+[  287.779536] mp3 data: 4294964271,0,0,0
+[  287.827516] MP3 Timer Callback
+[  287.827525] MP3 workqueue handler!
+[  287.827526] mp3 data: 4294964283,0,0,0
+[  287.875488] MP3 Timer Callback
+[  287.875497] MP3 workqueue handler!
+[  287.875498] mp3 data: 4294964295,0,0,0
+[  287.923459] MP3 Timer Callback
+[  287.923472] MP3 workqueue handler!
+[  287.923474] mp3 data: 4294964307,0,0,0
+[  287.971433] MP3 Timer Callback
+[  287.971443] MP3 workqueue handler!
+[  287.971444] mp3 data: 4294964319,0,0,0
+[  288.019412] MP3 Timer Callback
+[  288.019421] MP3 workqueue handler!
+[  288.019422] mp3 data: 4294964331,0,0,0
+[  288.067390] MP3 Timer Callback
+[  288.067398] MP3 workqueue handler!
+[  288.067399] mp3 data: 4294964343,0,0,0
+[  288.115363] MP3 Timer Callback
+[  288.115369] MP3 workqueue handler!
+[  288.115371] mp3 data: 4294964355,1000,69,0
+[  288.163343] MP3 Timer Callback
+[  288.163405] MP3 workqueue handler!
+[  288.163408] mp3 data: 4294964367,4545,256,0
+[  288.211316] MP3 Timer Callback
+[  288.211324] MP3 workqueue handler!
+[  288.211326] mp3 data: 4294964379,0,0,0
+[  288.259306] MP3 Timer Callback
+[  288.259374] MP3 workqueue handler!
+[  288.259376] mp3 data: 4294964391,0,0,0
+[  288.307289] MP3 Timer Callback
+[  288.307298] MP3 workqueue handler!
+[  288.307300] mp3 data: 4294964403,0,0,0
+[  288.355267] MP3 Timer Callback
+[  288.355277] MP3 workqueue handler!
+[  288.355278] mp3 data: 4294964415,0,0,0
+[  288.403226] MP3 Timer Callback
+[  288.403235] MP3 workqueue handler!
+[  288.403237] mp3 data: 4294964427,0,0,0
+[  288.451198] MP3 Timer Callback
+[  288.451209] MP3 workqueue handler!
+[  288.451210] mp3 data: 4294964439,0,0,0
+[  288.499176] MP3 Timer Callback
+[  288.499182] MP3 workqueue handler!
+[  288.499183] mp3 data: 4294964451,257,219,0
+[  288.547153] MP3 Timer Callback
+[  288.547160] MP3 workqueue handler!
+[  288.547168] mp3 data: 4294964463,822,720,0
+[  288.595126] MP3 Timer Callback
+[  288.595133] MP3 workqueue handler!
+[  288.595135] mp3 data: 4294964475,786,716,0
+[  288.643107] MP3 Timer Callback
+[  288.643112] MP3 workqueue handler!
+[  288.643114] mp3 data: 4294964487,500,482,0
+[  288.691084] MP3 Timer Callback
+[  288.691129] MP3 workqueue handler!
+[  288.691131] mp3 data: 4294964499,354,394,0
+[  288.739057] MP3 Timer Callback
+[  288.739064] MP3 workqueue handler!
+[  288.739066] mp3 data: 4294964511,0,0,0
+[  288.787037] MP3 Timer Callback
+[  288.787046] MP3 workqueue handler!
+[  288.787048] mp3 data: 4294964523,0,0,0
+[  288.835016] MP3 Timer Callback
+[  288.835024] MP3 workqueue handler!
+[  288.835025] mp3 data: 4294964535,0,0,0
+[  288.882989] MP3 Timer Callback
+[  288.882998] MP3 workqueue handler!
+[  288.883000] mp3 data: 4294964547,0,0,0
+[  288.930965] MP3 Timer Callback
+[  288.930977] MP3 workqueue handler!
+[  288.930979] mp3 data: 4294964559,0,0,0
+[  288.978941] MP3 Timer Callback
+[  288.978948] MP3 workqueue handler!
+[  288.978950] mp3 data: 4294964571,0,0,0
+[  289.026923] MP3 Timer Callback
+[  289.026937] MP3 workqueue handler!
+[  289.026938] mp3 data: 4294964583,0,0,0
+[  289.074893] MP3 Timer Callback
+[  289.074900] MP3 workqueue handler!
+[  289.074901] mp3 data: 4294964595,0,0,0
+[  289.122886] MP3 Timer Callback
+[  289.122898] MP3 workqueue handler!
+[  289.122899] mp3 data: 4294964607,0,0,0
+[  289.170846] MP3 Timer Callback
+[  289.170854] MP3 workqueue handler!
+[  289.170856] mp3 data: 4294964619,3479,209,0
+[  289.218836] MP3 Timer Callback
+[  289.218885] MP3 workqueue handler!
+[  289.218887] mp3 data: 4294964631,1769,126,0
+[  289.266809] MP3 Timer Callback
+[  289.266818] MP3 workqueue handler!
+[  289.266820] mp3 data: 4294964643,0,0,0
+[  289.314787] MP3 Timer Callback
+[  289.314796] MP3 workqueue handler!
+[  289.314797] mp3 data: 4294964655,0,0,0
+[  289.362763] MP3 Timer Callback
+[  289.362773] MP3 workqueue handler!
+[  289.362774] mp3 data: 4294964667,0,0,0
+[  289.410729] MP3 Timer Callback
+[  289.410739] MP3 workqueue handler!
+[  289.410740] mp3 data: 4294964679,0,0,0
+[  289.458716] MP3 Timer Callback
+[  289.458725] MP3 workqueue handler!
+[  289.458726] mp3 data: 4294964691,0,0,0
+[  289.506688] MP3 Timer Callback
+[  289.506698] MP3 workqueue handler!
+[  289.506699] mp3 data: 4294964703,0,0,0
+[  289.554665] MP3 Timer Callback
+[  289.554673] MP3 workqueue handler!
+[  289.554675] mp3 data: 4294964715,0,0,0
+[  289.602662] MP3 Timer Callback
+[  289.602674] MP3 workqueue handler!
+[  289.602676] mp3 data: 4294964727,0,0,0
+[  289.650613] MP3 Timer Callback
+[  289.650620] MP3 workqueue handler!
+[  289.650621] mp3 data: 4294964739,0,0,0
+[  289.698593] MP3 Timer Callback
+[  289.698598] MP3 workqueue handler!
+[  289.698600] mp3 data: 4294964751,301,438,0
+[  289.746564] MP3 Timer Callback
+[  289.746569] MP3 workqueue handler!
+[  289.746571] mp3 data: 4294964763,462,745,0
+[  289.794542] MP3 Timer Callback
+[  289.794547] MP3 workqueue handler!
+[  289.794549] mp3 data: 4294964775,477,751,0
+[  289.842518] MP3 Timer Callback
+[  289.842525] MP3 workqueue handler!
+[  289.842527] mp3 data: 4294964787,423,644,0
+[  289.890491] MP3 Timer Callback
+[  289.890497] MP3 workqueue handler!
+[  289.890499] mp3 data: 4294964799,362,625,0
+[  289.938471] MP3 Timer Callback
+[  289.938476] MP3 workqueue handler!
+[  289.938478] mp3 data: 4294964811,364,697,0
+[  289.986452] MP3 Timer Callback
+[  289.986461] MP3 workqueue handler!
+[  289.986463] mp3 data: 4294964823,0,0,0
+[  290.034423] MP3 Timer Callback
+[  290.034429] MP3 workqueue handler!
+[  290.034430] mp3 data: 4294964835,0,0,0
+[  290.082400] MP3 Timer Callback
+[  290.082409] MP3 workqueue handler!
+[  290.082411] mp3 data: 4294964847,0,0,0
+[  290.130378] MP3 Timer Callback
+[  290.130386] MP3 workqueue handler!
+[  290.130387] mp3 data: 4294964859,0,0,0
+[  290.178352] MP3 Timer Callback
+[  290.178360] MP3 workqueue handler!
+[  290.178361] mp3 data: 4294964871,0,0,0
+[  290.226327] MP3 Timer Callback
+[  290.226333] MP3 workqueue handler!
+[  290.226335] mp3 data: 4294964883,3960,255,0
+[  290.274309] MP3 Timer Callback
+[  290.274355] MP3 workqueue handler!
+[  290.274357] mp3 data: 4294964895,1245,114,0
+[  290.322288] MP3 Timer Callback
+[  290.322297] MP3 workqueue handler!
+[  290.322299] mp3 data: 4294964907,0,0,0
+[  290.370265] MP3 Timer Callback
+[  290.370274] MP3 workqueue handler!
+[  290.370275] mp3 data: 4294964919,0,0,0
+[  290.418240] MP3 Timer Callback
+[  290.418249] MP3 workqueue handler!
+[  290.418250] mp3 data: 4294964931,0,0,0
+[  290.466210] MP3 Timer Callback
+[  290.466218] MP3 workqueue handler!
+[  290.466220] mp3 data: 4294964943,0,0,0
+[  290.514194] MP3 Timer Callback
+[  290.514203] MP3 workqueue handler!
+[  290.514204] mp3 data: 4294964955,0,0,0
+[  290.562166] MP3 Timer Callback
+[  290.562176] MP3 workqueue handler!
+[  290.562177] mp3 data: 4294964967,0,0,0
+[  290.610158] MP3 Timer Callback
+[  290.610168] MP3 workqueue handler!
+[  290.610169] mp3 data: 4294964979,0,0,0
+[  290.658139] MP3 Timer Callback
+[  290.658147] MP3 workqueue handler!
+[  290.658149] mp3 data: 4294964991,0,0,0
+[  290.706093] MP3 Timer Callback
+[  290.706100] MP3 workqueue handler!
+[  290.706101] mp3 data: 4294965003,0,0,0
+[  290.754069] MP3 Timer Callback
+[  290.754076] MP3 workqueue handler!
+[  290.754077] mp3 data: 4294965015,0,0,0
+[  290.802048] MP3 Timer Callback
+[  290.802058] MP3 workqueue handler!
+[  290.802059] mp3 data: 4294965027,0,0,0
+[  290.850061] MP3 Timer Callback
+[  290.850079] MP3 workqueue handler!
+[  290.850080] mp3 data: 4294965039,0,0,0
+[  290.898008] MP3 Timer Callback
+[  290.898016] MP3 workqueue handler!
+[  290.898018] mp3 data: 4294965051,0,0,0
+[  290.945976] MP3 Timer Callback
+[  290.945983] MP3 workqueue handler!
+[  290.945984] mp3 data: 4294965063,65,168,0
+[  290.993953] MP3 Timer Callback
+[  290.993959] MP3 workqueue handler!
+[  290.993960] mp3 data: 4294965075,312,734,0
+[  291.041927] MP3 Timer Callback
+[  291.041933] MP3 workqueue handler!
+[  291.041935] mp3 data: 4294965087,281,742,0
+[  291.089904] MP3 Timer Callback
+[  291.089910] MP3 workqueue handler!
+[  291.089912] mp3 data: 4294965099,252,631,0
+[  291.137882] MP3 Timer Callback
+[  291.137888] MP3 workqueue handler!
+[  291.137890] mp3 data: 4294965111,294,672,0
+[  291.185859] MP3 Timer Callback
+[  291.185865] MP3 workqueue handler!
+[  291.185867] mp3 data: 4294965123,307,752,0
+[  291.233839] MP3 Timer Callback
+[  291.233845] MP3 workqueue handler!
+[  291.233846] mp3 data: 4294965135,268,748,0
+[  291.281809] MP3 Timer Callback
+[  291.281816] MP3 workqueue handler!
+[  291.281818] mp3 data: 4294965147,3078,445,0
+[  291.329790] MP3 Timer Callback
+[  291.329835] MP3 workqueue handler!
+[  291.329837] mp3 data: 4294965159,1763,232,0
+[  291.377772] MP3 Timer Callback
+[  291.377781] MP3 workqueue handler!
+[  291.377782] mp3 data: 4294965171,0,0,0
+[  291.425752] MP3 Timer Callback
+[  291.425761] MP3 workqueue handler!
+[  291.425763] mp3 data: 4294965183,0,0,0
+[  291.473736] MP3 Timer Callback
+[  291.473744] MP3 workqueue handler!
+[  291.473745] mp3 data: 4294965195,0,0,0
+[  291.521699] MP3 Timer Callback
+[  291.521706] MP3 workqueue handler!
+[  291.521708] mp3 data: 4294965207,0,0,0
+[  291.569674] MP3 Timer Callback
+[  291.569683] MP3 workqueue handler!
+[  291.569684] mp3 data: 4294965219,0,0,0
+[  291.617661] MP3 Timer Callback
+[  291.617671] MP3 workqueue handler!
+[  291.617673] mp3 data: 4294965231,0,0,0
+[  291.665624] MP3 Timer Callback
+[  291.665632] MP3 workqueue handler!
+[  291.665634] mp3 data: 4294965243,0,0,0
+[  291.713598] MP3 Timer Callback
+[  291.713605] MP3 workqueue handler!
+[  291.713607] mp3 data: 4294965255,0,0,0
+[  291.761579] MP3 Timer Callback
+[  291.761587] MP3 workqueue handler!
+[  291.761588] mp3 data: 4294965267,0,0,0
+[  291.809565] MP3 Timer Callback
+[  291.809574] MP3 workqueue handler!
+[  291.809575] mp3 data: 4294965279,0,0,0
+[  291.857535] MP3 Timer Callback
+[  291.857543] MP3 workqueue handler!
+[  291.857544] mp3 data: 4294965291,0,0,0
+[  291.905510] MP3 Timer Callback
+[  291.905519] MP3 workqueue handler!
+[  291.905521] mp3 data: 4294965303,0,0,0
+[  291.953481] MP3 Timer Callback
+[  291.953487] MP3 workqueue handler!
+[  291.953488] mp3 data: 4294965315,0,0,0
+[  292.001465] MP3 Timer Callback
+[  292.001474] MP3 workqueue handler!
+[  292.001476] mp3 data: 4294965327,0,0,0
+[  292.049436] MP3 Timer Callback
+[  292.049442] MP3 workqueue handler!
+[  292.049443] mp3 data: 4294965339,0,0,0
+[  292.097412] MP3 Timer Callback
+[  292.097426] MP3 workqueue handler!
+[  292.097427] mp3 data: 4294965351,0,0,0
+[  292.145391] MP3 Timer Callback
+[  292.145398] MP3 workqueue handler!
+[  292.145399] mp3 data: 4294965363,0,0,0
+[  292.193373] MP3 Timer Callback
+[  292.193380] MP3 workqueue handler!
+[  292.193382] mp3 data: 4294965375,0,0,0
+[  292.241342] MP3 Timer Callback
+[  292.241354] MP3 workqueue handler!
+[  292.241355] mp3 data: 4294965387,43,109,0
+[  292.289316] MP3 Timer Callback
+[  292.289326] MP3 workqueue handler!
+[  292.289328] mp3 data: 4294965399,267,749,0
+[  292.337291] MP3 Timer Callback
+[  292.337298] MP3 workqueue handler!
+[  292.337300] mp3 data: 4294965411,2110,816,0
+[  292.385273] MP3 Timer Callback
+[  292.385278] MP3 workqueue handler!
+[  292.385280] mp3 data: 4294965423,2946,896,0
+[  292.433246] MP3 Timer Callback
+[  292.433253] MP3 workqueue handler!
+[  292.433255] mp3 data: 4294965435,195,668,0
+[  292.481222] MP3 Timer Callback
+[  292.481228] MP3 workqueue handler!
+[  292.481230] mp3 data: 4294965447,178,645,0
+[  292.529196] MP3 Timer Callback
+[  292.529202] MP3 workqueue handler!
+[  292.529204] mp3 data: 4294965459,239,756,0
+[  292.577176] MP3 Timer Callback
+[  292.577182] MP3 workqueue handler!
+[  292.577184] mp3 data: 4294965471,198,741,0
+[  292.625153] MP3 Timer Callback
+[  292.625159] MP3 workqueue handler!
+[  292.625161] mp3 data: 4294965483,154,741,0
+[  292.673134] MP3 Timer Callback
+[  292.673192] MP3 workqueue handler!
+[  292.673194] mp3 data: 4294965495,48,297,0
+[  292.721106] MP3 Timer Callback
+[  292.721115] MP3 workqueue handler!
+[  292.721116] mp3 data: 4294965507,0,0,0
+[  292.769086] MP3 Timer Callback
+[  292.769095] MP3 workqueue handler!
+[  292.769096] mp3 data: 4294965519,0,0,0
+[  292.817074] MP3 Timer Callback
+[  292.817085] MP3 workqueue handler!
+[  292.817087] mp3 data: 4294965531,0,0,0
+[  292.865049] MP3 Timer Callback
+[  292.865058] MP3 workqueue handler!
+[  292.865059] mp3 data: 4294965543,0,0,0
+[  292.913027] MP3 Timer Callback
+[  292.913037] MP3 workqueue handler!
+[  292.913039] mp3 data: 4294965555,0,0,0
+[  292.961003] MP3 Timer Callback
+[  292.961012] MP3 workqueue handler!
+[  292.961013] mp3 data: 4294965567,0,0,0
+[  293.008967] MP3 Timer Callback
+[  293.008976] MP3 workqueue handler!
+[  293.008978] mp3 data: 4294965579,0,0,0
+[  293.056954] MP3 Timer Callback
+[  293.056963] MP3 workqueue handler!
+[  293.056965] mp3 data: 4294965591,0,0,0
+[  293.104930] MP3 Timer Callback
+[  293.104939] MP3 workqueue handler!
+[  293.104941] mp3 data: 4294965603,0,0,0
+[  293.152911] MP3 Timer Callback
+[  293.152921] MP3 workqueue handler!
+[  293.152923] mp3 data: 4294965615,0,0,0
+[  293.200877] MP3 Timer Callback
+[  293.200886] MP3 workqueue handler!
+[  293.200888] mp3 data: 4294965627,0,0,0
+[  293.248848] MP3 Timer Callback
+[  293.248856] MP3 workqueue handler!
+[  293.248857] mp3 data: 4294965639,0,0,0
+[  293.296831] MP3 Timer Callback
+[  293.296842] MP3 workqueue handler!
+[  293.296844] mp3 data: 4294965651,0,0,0
+[  293.344816] MP3 Timer Callback
+[  293.344825] MP3 workqueue handler!
+[  293.344827] mp3 data: 4294965663,0,0,0
+[  293.392775] MP3 Timer Callback
+[  293.392789] MP3 workqueue handler!
+[  293.392791] mp3 data: 4294965675,16,21,0
+[  293.440752] MP3 Timer Callback
+[  293.440759] MP3 workqueue handler!
+[  293.440760] mp3 data: 4294965687,607,123,0
+[  293.488731] MP3 Timer Callback
+[  293.488738] MP3 workqueue handler!
+[  293.488740] mp3 data: 4294965699,0,0,0
+[  293.509997] mp3 Command: U 1888
+[  293.509997] 
+[  293.510000] mp3 OP: U
+[  293.510001] mp3 Unregistration
+[  293.510003] MP3 workqueue handler!
+[  293.510004] MP3 deleting process - not running
+[  293.510004] MP3 deleting process - not running
+[  293.536708] MP3 Timer Callback
+[  295.088420] mp3 Command: U 1887
+[  295.088420] 
+[  295.088424] mp3 OP: U
+[  295.088425] mp3 Unregistration
+[  295.088426] MP3 workqueue handler!

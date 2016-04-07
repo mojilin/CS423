@@ -33,7 +33,6 @@ static struct timer_list work_timer;
 
 spinlock_t *list_lock;
 
-spinlock_t *sharedmemlock;
 struct workqueue_struct *cpu_wq;
 struct work_struct profiler_struct;
 
@@ -165,10 +164,9 @@ static ssize_t mp3_read (struct file *file, char __user *buffer, size_t count, l
 void work_time_handler(unsigned long arg)
 {
    printk(KERN_INFO "MP3 Timer Callback\n");
-if (list_empty(&processList) == 0){
-  queue_work(cpu_wq, &profiler_struct);
+
+   queue_work(cpu_wq, &profiler_struct);
    mod_timer(&work_timer, jiffies + HZ/20);
-  }
    return;
 }
 
@@ -209,25 +207,18 @@ void profile_updater_work(struct work_struct *work)
       // TODO
       spin_unlock(list_lock);
    }
-printk(KERN_INFO "mp3 data: %u,%u,%u,%u",jiffies,total_min_flt,total_maj_flt,((total_stime+total_utime)*1000) / jiffies);
    unsigned long * curpointer =(unsigned long *)((unsigned long) mem_buf + sampleCount*4*sizeof(unsigned long));
-	
-spin_lock(sharedmemlock);
-curpointer[0] = jiffies;
-//   *curpointer = jiffies;
-
-//   curpointer += sizeof(unsigned long);
-   curpointer[1] = total_min_flt;
- //  curpointer += sizeof(unsigned long);
-   curpointer[2] = total_maj_flt;
-   //curpointer += sizeof(unsigned long);
-   curpointer[3] = ((total_stime+total_utime)*1000) / jiffies;
-   
-sampleCount++;
+   *curpointer = jiffies;
+   curpointer += sizeof(unsigned long);
+   *curpointer = total_min_flt;
+   curpointer += sizeof(unsigned long);
+   *curpointer = total_maj_flt;
+   curpointer += sizeof(unsigned long);
+   *curpointer = ((total_stime+total_utime)*1000) / jiffies;
+   sampleCount++;
    if(sampleCount == 12000)
     sampleCount = 0;
-spin_unlock(sharedmemlock);   
-return;
+   return;
 }
 
 /* add_process(int pid)
@@ -254,13 +245,15 @@ int add_process (int pid)
    newProcess->linux_task = find_task_by_pid(pid);
 
   if (list_empty(&processList) != 0){
-    add_timer(&work_timer);
     queue_work(cpu_wq, &profiler_struct);
-  }
+    }
 
    spin_lock(list_lock);
    list_add_tail( &newProcess->list, &processList);
    spin_unlock(list_lock);   
+
+   add_timer(&work_timer);
+   queue_work(cpu_wq, &profiler_struct);
 
    return 1;
 }
@@ -408,7 +401,6 @@ int __init mp3_init(void)
   work_timer.data = 0;
 
    list_lock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
-   sharedmemlock = kmalloc(sizeof(spinlock_t), GFP_KERNEL);
    if(list_lock == NULL)
    {
     printk(KERN_WARNING "spinlock malloc failed");
@@ -417,7 +409,7 @@ int __init mp3_init(void)
 
    //Init spin lock
    spin_lock_init(list_lock);
-   spin_lock_init(sharedmemlock);
+
    //Init workqueue
    cpu_wq = alloc_workqueue("cpu", (unsigned int) 0, 1);
    if(cpu_wq == NULL)
@@ -479,7 +471,7 @@ void __exit mp3_exit(void)
    remove_proc_entry(FILENAME, proc_dir);
    proc_remove(proc_dir);
    kfree(list_lock);
- kfree(sharedmemlock);
+
    printk(KERN_ALERT "MP3 MODULE UNLOADED\n");
 }
 
