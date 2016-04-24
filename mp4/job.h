@@ -1,4 +1,4 @@
-#ifdef JOB_H
+#ifndef JOB_H
 #define JOB_H
 
 #define A_SIZE 1024 * 1024 * 4
@@ -8,7 +8,7 @@ typedef struct {
 	double A[A_SIZE] = {1.111111};
 } Job;
 
-void compute();
+void compute(Job j);
 
 
 #endif
