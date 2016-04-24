@@ -3,13 +3,12 @@
 
 #define A_SIZE 1024 * 1024 * 4
 
-class Job {
-	public:
-		void compute();
+typedef struct {
+	int id;
+	double A[A_SIZE] = {1.111111};
+} Job;
 
-	private:
-		double A[A_SIZE];
+void compute();
 
-};
 
 #endif
