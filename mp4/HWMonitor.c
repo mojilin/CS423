@@ -36,8 +36,17 @@ double get_throttle() {
 }
 
 void throttle_thread() {
-	// while (SOME CONDITION) {
-	// 	printf("Set throttle pls: ");
-		
-	// }
+	double throttle_in = 0.0;
+	while (SOME CONDITION) {
+		printf("Set throttle pls: ");
+		scanf("%f", &throttle_in);
+
+		if (throttle_in >= 0.0 && throttle_in <= 1.0) {
+			set_throttle(throttle_in);
+		}
+
+		printf("Throttle set to %f\n", throttle_in);
+
+		throttle_in = 0.0;
+	}
 }

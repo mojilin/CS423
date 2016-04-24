@@ -7,5 +7,4 @@ double get_cpu_use();
 void set_throttle(double new_throttle);
 double get_throttle();
 
-
 #endif
