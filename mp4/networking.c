@@ -104,7 +104,7 @@ int join_channel(const char * address, int port)
 }
 
 
-int channel_read(int sockfd, void * buf, int nbytes)
+n_state channel_read(int sockfd, void * buf, int nbytes)
 {
 	int retval = 0;
 	char buffer[10];
@@ -126,8 +126,8 @@ int channel_read(int sockfd, void * buf, int nbytes)
 			}
 			printf("Message received: %s\n", (char *)buf);
 			write(sockfd ,"ACK", 10);
-			return retval;
+			break;
 	}
 
-	return retval;
+	return state;
 }
