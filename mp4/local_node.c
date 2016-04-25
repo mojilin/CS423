@@ -6,7 +6,7 @@
 
 
 
-#define NBYTES 100
+#define NBYTES 200
 
 char buffer[NBYTES];
 int sockfd;
@@ -20,10 +20,10 @@ void * comm_read_thread(void * arg)
 	{
 
 		state = channel_read(sockfd, buffer, NBYTES);
-
+		puts("SOMETHING RECEIVED");
 		if(state == JOB_TRANSFER)
 		{
-			job = *(Job_t*)buffer;
+			sscanf(buffer, "id: %d, data: %lf", &(job.id), &(job.data));
 			printf("Job transferred id = %d, data = %f", job.id, job.data);
 		}
 
