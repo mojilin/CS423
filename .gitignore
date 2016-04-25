@@ -14,3 +14,9 @@ MP1/.tmp_versions
 userapp
 *.mod.c
 **/*.swp
+
+*.dat
+*.data
+
+
+mp3_demo/
