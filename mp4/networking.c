@@ -124,7 +124,7 @@ n_state channel_read(int sockfd, void * buf, int nbytes)
 			{
 				retval = read(sockfd, buf, nbytes);
 			}
-			printf("Message received: %s\n", (char *)buf);
+			printf("Message received\n");
 			write(sockfd ,"ACK", 10);
 			break;
 	}

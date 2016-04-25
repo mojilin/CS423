@@ -12,15 +12,16 @@ char buffer[NBYTES];
 int sockfd;
 
 
-void comm_read_thread(void)
+void * comm_read_thread(void * arg)
 {
 	Job_t job;	
 	n_state state;
 	while(1)
 	{
 
-		channel_read(sockfd, buffer, NBYTES);
+		state = channel_read(sockfd, buffer, NBYTES);
 
+		printf("STATE = %d\n", state);
 		if(state == JOB_TRANSFER)
 		{
 			job = *(Job_t*)buffer;
