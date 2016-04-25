@@ -112,9 +112,6 @@ n_state channel_read(int sockfd, void * buf, int nbytes)
 	while(read(sockfd, buffer, 10) <= 0);
 
 	state = strtol(buffer, NULL, 10);
-	
-	puts("State received");
-
 	write(sockfd, "ACK", 10);
 
 	switch(state)
@@ -124,9 +121,12 @@ n_state channel_read(int sockfd, void * buf, int nbytes)
 			{
 				retval = read(sockfd, buf, nbytes);
 			}
-			printf("Message received\n");
 			write(sockfd ,"ACK", 10);
 			break;
+
+		case STATE_TRANSFER:
+			break;
+			
 	}
 
 	return state;

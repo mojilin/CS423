@@ -1,5 +1,5 @@
 
-FLAGS:= -O2  -Wall -g -lpthread
+FLAGS:= -Wall -g -lpthread
 GCC:=gcc
 RM:=rm
 
