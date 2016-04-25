@@ -7,7 +7,7 @@
 
 transfer_job(int fd, Job_t job)
 {
-	printf("Transferring job %d. Data: %f", job.id, job.A[job.id]);
+	printf("Transferring job %d. Data: %f", job.id, job.data);
 
 	channel_write(fd, JOB_TRANSFER, &job, sizeof(job));
 }

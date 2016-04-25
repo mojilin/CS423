@@ -34,7 +34,7 @@ int main()
 {
 	pthread_t read_thread;
 
-	sockfd = join_channel(address, PORT);
+	sockfd = join_channel(ip_address, PORT);
 
 	pthread_create(&read_thread, NULL, comm_read_thread, 0);
 

@@ -14,7 +14,7 @@
 
 
 
-const char address[] = "172.22.146.190";
+#define ip_address "172.22.146.190"
 #define PORT 4200
 
 typedef enum {JOB_TRANSFER, STATE_TRANSFER} n_state;
