@@ -8,7 +8,7 @@ typedef struct {
 	double *A;
 } Job_t;
 
-void compute(Job_t j);
+void compute(Job_t job);
 
 
 #endif
