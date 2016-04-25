@@ -4,11 +4,11 @@
 #define A_SIZE 1024 * 1024 * 4
 
 typedef struct {
-	int id;
-	double A[A_SIZE] = {1.111111};
-} Job;
+	int id; // this doubles as the index for the thread to operate on
+	double *A;
+} Job_t;
 
-void compute(Job j);
+void compute(Job_t j);
 
 
 #endif
