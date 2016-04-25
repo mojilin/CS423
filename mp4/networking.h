@@ -20,8 +20,10 @@ const char address[] = "172.22.146.190";
 typedef enum {JOB_TRANSFER} n_state;
 
 int join_channel(const char * address, int port);
+int create_channel(int port);
+int channel_write(int fd, void * buf, int nbytes);
 
 
-
+void error(const char *msg);
 
 #endif

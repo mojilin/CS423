@@ -1,17 +1,5 @@
-/* A simple server in the internet domain using TCP
-   The port number is passed as an argument */
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <sys/types.h> 
-#include <sys/socket.h>
-#include <netinet/in.h>
 
-#define PORT 4200
-
-int create_channel(int port);
-int channel_write(int fd, void * buf, int nbytes);
+#include "networking.h"
 
 void error(const char *msg)
 {
@@ -19,21 +7,6 @@ void error(const char *msg)
     exit(1);
 }
 
-int main(int argc, char *argv[])
-{
-     int sockfd;
-	 char buffer[100];
-	 sockfd = create_channel(PORT);
-
-	 while(1)
-	 {
-		printf("Enter message:");
-		scanf("%s", buffer);
-		channel_write(sockfd, buffer, 100);
-	 }
-
-     return 0; 
-}
 
 
 /*
