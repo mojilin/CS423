@@ -7,7 +7,7 @@
 
 transfer_job(int fd, Job_t job)
 {
-	printf("Transferring job %d. Data: %f", job.id, job.data);
+	printf("Transferring job %d. Data: %f\n", job.id, job.data);
 
 	channel_write(fd, JOB_TRANSFER, &job, sizeof(job));
 }
@@ -19,10 +19,13 @@ int main()
 	job.data = 2.345;
 	
 	int sockfd = create_channel(PORT);
-	transfer_job(sockfd, job);
+	while(1)
+	{
+		getc(stdin);
+		transfer_job(sockfd, job);
+	}
 
-	while(1);
-
+	close(sockfd);
 	return 0;
 }
 
