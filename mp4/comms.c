@@ -5,7 +5,7 @@
 
 
 
-transfer_job(int fd, Job_t job)
+void transfer_job(int fd, Job_t job)
 {
 	printf("Transferring job %d. Data: %f\n", job.id, job.data);
 

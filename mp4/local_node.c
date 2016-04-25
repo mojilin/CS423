@@ -21,7 +21,6 @@ void * comm_read_thread(void * arg)
 
 		state = channel_read(sockfd, buffer, NBYTES);
 
-		printf("STATE = %d\n", state);
 		if(state == JOB_TRANSFER)
 		{
 			job = *(Job_t*)buffer;
