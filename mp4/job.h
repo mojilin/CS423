@@ -3,7 +3,8 @@
 
 #define A_SIZE 1024 * 1024 * 4
 
-typedef struct {
+typedef struct 
+{
 	int id; // this doubles as the index for the thread to operate on
 	double data;
 } Job_t;
