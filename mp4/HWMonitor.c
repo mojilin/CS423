@@ -43,9 +43,10 @@ void throttle_thread() {
 
 		if (throttle_in >= 0.0 && throttle_in <= 1.0) {
 			set_throttle(throttle_in);
+			printf("Throttle set to %f.\n", throttle_in);
+		} else {
+			printf("That ain't right.\n");
 		}
-
-		printf("Throttle set to %f\n", throttle_in);
 
 		throttle_in = 0.0;
 	}
