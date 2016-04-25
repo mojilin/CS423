@@ -48,6 +48,7 @@ int create_channel(int port)
      puts("Client to server connection established");
      n = write(newsockfd,"Client connection ACK",25);
      if (n < 0) error("ERROR writing to socket");
+	 close(sockfd);
      return newsockfd; 
 }
 
@@ -107,11 +108,12 @@ int join_channel(const char * address, int port)
 n_state channel_read(int sockfd, void * buf, int nbytes)
 {
 	int retval = 0;
-	char buffer[10];
+	char temp[10];
 	n_state state;
-	while(read(sockfd, buffer, 10) <= 0);
+	while(read(sockfd, temp, 2) <= 0);
 
-	state = strtol(buffer, NULL, 10);
+
+	state = strtol(temp, NULL, 10);
 	write(sockfd, "ACK", 10);
 
 	switch(state)
@@ -121,7 +123,8 @@ n_state channel_read(int sockfd, void * buf, int nbytes)
 			{
 				retval = read(sockfd, buf, nbytes);
 			}
-			write(sockfd ,"ACK", 10);
+			printf("Message received = %s\n", (char *)buf);
+			write(sockfd ,buf, nbytes);
 			break;
 
 		case STATE_TRANSFER:
