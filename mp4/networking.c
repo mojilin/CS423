@@ -51,7 +51,7 @@ int create_channel(int port)
      return newsockfd; 
 }
 
-int channel_write(int fd, void * buf, int nbytes)
+int channel_write(int fd, n_state state, void * buf, int nbytes)
 {
 	char buffer[10];
 	write(fd, "1", 10);
@@ -65,4 +65,69 @@ int channel_write(int fd, void * buf, int nbytes)
 	printf("Buffer received = %s\n", buffer);
 	
 	return 0;
+}
+
+
+int join_channel(const char * address, int port)
+{
+    int sockfd, portno, n;
+    struct sockaddr_in serv_addr;
+    struct hostent *server;
+
+    char buffer[256];
+    portno = port;
+    sockfd = socket(AF_INET, SOCK_STREAM, 0);
+    if (sockfd < 0) 
+        error("ERROR opening socket");
+    server = gethostbyname(address);
+    if (server == NULL) {
+        fprintf(stderr,"ERROR, no such host\n");
+        exit(0);
+    }
+    bzero((char *) &serv_addr, sizeof(serv_addr));
+    serv_addr.sin_family = AF_INET;
+    bcopy((char *)server->h_addr, (char *)&serv_addr.sin_addr.s_addr,
+         server->h_length);
+    serv_addr.sin_port = htons(portno);
+	printf("Creating connecttion to address: %s at port %d\n", address, port);
+	puts("Connecting to server...");
+    if (connect(sockfd,(struct sockaddr *) &serv_addr,sizeof(serv_addr)) < 0) 
+        error("ERROR connecting");
+	puts("Connection established!");
+
+    bzero(buffer,256);
+    n = read(sockfd,buffer,255);
+    if (n < 0) 
+         error("ERROR reading from socket");
+	puts("Received ACK from server");
+    return sockfd;
+}
+
+
+n_state channel_read(int sockfd, void * buf, int nbytes)
+{
+	int retval = 0;
+	char buffer[10];
+	n_state state;
+	while(read(sockfd, buffer, 10) <= 0);
+
+	state = strtol(buffer, NULL, 10);
+	write(sockfd, "ACK", 10);
+
+	switch(state)
+	{
+		case JOB_TRANSFER:
+			while(retval <= 0)
+			{
+				retval = read(sockfd, buf, nbytes);
+			}
+			write(sockfd ,"ACK", 10);
+			break;
+
+		case STATE_TRANSFER:
+			break;
+			
+	}
+
+	return state;
 }
