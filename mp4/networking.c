@@ -53,16 +53,16 @@ int create_channel(int port)
 
 int channel_write(int fd, n_state state, void * buf, int nbytes)
 {
-	char buffer[10];
-	write(fd, "1", 10);
+	char temp[10];
+	write(fd, "1",  2);
 
-	while(read(fd, buffer, 10) <= 0);
-	printf("Buffer received = %s\n", buffer);
+	while(read(fd, temp, 10) <= 0);
+	printf("Buffer received = %s\n", temp);
 	write(fd, buf, nbytes);
 
-	while(read(fd, buffer, 10) <= 0);
+	while(read(fd, temp, 10) <= 0);
 	
-	printf("Buffer received = %s\n", buffer);
+	printf("Buffer received = %s\n", temp);
 	
 	return 0;
 }

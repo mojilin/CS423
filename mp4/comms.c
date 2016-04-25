@@ -3,13 +3,14 @@
 #include "job.h"
 #include "HWMonitor.h"
 
-
+char buffer[100];
 
 void transfer_job(int fd, Job_t job)
 {
 	printf("Transferring job %d. Data: %f\n", job.id, job.data);
 
-	channel_write(fd, JOB_TRANSFER, &job, sizeof(job));
+	sprintf(buffer, "id: %d, data: %lf", job.id, job.data);
+	channel_write(fd, JOB_TRANSFER, buffer, 100);
 }
 
 int main()
