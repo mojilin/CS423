@@ -4,7 +4,7 @@
 #include "job_queue.h"
 
 #define THRESHOLD 420
-#define SENDER_I 
+// #define SENDER_I 
 // #define RECEIVER_I 
 // #define SYM_I 
 
@@ -18,7 +18,7 @@ void * adaptor_thread(void * arg) {
 		// next available job for selection policy, since jobs are identical it shouldn't matter much
 
 		// sender initiated
-		#ifdef SENDER_I
+		// #ifdef SENDER_I
 
 		if ((args->remote_state->num_jobs - args->local_state->num_jobs) > THRESHOLD) {
 			if (!isEmpty()) {
@@ -31,6 +31,6 @@ void * adaptor_thread(void * arg) {
 			}
 		}
 		
-		#endif
+		// #endif
 	}
 }
