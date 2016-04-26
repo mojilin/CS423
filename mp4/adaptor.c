@@ -19,7 +19,7 @@ void * adaptor_thread(void * arg) {
 
 		// sender initiate
 		if (isFull() && args->remote_state->num_jobs < QUEUE_MAX) {
-			transfer_job(out_data_sockfd, newjob);
+			transfer_job(out_data_sockfd, newJob);
 		} else {
 			enqueue(newJob);
 		}

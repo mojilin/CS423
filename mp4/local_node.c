@@ -8,7 +8,7 @@
 #include <pthread.h>
 #include <signal.h>
 #include <sys/time.h>
-
+#include "adaptor.h"
 
 
 #define NBYTES 100
@@ -20,10 +20,10 @@ extern double result[A_SIZE];
 
 node_state local_state;
 node_state remote_state;
-double throttle_in;
+float throttle_in;
 
-static double A[A_SIZE];
-static int A_count = 0;
+double A[A_SIZE];
+int A_count = 0;
 
 
 void * comm_read_thread(void * arg)
@@ -37,7 +37,7 @@ void * comm_read_thread(void * arg)
 
 	    read(in_data_sockfd, buffer, NBYTES);
 		sscanf(buffer, "%d %lf", &(job.id), &(job.data));
-		printf("JOB RECEIVED id = %d, Job data = %lf\n", job.id, job.data);
+//		printf("JOB RECEIVED id = %d, Job data = %lf\n", job.id, job.data);
 		
 		sprintf(temp, "ACK %d", job.id);
 		write(in_data_sockfd, temp, NBYTES);
@@ -57,10 +57,10 @@ void * state_read_thread(void * arg)
 	{
 
 	    read(in_state_sockfd, buffer, NBYTES);
-		printf("Buffer received %s\n", buffer);
+//		printf("Buffer received %s\n", buffer);
 		sscanf(buffer, "%d %f %lf", &remote_state.num_jobs, &remote_state.throttle,
 			   		&remote_state.cpu_use);
-		printf("STATE RECEIVED num_jobs = %d, cpu_use = %lf, throttle = %f\n", remote_state.num_jobs, remote_state.cpu_use, remote_state.throttle);
+//		printf("STATE RECEIVED num_jobs = %d, cpu_use = %lf, throttle = %f\n", remote_state.num_jobs, remote_state.cpu_use, remote_state.throttle);
 
 		
 	}
@@ -71,12 +71,13 @@ void * timer_handler (void * arg)
 
 	while(1)
 	{
-	//	local_state.num_jobs = get_queue_size();
-	//	local_state.cpu_use = get_cpu_use();
-//		local_state.throttle = throttle_in;
+		local_state.num_jobs = get_queue_size();
+		local_state.cpu_use = get_cpu_use();
+		local_state.throttle = throttle_in;
 
-		printf("Transferring state\n");
+//		printf("Transferring state\n");
 		send_state(out_state_sockfd, local_state);
+		usleep(100000);
 
 	}
 		
@@ -90,15 +91,17 @@ int main(int argc, char **argv)
 {
 	pthread_t read_thread, worker_td, state_r_td;
 	pthread_t state_send_td;
+	pthread_t adaptor_td;
 	
 	arg_t worker_arg;
+	adaptor_arg_t adaptor_arg = { &remote_state, &local_state};
 	worker_arg.throttle = 0;
 	int i;
 
-	Job_t job;
-	job.id = 10;
-	job.data = 2.345;
-
+	if(argc == 2)
+	{
+		throttle_in = atof(argv[1]);
+	}
 
 #ifdef LOCAL
 	/* Initialize result array */
@@ -140,14 +143,10 @@ int main(int argc, char **argv)
 	pthread_create(&read_thread, NULL, comm_read_thread, 0);
 	pthread_create(&worker_td, NULL, worker_thread, &worker_arg);
 	pthread_create(&state_r_td, NULL, state_read_thread, 0);
-	//pthread_create(&state_send_td, NULL, timer_handler, 0);
+	pthread_create(&state_send_td, NULL, timer_handler, 0);
+	pthread_create(&adaptor_td, NULL, adaptor_thread, &adaptor_arg);
 
 
-	while(1)
-	{
-		send_state(out_state_sockfd, local_state);
-		transfer_job(out_data_sockfd, job);
-	}
 
 
 	pthread_join(read_thread, NULL);

@@ -27,10 +27,10 @@ comms: network
 	gcc comms.c ${FLAGS} -c -o comms.o
 
 client: network job worker comms HW_Monitor
-	gcc -D LOCAL local_node.c networking.o comms.o HWMonitor.o WorkThread.o job_queue.o job.o ${FLAGS} -o client
+	gcc -D LOCAL local_node.c networking.o comms.o HWMonitor.o WorkThread.o job_queue.o job.o ${FLAGS} adaptor.c -o client
 
 server: client
-	gcc -D REMOTE local_node.c networking.o comms.o HWMonitor.o WorkThread.o job_queue.o job.o ${FLAGS} -o server
+	gcc -D REMOTE local_node.c networking.o comms.o HWMonitor.o WorkThread.o job_queue.o job.o ${FLAGS} adaptor.c -o server
 
 clean:
 	$(RM) -f server client *~ *.o

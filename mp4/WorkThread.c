@@ -8,13 +8,21 @@
 
 double result[A_SIZE];
 
+extern float throttle_in;
+
 
 void * worker_thread(void *arg) {
-	arg_t * args = (arg_t *)arg;
 
+	int counter = 0;
 	while (1) {
 		// if queue is not empty
 		if (!isEmpty()) {
+
+			if(counter >throttle_in * 5000)
+			{
+				usleep(100000 * (1 - throttle_in));
+				counter = 0;
+			}
 			int i = 0;
 			Job_t job = dequeue();
 
@@ -23,15 +31,19 @@ void * worker_thread(void *arg) {
 
 			printf("WORKER THREAD: Processing job %d\n", job.id);
 
+			/* This job takes 20 microseconds */
 			for (i = 0; i < 6000; i++) {
 				job.data += 1.111111;
 			}
 
+
 			/* On finish, add it to the result array */
 			result[job.id] = job.data;
 			printf("COMPUTED job %d\n", job.id);
+			counter++;
 
 		} else {
+			counter = 0;
 			usleep(EMPTY_SLEEP_TIME);
 		}
 	}
