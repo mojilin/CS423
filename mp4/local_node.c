@@ -1,6 +1,7 @@
 
 #include "networking.h"
 #include "job.h"
+#include "job_queue.h"
 #include "HWMonitor.h"
 #include <pthread.h>
 
@@ -15,18 +16,16 @@ int sockfd;
 void * comm_read_thread(void * arg)
 {
 	Job_t job;	
-	n_state state;
+	
 	while(1)
 	{
 
-		state = channel_read(sockfd, buffer, NBYTES);
-		puts("SOMETHING RECEIVED");
-		if(state == JOB_TRANSFER)
-		{
-			sscanf(buffer, "id: %d, data: %lf", &(job.id), &(job.data));
-			printf("Job transferred id = %d, data = %f", job.id, job.data);
-		}
-
+	    read(sockfd, buffer, NBYTES);
+		sscanf(buffer, "%d %lf", &(job.id), &(job.data));
+		printf("JOB RECEIVED id = %d, Job data = %lf\n", job.id, job.data);
+		
+		enqueue(job);
+		
 	}
 }
 
@@ -40,6 +39,7 @@ int main()
 
 
 	pthread_join(read_thread, NULL);
+
 
 	return 0;
 }

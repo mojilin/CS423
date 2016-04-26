@@ -1,6 +1,7 @@
 #include "job_queue.h"
 #include "job.h"
 #include <pthread.h>
+#include <stdio.h>
 
 static Job_t queue[QUEUE_MAX];
 static int tail = -1;
@@ -24,7 +25,7 @@ int enqueue(Job_t job) {
 
 	tail++;
 	queue[tail % QUEUE_MAX] = job;
-
+	printf("ENQUEUED job, id: %d, data: %lf\n", job.id, job.data);
 	pthread_mutex_unlock(&queue_mutex);
 	return 0;
 }
