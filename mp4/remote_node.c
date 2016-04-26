@@ -61,7 +61,7 @@ void timer_handler (int signum)
 	local_state.num_jobs = get_queue_size();
 	local_state.cpu_use = get_cpu_use();
 	local_state.throttle = throttle_in;
-	printf("TIMER! Queue Size = %d\n", local_state.num_jobs);
+	printf("TIMER! Queue Size = %d \n", local_state.num_jobs);
 
 	send_state(out_state_sockfd, local_state);
 		
