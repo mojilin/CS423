@@ -20,7 +20,7 @@ void * adaptor_thread(void * arg) {
 		// sender initiated
 		// #ifdef SENDER_I
 
-		if ((args->remote_state->num_jobs - args->local_state->num_jobs) > THRESHOLD) {
+		if ((args->local_state->num_jobs - args->remote_state->num_jobs) > THRESHOLD) {
 			if (!isEmpty()) {
 				Job_t job = dequeue();
 
@@ -30,7 +30,7 @@ void * adaptor_thread(void * arg) {
 				continue;
 			}
 		}
-		
+
 		// #endif
 	}
 }
