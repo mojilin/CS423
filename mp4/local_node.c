@@ -11,16 +11,15 @@
 
 
 
-#define NBYTES 200
+#define NBYTES 100
 #define STATE_TIMER 100000
 
-char buffer[NBYTES];
 int in_data_sockfd, in_state_sockfd, out_data_sockfd, out_state_sockfd;
-char temp[NBYTES];
 
 extern double result[A_SIZE];
 
 node_state local_state;
+node_state remote_state;
 double throttle_in;
 
 
@@ -28,6 +27,8 @@ void * comm_read_thread(void * arg)
 {
 	Job_t job;	
 	
+	char temp[NBYTES];
+	char buffer[NBYTES];
 	while(1)
 	{
 
@@ -44,7 +45,6 @@ void * comm_read_thread(void * arg)
 
 void * state_read_thread(void * arg)
 {
-	Job_t job;	
 	char temp[NBYTES];
 	char buffer[NBYTES];
 	
@@ -52,13 +52,12 @@ void * state_read_thread(void * arg)
 	{
 
 	    read(in_state_sockfd, buffer, NBYTES);
-		sscanf(buffer, "%d %f %lf", &local_state.num_jobs, &local_state.throttle,
-			   		&local_state.cpu_use);
-		printf("STATE RECEIVED num_jobs = %d, cpu_use = %lf, throttle = %f\n", local_state.num_jobs, local_state.cpu_use, local_state.throttle);
+		sscanf(buffer, "%d %f %lf", &remote_state.num_jobs, &remote_state.throttle,
+			   		&remote_state.cpu_use);
+		printf("STATE RECEIVED num_jobs = %d, cpu_use = %lf, throttle = %f\n", remote_state.num_jobs, remote_state.cpu_use, remote_state.throttle);
 		
 		sprintf(temp, "ACK");
 		write(in_state_sockfd, temp, NBYTES);
-		enqueue(job);
 		
 	}
 }

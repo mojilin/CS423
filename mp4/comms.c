@@ -31,7 +31,6 @@ void send_state(int fd, node_state state)
 	write(fd, buffer, 100);
 	while(read(fd, temp, 100) <= 0);
 	printf("Message Acknowledged: %s\n", temp);
-	read(fd,temp,100);
 }
 
 
