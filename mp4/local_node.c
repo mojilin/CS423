@@ -64,7 +64,6 @@ void timer_handler (int signum)
 	local_state.num_jobs = get_queue_size();
 	local_state.cpu_use = get_cpu_use();
 	local_state.throttle = throttle_in;
-	printf("TIMER! Queue Size = %d\n", local_state.num_jobs);
 
 	send_state(out_state_sockfd, local_state);
 		
@@ -79,6 +78,9 @@ int main(int argc, char **argv)
 	worker_arg.throttle = 0;
 	int i;
 
+	Job_t job;
+	job.id = 10;
+	job.data = 2.345;
 	struct sigaction sa;
 	struct itimerval timer;
 	/* Install the timer handler */
@@ -105,12 +107,20 @@ int main(int argc, char **argv)
 	timer.it_value.tv_usec = STATE_TIMER;
 	timer.it_interval.tv_sec = 0;
 	timer.it_interval.tv_usec = STATE_TIMER;
-	setitimer(ITIMER_REAL, &timer, NULL);
+	//setitimer(ITIMER_REAL, &timer, NULL);
 
 	/* Create the threads */
 	pthread_create(&read_thread, NULL, comm_read_thread, 0);
 	pthread_create(&worker_td, NULL, worker_thread, &worker_arg);
 	pthread_create(&state_r_td, NULL, state_read_thread, 0);
+
+	while(1)
+	{
+		transfer_job(out_data_sockfd, job);
+		job.id++;
+		job.data += 1.2;
+	}
+
 
 	pthread_join(read_thread, NULL);
 

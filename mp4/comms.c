@@ -25,7 +25,6 @@ void send_state(int fd, node_state state)
 {
 //	char temp[100];
 	char buffer[100];
-	printf("Transferring state\n");
 	sprintf(buffer, "%d %f %lf", state.num_jobs, state.throttle, state.cpu_use);
 	
 	write(fd, buffer, 100);
