@@ -20,12 +20,17 @@ network:
 worker: job_queue
 	gcc WorkThread.c ${FLAGS} -c -o  WorkThread.o
 
-server: network
-	gcc networking.o comms.c ${FLAGS} -o server
+HW_Monitor:
+	gcc HWMonitor.c ${FLAGS} -c -o HWMonitor.o
 
-client: network job worker
-	gcc local_node.c networking.c  WorkThread.o job_queue.o job.o ${FLAGS} -o client
+comms: network
+	gcc comms.c ${FLAGS} -c -o comms.o
 
+client: network job worker comms HW_Monitor
+	gcc local_node.c networking.o comms.o HWMonitor.o WorkThread.o job_queue.o job.o ${FLAGS} -o client
+
+server: client
+	gcc networking.o comms.o job_queue.o HWMonitor.o remote_node.c ${FLAGS} -o server
 
 clean:
 	$(RM) -f server client *~ *.o
