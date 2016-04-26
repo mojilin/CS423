@@ -8,7 +8,7 @@
 // #define RECEIVER_I 
 // #define SYM_I 
 
-extern int out_state_sockfd;
+extern int out_data_sockfd;
 
 void * adaptor_thread(void * arg) {
 	adaptor_arg_t * args = (adaptor_arg_t *)arg;
@@ -24,7 +24,7 @@ void * adaptor_thread(void * arg) {
 			if (!isEmpty()) {
 				Job_t job = dequeue();
 
-				transfer_job(out_state_sockfd, job);
+				transfer_job(out_data_sockfd, job);
 			} else {
 				// no more available jobs
 				continue;
