@@ -22,6 +22,9 @@ node_state local_state;
 node_state remote_state;
 double throttle_in;
 
+static double A[A_SIZE];
+static int A_count = 0;
+
 
 void * comm_read_thread(void * arg)
 {
@@ -102,6 +105,7 @@ int main(int argc, char **argv)
 	for(i = 0; i < A_SIZE; i++)
 	{
 		result[i] = (float)i;
+		A[i] = 1.111111;
 	}
 	
 
