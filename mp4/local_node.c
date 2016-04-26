@@ -14,7 +14,7 @@
 #define STATE_TIMER 100000
 
 char buffer[NBYTES];
-int in_data_sockfd, int in_state_sockfd;
+int in_data_sockfd, in_state_sockfd, out_data_sockfd, out_state_sockfd;
 char temp[NBYTES];
 
 extern double result[A_SIZE];
@@ -59,7 +59,7 @@ int main()
 	/* Install the timer handler */
 	memset(&sa, 0, sizeof(sa));
 	sa.sa_handler = timer_handler;
-	sigaction(SIGVTALARM, &sa, NULL);
+	sigaction(SIGVTALRM, &sa, NULL);
 
 
 	/* Initialize result array */
@@ -72,6 +72,8 @@ int main()
 	/* Initialize the incoming socket*/
 	in_data_sockfd = join_channel(ip_address, RtoL_DATA_PORT);
 	in_state_sockfd = join_channel(ip_address, RtoL_STATE_PORT); 
+	out_data_sockfd = join_channel(ip_address, LtoR_DATA_PORT);
+	out_state_sockfd = join_channel(ip_address, LtoR_STATE_PORT); 
 
 	/* SET Timer to send state every STATE_TIMER microseconds */
 	timer.it_value.tv_sec = 0;

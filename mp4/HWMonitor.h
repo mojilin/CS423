@@ -4,7 +4,7 @@
 double get_cpu_use();
 
 
-typdef struct
+typedef struct
 {
 	int num_jobs;
 	float throttle;

@@ -18,14 +18,21 @@ int main()
 	job.id = 10;
 	job.data = 2.345;
 	
-	int sockfd = create_channel(PORT);
+	int in_data_sockfd = create_channel(LtoR_DATA_PORT);
+	int in_state_sockfd = create_channel(LtoR_STATE_PORT);
+	int out_state_sockfd = create_channel(RtoL_STATE_PORT);
+	int out_data_sockfd = create_channel(RtoL_DATA_PORT);
+
 	while(1)
 	{
 		getc(stdin);
-		transfer_job(sockfd, job);
+		transfer_job(out_data_sockfd, job);
 	}
 
-	close(sockfd);
+	close(out_data_sockfd);
+	close(out_state_sockfd);
+	close(in_data_sockfd);
+	close(in_state_sockfd);
 	return 0;
 }
 

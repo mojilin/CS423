@@ -16,7 +16,6 @@ void * worker_thread(void *arg) {
 		// if queue is not empty
 		if (!isEmpty()) {
 			int i = 0;
-			int j = 0;
 			Job_t job = dequeue();
 
 			if (job.id == -1)
