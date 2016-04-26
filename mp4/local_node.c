@@ -45,7 +45,7 @@ void * comm_read_thread(void * arg)
 
 void * state_read_thread(void * arg)
 {
-	char temp[NBYTES];
+//	char temp[NBYTES];
 	char buffer[NBYTES];
 	
 	while(1)
@@ -55,9 +55,6 @@ void * state_read_thread(void * arg)
 		sscanf(buffer, "%d %f %lf", &remote_state.num_jobs, &remote_state.throttle,
 			   		&remote_state.cpu_use);
 		printf("STATE RECEIVED num_jobs = %d, cpu_use = %lf, throttle = %f\n", remote_state.num_jobs, remote_state.cpu_use, remote_state.throttle);
-		
-		sprintf(temp, "ACK");
-		write(in_state_sockfd, temp, NBYTES);
 		
 	}
 }
