@@ -2,7 +2,7 @@
 #define WT_H
 
 typedef struct {
-	Job_t job;
+	// Job_t job;
 	double throttle;
 } arg_t;
 
