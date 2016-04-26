@@ -73,6 +73,9 @@ void timer_handler (int signum)
 	
 }
 
+
+
+
 int main(int argc, char **argv)
 {
 	pthread_t read_thread, worker_td, state_r_td;
@@ -92,10 +95,11 @@ int main(int argc, char **argv)
 	sigaction(SIGALRM, &sa, NULL);
 
 
+#ifdef LOCAL
 	/* Initialize result array */
 	for(i = 0; i < A_SIZE; i++)
 	{
-		result[i] = -1.0f;
+		result[i] = (float)i;
 		A[i] = 1.111111;
 	}
 	
@@ -106,12 +110,30 @@ int main(int argc, char **argv)
 	in_state_sockfd = join_channel(ip_address, RtoL_STATE_PORT); 
 	in_data_sockfd = join_channel(ip_address, RtoL_DATA_PORT);
 
+#endif
+
+#ifdef REMOTE
+	/* Initialize result array */
+	for(i = 0; i < A_SIZE; i++)
+	{
+		result[i] = -1.0f;
+	}
+	
+
+	/* Initialize the incoming socket*/
+	out_data_sockfd = create_channel(RtoL_DATA_PORT);
+	out_state_sockfd = create_channel( RtoL_STATE_PORT); 
+	in_state_sockfd = create_channel(LtoR_STATE_PORT); 
+	in_data_sockfd = create_channel( LtoR_DATA_PORT);
+#endif
+
 	/* SET Timer to send state every STATE_TIMER microseconds */
 	timer.it_value.tv_sec = 0;
 	timer.it_value.tv_usec = STATE_TIMER;
 	timer.it_interval.tv_sec = 0;
 	timer.it_interval.tv_usec = STATE_TIMER;
-	//setitimer(ITIMER_REAL, &timer, NULL);
+	setitimer(ITIMER_REAL, &timer, NULL);
+
 
 	/* Create the threads */
 	pthread_create(&read_thread, NULL, comm_read_thread, 0);
@@ -135,3 +157,7 @@ int main(int argc, char **argv)
 
 	return 0;
 }
+
+
+
+
