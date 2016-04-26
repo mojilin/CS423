@@ -17,11 +17,14 @@ job: job_queue
 network:
 	gcc networking.c ${FLAGS} -c -o networking.o
 
+worker: job_queue
+	gcc WorkThread.c ${FLAGS} -c -o  WorkThread.o
+
 server: network
 	gcc networking.o comms.c ${FLAGS} -o server
 
-client: network job
-	gcc local_node.c networking.c  job_queue.o job.o ${FLAGS} -o client
+client: network job worker
+	gcc local_node.c networking.c  WorkThread.o job_queue.o job.o ${FLAGS} -o client
 
 
 clean:

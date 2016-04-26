@@ -15,7 +15,10 @@
 
 
 #define ip_address "172.22.146.190"
-#define PORT 4200
+#define RtoL_DATA_PORT 4200
+#define RtoL_STATE_PORT 4201
+#define LtoR_DATA_PORT 5200
+#define RtoL_DATA_PORT 5201
 
 typedef enum {JOB_TRANSFER, STATE_TRANSFER} n_state;
 

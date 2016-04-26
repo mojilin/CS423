@@ -6,6 +6,6 @@ typedef struct {
 	double throttle;
 } arg_t;
 
-void worker_thread(void *arg);
+void * worker_thread(void *arg);
 
 #endif
