@@ -14,7 +14,7 @@
 
 
 
-#define ip_address "172.22.146.190"
+#define ip_address "127.0.0.1"
 #define RtoL_DATA_PORT 4200
 #define RtoL_STATE_PORT 4201
 #define LtoR_DATA_PORT 5200
