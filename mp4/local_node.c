@@ -107,7 +107,7 @@ int main(int argc, char **argv)
 	timer.it_value.tv_usec = STATE_TIMER;
 	timer.it_interval.tv_sec = 0;
 	timer.it_interval.tv_usec = STATE_TIMER;
-	setitimer(ITIMER_REAL, &timer, NULL);
+	//setitimer(ITIMER_REAL, &timer, NULL);
 
 	/* Create the threads */
 	pthread_create(&read_thread, NULL, comm_read_thread, 0);

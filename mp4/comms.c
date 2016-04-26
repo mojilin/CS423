@@ -17,6 +17,7 @@ void transfer_job(int fd, Job_t job)
 	write(fd, buffer, 100);
 	while(read(fd, temp, 100) <= 0);
 	printf("Message Acknowledged: %s\n", temp);
+	read(fd,temp,100);
 	
 }
 
